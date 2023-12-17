@@ -36,8 +36,8 @@ export default function Sidebard() {
           >
             <Icon
               name={item.icon as IconName}
-              width={25}
-              height={25}
+              width={22}
+              height={22}
               color={item.url === pathname ? '#ff2461' : ''}
             />
             <p

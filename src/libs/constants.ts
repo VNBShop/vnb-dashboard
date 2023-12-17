@@ -5,13 +5,8 @@ export const SidebarList = [
     url: '/',
   },
   {
-    label: 'Product',
-    icon: 'Plane',
+    label: 'Invoice order',
+    icon: 'Selling',
     url: '/products',
-  },
-  {
-    label: 'Product detail',
-    icon: 'Plane',
-    url: '/products/product-detail',
   },
 ]

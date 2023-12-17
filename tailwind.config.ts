@@ -33,6 +33,8 @@ const config: Config = {
       },
       colors: {
         secondary: '#ff2461',
+        success: '#4BB543',
+        danger: '#ff0e0e',
       },
     },
   },
