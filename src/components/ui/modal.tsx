@@ -6,7 +6,7 @@ import { Transition } from '@headlessui/react'
 
 import { VariantProps, cva } from 'class-variance-authority'
 
-import { cn } from '@/lib/utils'
+import { cn } from '@/libs/utils'
 
 const modalVariants = cva('bg-white shadow-box w-full', {
   variants: {

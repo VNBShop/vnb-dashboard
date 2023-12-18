@@ -11,7 +11,7 @@ import {
   type FieldValues,
 } from 'react-hook-form'
 
-import { cn } from '@/lib/utils'
+import { cn } from '@/libs/utils'
 
 import { Label } from './label'
 
@@ -135,7 +135,7 @@ const FormDescription = React.forwardRef<
     <p
       ref={ref}
       id={formDescriptionId}
-      className={cn('text-sm text-muted-foreground', className)}
+      className={cn('text-muted-foreground text-sm', className)}
       {...props}
     />
   )

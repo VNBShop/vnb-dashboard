@@ -7,6 +7,6 @@ export const SidebarList = [
   {
     label: 'Invoice order',
     icon: 'Selling',
-    url: '/products',
+    url: '/invoice-order',
   },
 ]

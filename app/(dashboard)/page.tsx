@@ -1,5 +1,7 @@
 import dynamic from 'next/dynamic'
 
+import { DateRangePicker } from '@/components/date-rangepicker'
+
 const Chart = dynamic(() => import('@/contents/home/chart'), {
   ssr: false,
 })
@@ -9,7 +11,11 @@ export default function Home() {
     <section className="mt-1">
       <h1 className="text-xl font-semibold">Dashboard</h1>
 
-      <section className="mt-4 grid grid-cols-4 gap-4">
+      <section className="my-4 flex justify-end">
+        <DateRangePicker dayCount={30} />
+      </section>
+
+      <section className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
         <article className="rounded-md bg-white p-2">
           <p className="text-[15px] font-medium text-gray-500">Revenue</p>
           <p className="text-lg font-medium">
@@ -57,6 +63,7 @@ export default function Home() {
           </p>
         </article>
       </section>
+
       <Chart />
     </section>
   )

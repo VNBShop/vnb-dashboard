@@ -13,7 +13,11 @@ import {
   YAxis,
 } from 'recharts'
 
+import useMediaQuery from '@/hooks/useMediaQuery'
+
 export default function Chart() {
+  const isSCMedium = useMediaQuery('(min-width: 768px)')
+
   const data = [
     {
       name: 'Jan',
@@ -90,69 +94,69 @@ export default function Chart() {
   ]
 
   return (
-    <section className="mt-4 flex w-full gap-16 rounded bg-white py-2 pt-4 shadow-sm">
-      <LineChart
-        width={500}
-        height={300}
-        data={data}
-        margin={{
-          top: 10,
-          right: 30,
-          left: 20,
-          bottom: 5,
-        }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Line
-          type="monotone"
-          dataKey="pv"
-          stroke="#8884d8"
-          activeDot={{ r: 8 }}
-        />
-        <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-      </LineChart>
+    <section className="mt-4 flex w-full flex-col gap-16 rounded bg-white py-2 pt-4 shadow-sm md:flex-row">
+      <ResponsiveContainer width={isSCMedium ? '50%' : '100%'} height={300}>
+        <LineChart
+          data={data}
+          margin={{
+            top: 10,
+            right: 30,
+            left: 20,
+            bottom: 5,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Line
+            type="monotone"
+            dataKey="pv"
+            stroke="#8884d8"
+            activeDot={{ r: 8 }}
+          />
+          <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+        </LineChart>
+      </ResponsiveContainer>
 
-      <AreaChart
-        width={500}
-        height={270}
-        data={data}
-        margin={{
-          top: 10,
-          right: 30,
-          left: 0,
-          bottom: 0,
-        }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Area
-          type="monotone"
-          dataKey="uv"
-          stackId="1"
-          stroke="#8884d8"
-          fill="#8884d8"
-        />
-        <Area
-          type="monotone"
-          dataKey="pv"
-          stackId="1"
-          stroke="#82ca9d"
-          fill="#82ca9d"
-        />
-        <Area
-          type="monotone"
-          dataKey="amt"
-          stackId="1"
-          stroke="#ffc658"
-          fill="#ffc658"
-        />
-      </AreaChart>
+      <ResponsiveContainer width={isSCMedium ? '50%' : '100%'} height={270}>
+        <AreaChart
+          data={data}
+          margin={{
+            top: 10,
+            right: 30,
+            left: 0,
+            bottom: 0,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip />
+          <Area
+            type="monotone"
+            dataKey="uv"
+            stackId="1"
+            stroke="#8884d8"
+            fill="#8884d8"
+          />
+          <Area
+            type="monotone"
+            dataKey="pv"
+            stackId="1"
+            stroke="#82ca9d"
+            fill="#82ca9d"
+          />
+          <Area
+            type="monotone"
+            dataKey="amt"
+            stackId="1"
+            stroke="#ffc658"
+            fill="#ffc658"
+          />
+        </AreaChart>
+      </ResponsiveContainer>
     </section>
   )
 }

@@ -4,7 +4,7 @@ import * as React from 'react'
 
 import * as SliderPrimitive from '@radix-ui/react-slider'
 
-import { cn } from '@/lib/utils'
+import { cn } from '@/libs/utils'
 
 const Slider = React.forwardRef<
   React.ElementRef<typeof SliderPrimitive.Root>,
@@ -35,14 +35,14 @@ const Slider = React.forwardRef<
       </SliderPrimitive.Track>
       <SliderPrimitive.Thumb
         className={cn(
-          'block h-5 w-5 rounded-full border-2 border-gray-500 bg-gray-500 ring-offset-black transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+          'focus-visible:ring-ring block h-5 w-5 rounded-full border-2 border-gray-500 bg-gray-500 ring-offset-black transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
           thickness === 'thin' && 'h-3.5 w-3.5'
         )}
       />
       {variant === 'range' && (
         <SliderPrimitive.Thumb
           className={cn(
-            'block h-5 w-5 rounded-full border-2 border-gray-500 bg-gray-500 ring-offset-black transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+            'focus-visible:ring-ring block h-5 w-5 rounded-full border-2 border-gray-500 bg-gray-500 ring-offset-black transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
             thickness === 'thin' && 'h-3.5 w-3.5'
           )}
         />

@@ -127,7 +127,7 @@ const Breadcrumbs = ({
                     : 'flex items-center gap-1'
                 }
               >
-                <div className="mt-[2px]">
+                <div className="mt-[1px]">
                   <Icon
                     name="ChevronRight"
                     width={16}
@@ -135,7 +135,10 @@ const Breadcrumbs = ({
                     height={16}
                   />
                 </div>
-                <Link href={breadcrumb.href} className="text-sm text-[#7071E8]">
+                <Link
+                  href={breadcrumb.href}
+                  className="capitalize-first text-sm text-[#7071E8]"
+                >
                   {convertBreadcrumb(
                     breadcrumb.breadcrumb,
                     labelsToUppercase,
