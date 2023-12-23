@@ -1,7 +1,7 @@
 import { Breadcrumbs } from '@/components/breadscrum'
 import HeaderSection from '@/components/header-section'
 
-export default function InvoiceOrderPage() {
+export default function ProductCreatePage() {
   return (
     <section>
       <Breadcrumbs
@@ -11,13 +11,17 @@ export default function InvoiceOrderPage() {
             href: '/',
           },
           {
-            title: 'Invoice order',
-            href: '/invoice-order',
+            title: 'Products',
+            href: '/products',
+          },
+          {
+            title: 'Create',
+            href: '/product-create',
           },
         ]}
       />
 
-      <HeaderSection title="Invoice order" />
+      <HeaderSection title="Create product" />
     </section>
   )
 }

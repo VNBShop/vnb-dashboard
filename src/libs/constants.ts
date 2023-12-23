@@ -9,4 +9,9 @@ export const SidebarList = [
     icon: 'Selling',
     url: '/invoice-order',
   },
+  {
+    label: 'Products',
+    icon: 'Products',
+    url: '/products',
+  },
 ]

@@ -1,4 +1,6 @@
+/* eslint-disable import/order */
 import { siteConfig } from '@/configs/site'
+
 import '@/styles/globals.css'
 import type { Metadata } from 'next'
 

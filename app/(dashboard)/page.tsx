@@ -1,6 +1,8 @@
 import dynamic from 'next/dynamic'
 
+import { Breadcrumbs } from '@/components/breadscrum'
 import { DateRangePicker } from '@/components/date-rangepicker'
+import HeaderSection from '@/components/header-section'
 
 const Chart = dynamic(() => import('@/contents/home/chart'), {
   ssr: false,
@@ -9,10 +11,20 @@ const Chart = dynamic(() => import('@/contents/home/chart'), {
 export default function Home() {
   return (
     <section className="mt-1">
-      <h1 className="text-xl font-semibold">Dashboard</h1>
+      <Breadcrumbs
+        segments={[
+          {
+            title: 'Home',
+            href: '/',
+          },
+        ]}
+      />
+
+      <HeaderSection title="Dashboard" />
 
       <section className="my-4 flex justify-end">
         <DateRangePicker dayCount={30} />
+        SH
       </section>
 
       <section className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
