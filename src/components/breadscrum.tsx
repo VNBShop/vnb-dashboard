@@ -40,7 +40,7 @@ export function Breadcrumbs({
               href={segment.href}
               className={cn(
                 'truncate transition-colors hover:underline',
-                isLastSegment ? 'text-black' : 'text-gray-500'
+                isLastSegment ? 'text-secondary' : ''
               )}
             >
               {truncationLength > 0 && segment.title
@@ -50,8 +50,8 @@ export function Breadcrumbs({
             {!isLastSegment && (
               <Icon
                 name="ChevronRightThin"
-                width={22}
-                height={22}
+                width={20}
+                height={20}
                 aria-hidden="true"
               />
             )}
