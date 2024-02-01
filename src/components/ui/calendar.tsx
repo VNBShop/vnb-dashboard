@@ -21,6 +21,7 @@ type CalendarProps = React.ComponentProps<typeof DayPicker> & {
   onChange: any
   dayCount?: number
   align?: 'center' | 'start' | 'end'
+  buttonHeight?: number
   // mode?: 'default' | 'single' | 'multiple' | 'range'
 }
 
@@ -33,6 +34,7 @@ export function Calendar({
   onChange,
   className,
   classNames,
+  buttonHeight,
   showOutsideDays = false,
   ...props
 }: CalendarProps) {
@@ -43,6 +45,9 @@ export function Calendar({
           <Button
             id="date"
             variant={'outline'}
+            style={{
+              height: buttonHeight,
+            }}
             className={cn(
               'xs:w-[300px] flex w-full items-center justify-start gap-2 truncate bg-white text-left font-normal hover:bg-transparent hover:text-black',
               !date && 'text-muted-foreground'
@@ -60,12 +65,12 @@ export function Calendar({
                   format(date.from, 'LLL dd, y')
                 )
               ) : (
-                <span>Pick a date</span>
+                <span className="text-gray-500">Pick a date</span>
               )
             ) : !!date && mode === 'single' ? (
               format(date, 'LLL dd, y')
             ) : (
-              <span>Pick a date</span>
+              <span className="text-gray-500">Pick a date</span>
             )}
           </Button>
         </PopoverTrigger>
