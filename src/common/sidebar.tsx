@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 import { usePathname } from 'next/navigation'
 
-import { SidebarList } from '@/libs/constants'
+import { sidebarList } from '@/libs/constants'
 
 import Icon, { IconName } from './icons'
 
@@ -13,7 +13,7 @@ export default function Sidebard() {
   const pathname = usePathname()
 
   return (
-    <aside className=" lg:col-span-[22%] hidden h-full flex-col overflow-hidden py-4 lg:flex">
+    <aside className="lg:col-span-[20%] hidden h-full flex-col overflow-hidden border-r py-4 pt-2 lg:flex">
       <header className="flex items-center gap-2 border-b border-b-gray-100 px-4 pb-2">
         <Image
           src="/icon.png"
@@ -28,22 +28,22 @@ export default function Sidebard() {
       </header>
 
       <section className="mt-2 flex-1 overflow-auto px-2">
-        {SidebarList.map((item) => (
+        {sidebarList.map((item) => (
           <Link
             href={item.url}
             key={item.label}
-            className="flex items-center gap-2 rounded-md p-2 hover:cursor-pointer lg:hover:bg-gray-100"
+            className="flex items-center gap-2 rounded-[4px] p-2 hover:cursor-pointer lg:hover:bg-gray-100"
           >
             <Icon
               name={item.icon as IconName}
-              width={22}
-              height={22}
+              width={18}
+              height={18}
               color={item.url === pathname ? '#ff2461' : ''}
             />
             <p
               className={`${
                 item.url === pathname ? 'text-[#ff2461]' : ''
-              } text-[15px] font-medium`}
+              } text-[13px] font-medium`}
             >
               {item.label}
             </p>

@@ -1,4 +1,4 @@
-export const SidebarList = [
+export const sidebarList = [
   {
     label: 'Home',
     icon: 'Dashboard',
