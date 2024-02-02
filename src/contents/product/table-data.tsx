@@ -62,8 +62,8 @@ export default function ProductTableData() {
         return (
           <div
             style={{
-              color: genTypeColor[row.department].color,
-              backgroundColor: genTypeColor[row.department].backgroundColor,
+              color: genTypeColor[row.department]?.color,
+              backgroundColor: genTypeColor[row.department]?.backgroundColor,
               padding: '4px 12px',
               borderRadius: 9999,
               fontSize: 13,
@@ -125,12 +125,7 @@ export default function ProductTableData() {
     <>
       <ProductsHeader />
       <section className="mt-4">
-        <DataTable
-          columns={columns as []}
-          data={dummyData}
-          pagination
-          fixedHeader
-        />
+        <DataTable columns={columns as []} data={dummyData} pagination />
       </section>
     </>
   )

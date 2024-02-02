@@ -1,4 +1,5 @@
 import { Breadcrumbs } from '@/components/breadscrum'
+import AddProductForm from '@/components/form/add-product'
 import HeaderSection from '@/components/header-section'
 
 export default function ProductCreatePage() {
@@ -22,6 +23,8 @@ export default function ProductCreatePage() {
       />
 
       <HeaderSection title="Create product" />
+
+      <AddProductForm />
     </section>
   )
 }
