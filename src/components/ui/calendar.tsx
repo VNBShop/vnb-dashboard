@@ -53,7 +53,7 @@ export function Calendar({
               !date && 'text-muted-foreground'
             )}
           >
-            <Icon name="Calandar" width={20} height={20} />
+            <Icon name="Calandar" size={20} />
             {mode === 'range' ? (
               date?.from ? (
                 date.to ? (
@@ -123,12 +123,8 @@ export function Calendar({
               ...classNames,
             }}
             components={{
-              IconLeft: () => (
-                <Icon name="ChevronLeft" width={16} height={16} />
-              ),
-              IconRight: () => (
-                <Icon name="ChevronRight" width={16} height={16} />
-              ),
+              IconLeft: () => <Icon name="ChevronLeft" size={16} />,
+              IconRight: () => <Icon name="ChevronRight" size={16} />,
             }}
             {...props}
           />

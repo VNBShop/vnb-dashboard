@@ -48,12 +48,7 @@ export function Breadcrumbs({
                 : segment.title}
             </Link>
             {!isLastSegment && (
-              <Icon
-                name="ChevronRightThin"
-                width={20}
-                height={20}
-                aria-hidden="true"
-              />
+              <Icon name="ChevronRightThin" size={20} aria-hidden="true" />
             )}
           </React.Fragment>
         )

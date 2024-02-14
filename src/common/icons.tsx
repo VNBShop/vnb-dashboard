@@ -1,22 +1,20 @@
 type IconProps = {
   name: IconName
   color?: string
-  width?: number
-  height?: number
+  size: number
 }
 
 export default function Icon({
   name,
   color = 'currentColor',
-  width,
-  height,
+  size,
 }: IconProps) {
   switch (name) {
     case 'Phone': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -30,8 +28,8 @@ export default function Icon({
     case 'Plane': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -48,8 +46,8 @@ export default function Icon({
     case 'Xmark': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 16 16"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -63,8 +61,8 @@ export default function Icon({
     case 'Search': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 21 21"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -84,8 +82,8 @@ export default function Icon({
     case 'Racket': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 512 512"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -99,8 +97,8 @@ export default function Icon({
     case 'Shoe': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 512 512"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -114,8 +112,8 @@ export default function Icon({
     case 'Skirt': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 512 512"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -129,8 +127,8 @@ export default function Icon({
     case 'Backpack': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 512 512"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -144,8 +142,8 @@ export default function Icon({
     case 'Products': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 512 512"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -159,8 +157,8 @@ export default function Icon({
     case 'Hamburger': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 32 32"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -178,8 +176,8 @@ export default function Icon({
     case 'Cart': {
       return (
         <svg
-          width={height}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 16 16"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -193,8 +191,8 @@ export default function Icon({
     case 'Shipping': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 640 512"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -208,8 +206,8 @@ export default function Icon({
     case 'Chart': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -227,8 +225,8 @@ export default function Icon({
     case 'Wallet': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -242,8 +240,8 @@ export default function Icon({
     case 'Coin': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 512 512"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -257,8 +255,8 @@ export default function Icon({
     case 'HeartOutline': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 256 256"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -272,8 +270,8 @@ export default function Icon({
     case 'Heart': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -287,8 +285,8 @@ export default function Icon({
     case 'Checked': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -302,8 +300,8 @@ export default function Icon({
     case 'ChevronDown': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -321,8 +319,8 @@ export default function Icon({
     case 'Endow': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 256 256"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -336,8 +334,8 @@ export default function Icon({
     case 'Minus': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -348,8 +346,8 @@ export default function Icon({
     case 'Plus': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -360,8 +358,8 @@ export default function Icon({
     case 'Star': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -383,8 +381,8 @@ export default function Icon({
     case 'Trash': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 20 20"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -398,8 +396,8 @@ export default function Icon({
     case 'Location': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -413,8 +411,8 @@ export default function Icon({
     case 'Pen': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -428,8 +426,8 @@ export default function Icon({
     case 'QR': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 28 28"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -443,8 +441,8 @@ export default function Icon({
     case 'Photo': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -466,8 +464,8 @@ export default function Icon({
     case 'Ellipsis': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -482,8 +480,8 @@ export default function Icon({
     case 'ChatOutline': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 1024 1024"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -498,8 +496,8 @@ export default function Icon({
     case 'ShareOutline': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -514,8 +512,8 @@ export default function Icon({
     case 'ChevronLeft': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -534,8 +532,8 @@ export default function Icon({
     case 'ChevronRight': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -554,8 +552,8 @@ export default function Icon({
     case 'Bell': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -570,8 +568,8 @@ export default function Icon({
     case 'Logout': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -590,8 +588,8 @@ export default function Icon({
     case 'I': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -606,8 +604,8 @@ export default function Icon({
     case 'Setting': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 20 20"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -622,8 +620,8 @@ export default function Icon({
     case 'Key': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 512 512"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -638,8 +636,8 @@ export default function Icon({
     case 'ChevronLeftThin': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 20 20"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -654,8 +652,8 @@ export default function Icon({
     case 'Dashboard': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -670,8 +668,8 @@ export default function Icon({
     case 'Selling': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -688,8 +686,8 @@ export default function Icon({
     case 'Calandar': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 50 50"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -708,8 +706,8 @@ export default function Icon({
     case 'ChevronRightThin': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 50 50"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -724,8 +722,8 @@ export default function Icon({
     case 'Filter': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -740,8 +738,8 @@ export default function Icon({
     case 'ChevronUp': {
       return (
         <svg
-          width={width}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 20 20"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -756,8 +754,8 @@ export default function Icon({
     case 'CaretSort': {
       return (
         <svg
-          width={height}
-          height={height}
+          width={size}
+          height={size}
           viewBox="0 0 32 32"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -768,11 +766,51 @@ export default function Icon({
         </svg>
       )
     }
+
+    case 'PhotoPlus': {
+      return (
+        <svg
+          width={size}
+          height={size}
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g
+            fill="none"
+            stroke={color}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+          >
+            <path d="M15 8h.01M12.5 21H6a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v6.5" />
+            <path d="m3 16l5-5c.928-.893 2.072-.893 3 0l4 4" />
+            <path d="m14 14l1-1c.67-.644 1.45-.824 2.182-.54M16 19h6m-3-3v6" />
+          </g>
+        </svg>
+      )
+    }
+
+    case 'ZoomOut': {
+      return (
+        <svg
+          width={size}
+          height={size}
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill={color}
+            d="M6.4 19H8q.425 0 .713.288T9 20q0 .425-.288.713T8 21H4q-.425 0-.712-.288T3 20v-4q0-.425.288-.712T4 15q.425 0 .713.288T5 16v1.6l2.4-2.4q.275-.275.7-.275t.7.275q.275.275.275.7t-.275.7zm11.2 0l-2.4-2.4q-.275-.275-.275-.7t.275-.7q.275-.275.7-.275t.7.275l2.4 2.4V16q0-.425.288-.712T20 15q.425 0 .713.288T21 16v4q0 .425-.288.713T20 21h-4q-.425 0-.712-.288T15 20q0-.425.288-.712T16 19zM5 6.4V8q0 .425-.288.713T4 9q-.425 0-.712-.288T3 8V4q0-.425.288-.712T4 3h4q.425 0 .713.288T9 4q0 .425-.288.713T8 5H6.4l2.4 2.4q.275.275.275.7t-.275.7q-.275.275-.7.275T7.4 8.8zm14 0l-2.4 2.4q-.275.275-.7.275t-.7-.275q-.275-.275-.275-.7t.275-.7L17.6 5H16q-.425 0-.712-.287T15 4q0-.425.288-.712T16 3h4q.425 0 .713.288T21 4v4q0 .425-.288.713T20 9q-.425 0-.712-.288T19 8z"
+          />
+        </svg>
+      )
+    }
   }
 }
 
 export type IconName =
   | 'Phone'
+  | 'ZoomOut'
   | 'CaretSort'
   | 'ChevronUp'
   | 'Filter'
@@ -818,3 +856,4 @@ export type IconName =
   | 'Bell'
   | 'Dashboard'
   | 'Selling'
+  | 'PhotoPlus'

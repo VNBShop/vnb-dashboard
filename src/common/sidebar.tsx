@@ -36,8 +36,7 @@ export default function Sidebard() {
           >
             <Icon
               name={item.icon as IconName}
-              width={18}
-              height={18}
+              size={20}
               color={item.url === pathname ? '#ff2461' : ''}
             />
             <p
@@ -66,7 +65,7 @@ export default function Sidebard() {
             </figcaption>
           </figure>
 
-          <Icon name="Logout" width={18} height={18} />
+          <Icon name="Logout" size={18} />
         </section>
       </section>
     </aside>

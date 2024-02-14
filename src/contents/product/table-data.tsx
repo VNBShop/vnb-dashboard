@@ -114,7 +114,7 @@ export default function ProductTableData() {
       cell() {
         return (
           <Button variant="ghost">
-            <Icon name="Ellipsis" width={20} height={20} />
+            <Icon name="Ellipsis" size={20} />
           </Button>
         )
       },

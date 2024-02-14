@@ -1,8 +1,10 @@
 /* eslint-disable import/order */
+import RQProvider from '@/components/provider'
 import { siteConfig } from '@/configs/site'
 
 import '@/styles/globals.css'
 import type { Metadata } from 'next'
+import { Toaster } from 'sonner'
 
 export const metadata: Metadata = {
   title: {
@@ -20,7 +22,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="scroll-smooth font-sans antialiased">{children}</body>
+      <body className="scroll-smooth font-sans antialiased">
+        <RQProvider>
+          {children}
+          <Toaster richColors />
+        </RQProvider>
+      </body>
     </html>
   )
 }

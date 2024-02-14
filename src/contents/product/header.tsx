@@ -23,18 +23,17 @@ export default function ProductsHeader() {
     <>
       <HeaderSection title="Products">
         <section className="flex items-center gap-4">
-          <Button
-            className="h-[38px]"
-            variant={filter ? 'default' : 'outline'}
+          <div
+            className="flex h-[36px] items-center justify-center rounded border px-4 hover:cursor-pointer hover:bg-black hover:text-white"
             onClick={() => setFilter((prev) => !prev)}
           >
-            <Icon name="Filter" width={16} height={16} />
-          </Button>
+            <Icon name="Filter" size={16} />
+          </div>
           <Link
             href="/product/create"
-            className=" inline-flex items-center gap-1 rounded-md border bg-success p-2 text-sm font-medium text-white lg:hover:bg-success lg:hover:text-white"
+            className=" inline-flex items-center gap-1 rounded border bg-success p-2 px-4 text-sm font-medium text-white lg:hover:bg-success lg:hover:text-white"
           >
-            <Icon name="Plus" width={20} height={20} />
+            <Icon name="Plus" size={20} />
             Create
           </Link>
         </section>
