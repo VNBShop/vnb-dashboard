@@ -2,7 +2,6 @@ import {
   ChangeEvent,
   ForwardedRef,
   forwardRef,
-  useEffect,
   useImperativeHandle,
   useRef,
   useState,
@@ -13,17 +12,22 @@ import { toast } from 'sonner'
 
 import Icon from '@/common/icons'
 
-import Spinner from './spiner'
+import Spinner from './spinner'
 
-import Carousel from '../carausel'
+import Carousel from '../carousel'
+
+export type ImageCloudinaryProps = {
+  secureUrl: string
+  assetId: string
+}
 
 type UploadFileProps = {
   size?: number
   maxLength?: number
 }
 
-type UploadFileRefProps = {
-  images: string[]
+export type UploadFileRefProps = {
+  images: ImageCloudinaryProps[]
 }
 
 const UploadFile = (
@@ -32,7 +36,7 @@ const UploadFile = (
 ) => {
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const [images, setImages] = useState<string[]>([])
+  const [images, setImages] = useState<ImageCloudinaryProps[]>([])
   const [preview, setPreview] = useState<{ imgs: string[]; index: number }>({
     imgs: [],
     index: 0,
@@ -46,7 +50,6 @@ const UploadFile = (
   const onUploadFile = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files && e.target.files[0]
     setLoading(true)
-    console.log('file >>', file)
 
     if (
       file?.type !== 'image/png' &&
@@ -76,7 +79,12 @@ const UploadFile = (
         }
       )
       const res = await response.json()
-      setImages((prev) => [...prev, res.secure_url])
+      console.log('res >>', res)
+
+      setImages((prev) => [
+        ...prev,
+        { assetId: res?.asset_id, secureUrl: res?.secure_url },
+      ])
     } catch (error) {
       toast.error('Upload image failed, try again 😢!')
     } finally {
@@ -87,9 +95,9 @@ const UploadFile = (
     }
   }
 
-  const onDeleteImage = (image: string) => {
+  const onDeleteImage = (image: ImageCloudinaryProps) => {
     setImages((prev) => {
-      return prev.filter((img) => img !== image)
+      return prev.filter((img) => img.assetId !== image.assetId)
     })
   }
 
@@ -118,7 +126,7 @@ const UploadFile = (
             }}
           >
             <Image
-              src={img}
+              src={img.secureUrl}
               width={size}
               height={size}
               sizes="100vw"
@@ -129,7 +137,9 @@ const UploadFile = (
               <div
                 onClick={() => {
                   setPreview({
-                    imgs: images as unknown as string[],
+                    imgs: images.map(
+                      (imgs) => imgs.secureUrl
+                    ) as unknown as string[],
                     index: index,
                   })
                 }}

@@ -22,7 +22,7 @@ export default function ProductCreatePage() {
         ]}
       />
 
-      <HeaderSection title="Create product" />
+      <HeaderSection title="Create product ✍🏼" />
 
       <AddProductForm />
     </section>
