@@ -79,7 +79,6 @@ const UploadFile = (
         }
       )
       const res = await response.json()
-      console.log('res >>', res)
 
       setImages((prev) => [
         ...prev,

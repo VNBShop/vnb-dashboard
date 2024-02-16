@@ -15,6 +15,8 @@ export default function useAxiosPrivate() {
     const requestIntercept = axiosPrivate.interceptors.request.use(
       (config) => {
         if (!config.headers['Authorization']) {
+          console.log('run >>>')
+
           config.headers['Authorization'] =
             `Bearer ${session?.user.accessToken}`
         }
@@ -50,6 +52,7 @@ export default function useAxiosPrivate() {
       axiosPrivate.interceptors.request.eject(requestIntercept)
       axiosPrivate.interceptors.response.eject(responseIntercept)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session])
 
   return axiosPrivate

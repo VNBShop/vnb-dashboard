@@ -5,3 +5,8 @@
 .capitalize-first::first-letter {
   text-transform: uppercase;
 }
+
+.rdt_Table .rdt_TableHead .rdt_TableHeadRow {
+  background-color: #f0f3ff;
+  color: #3b30a3;
+}

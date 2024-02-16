@@ -7,6 +7,7 @@ import { Controller, useFieldArray, useForm } from 'react-hook-form'
 
 import { toast } from 'sonner'
 
+import useCreateProduct, { CreateProductProps } from '@/hooks/useCreateProduct'
 import { brands, categories } from '@/libs/constants'
 
 import { Button } from '../ui/button'
@@ -21,6 +22,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../ui/select'
+import Spinner from '../ui/spinner'
 import UploadFile, {
   ImageCloudinaryProps,
   UploadFileRefProps,
@@ -31,24 +33,12 @@ type FormProps = {
   productPrice: string
   productSubCategory: string
   productBrand: string
-  productSizeAndStock: {
+  productSizes: {
     value: string
   }[]
   productDetails: {
     key: string
     value: string
-  }[]
-}
-
-type CreateProductProps = {
-  productName: string
-  productSizeAndStock: string[]
-  productPrice: number
-  productSubCategory: number
-  productBrand: number
-  productAssets: ImageCloudinaryProps[]
-  productDetails: {
-    [key: string]: string | number
   }[]
 }
 
@@ -61,7 +51,7 @@ export default function AddProductForm() {
       productPrice: '',
       productSubCategory: '',
       productBrand: '',
-      productSizeAndStock: [{ value: '' }],
+      productSizes: [{ value: '' }],
       productDetails: [{ key: '', value: '' }],
     },
   })
@@ -70,7 +60,7 @@ export default function AddProductForm() {
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
-    name: 'productSizeAndStock',
+    name: 'productSizes',
   })
 
   const {
@@ -82,23 +72,33 @@ export default function AddProductForm() {
     name: 'productDetails',
   })
 
+  const { loading, onCreateProduct } = useCreateProduct()
+
   const onSubmit = (values: FormProps) => {
     if (imagesRef && imagesRef.current && !imagesRef.current?.images?.length) {
       toast.error('Please upload image for prodcut!')
       return
     }
 
+    const details = values.productDetails.map((detail) => ({
+      [detail.key]: detail.value,
+    }))
+
+    const convertDetail = Object.fromEntries(
+      details.map((obj) => Object.entries(obj)[0])
+    )
+
     const payload: CreateProductProps = {
       ...values,
       productAssets: imagesRef.current?.images as ImageCloudinaryProps[],
       productPrice: numeral(values.productPrice).value() as number,
-      productSubCategory: numeral(values.productSizeAndStock).value() as number,
-      productSizeAndStock: values.productSizeAndStock.map((att) => att.value),
+      productSubCategory: numeral(values.productSubCategory).value() as number,
+      productSizes: values.productSizes.map((att) => att.value),
       productBrand: numeral(values.productBrand).value() as number,
-      productDetails: values.productDetails.map((detail) => ({
-        [detail.key]: detail.value,
-      })),
+      productDetails: convertDetail,
     }
+
+    onCreateProduct(payload)
   }
 
   return (
@@ -232,7 +232,7 @@ export default function AddProductForm() {
           <div key={field.id} className="grid gap-7 md:grid-cols-3 lg:w-[91%]">
             <Controller
               control={form.control}
-              name={`productSizeAndStock.${index}.value`}
+              name={`productSizes.${index}.value`}
               render={({ field: { value, onChange } }) => {
                 return (
                   <Input
@@ -370,7 +370,14 @@ export default function AddProductForm() {
       </section>
 
       <section className="mt-10 flex items-center justify-center">
-        <Button type="submit">Create product</Button>
+        <Button
+          type="submit"
+          className="flex items-center gap-1"
+          disabled={loading}
+        >
+          {loading && <Spinner size={18} />}
+          Create product
+        </Button>
       </section>
     </form>
   )

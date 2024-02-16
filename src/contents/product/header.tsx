@@ -9,14 +9,28 @@ import HeaderSection from '@/components/header-section'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { Input } from '@/components/ui/input'
+import { SearchProductTableProps } from '@/hooks/useTableDataProduct'
 
-export default function ProductsHeader() {
-  const form = useForm()
+type ProductsHeaderProps = {
+  onSearch: (values: SearchProductTableProps) => void
+}
+
+export default function ProductsHeader({ onSearch }: ProductsHeaderProps) {
+  const form = useForm<SearchProductTableProps>()
 
   const [filter, setFilter] = useState(false)
 
-  const onSubmit = (value: any) => {
-    console.log('value >>', value)
+  const onSubmit = (values: SearchProductTableProps) => {
+    console.log('values', values)
+
+    if(values?.createdAt) {
+      values.createdAt = {
+        from: '',
+        to: 
+      }
+    }
+
+    onSearch(values)
   }
 
   return (
@@ -44,9 +58,13 @@ export default function ProductsHeader() {
           className="my-5 grid grid-cols-4 gap-5"
           onSubmit={form.handleSubmit(onSubmit)}
         >
-          <Input placeholder="Search product..." className="h-10" />
+          <Input
+            {...form.register('search')}
+            placeholder="Name, category, brand..."
+            className="h-10"
+          />
           <Controller
-            name="date"
+            name="createdAt"
             control={form.control}
             render={({ field: { value, onChange } }) => {
               return (
@@ -61,7 +79,7 @@ export default function ProductsHeader() {
           />
           <div>
             <Button type="submit" className="h-10">
-              Submit
+              Search
             </Button>
           </div>
         </form>
