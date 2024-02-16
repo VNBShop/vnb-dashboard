@@ -20,10 +20,8 @@ export type SearchProductTableProps = {
   brandIds: string
   storeIds: string
   category: string
-  createdAt: {
-    from: Date
-    to: Date
-  }
+  startDate?: string
+  endDate?: string
 }
 
 export default function useTableDataProduct() {

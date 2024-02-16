@@ -3,7 +3,6 @@ import Image from 'next/image'
 import DataTable, { TableColumn } from 'react-data-table-component'
 
 import Icon from '@/common/icons'
-import { Button } from '@/components/ui/button'
 
 import useHydration from '@/hooks/useHydration'
 
@@ -13,6 +12,8 @@ import { Product } from '@/types/product'
 import ProductsHeader from './header'
 import ProductTableImage from './image'
 import ProductTableSkeleton from './skeleton'
+
+import { EmptyImg } from '../../../public'
 
 export default function ProductTableData() {
   const { hydration } = useHydration()
@@ -90,7 +91,7 @@ export default function ProductTableData() {
 
   return (
     <>
-      <ProductsHeader onSearch={onSearch} />
+      <ProductsHeader onSearch={onSearch} loading={isLoading} />
       {isFetching || isLoading ? (
         <ProductTableSkeleton />
       ) : (
@@ -104,6 +105,18 @@ export default function ProductTableData() {
             paginationDefaultPage={currentPage}
             onChangePage={onPageChange}
             onChangeRowsPerPage={onPerPageChange}
+            noDataComponent={
+              <div className="mt-[120px] grid place-items-center gap-5">
+                <Image
+                  src={EmptyImg}
+                  width={100}
+                  height={100}
+                  sizes="100vw"
+                  alt="Empty"
+                />
+                <p className="font-medium text-gray-500">No data 😢</p>
+              </div>
+            }
           />
         </section>
       )}

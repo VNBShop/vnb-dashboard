@@ -14,15 +14,16 @@ export default function ProductTableImage({ images }: ProductTableImageProps) {
 
   return (
     <>
-      <Image
-        src={images[0]}
-        alt="product"
-        width={70}
-        height={50}
-        sizes="100vw"
-        className="transition-all duration-300 ease-in-out hover:cursor-pointer"
-        onClick={() => setGallery(images)}
-      />
+      <figure className="relative h-[70px] w-[70px] self-center">
+        <Image
+          src={images[0]}
+          alt="product"
+          fill
+          sizes="100vw"
+          className="object-contain transition-all duration-300 ease-in-out hover:cursor-pointer"
+          onClick={() => setGallery(images)}
+        />
+      </figure>
 
       <Carousel images={gallery} close={() => setGallery([])} />
     </>

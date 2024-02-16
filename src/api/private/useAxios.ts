@@ -15,8 +15,6 @@ export default function useAxiosPrivate() {
     const requestIntercept = axiosPrivate.interceptors.request.use(
       (config) => {
         if (!config.headers['Authorization']) {
-          console.log('run >>>')
-
           config.headers['Authorization'] =
             `Bearer ${session?.user.accessToken}`
         }
