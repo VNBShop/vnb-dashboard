@@ -1,14 +1,14 @@
 'use client'
 import Image from 'next/image'
+import { useSession } from 'next-auth/react'
 import DataTable, { TableColumn } from 'react-data-table-component'
-
-import Icon from '@/common/icons'
 
 import useHydration from '@/hooks/useHydration'
 
 import useTableDataProduct from '@/hooks/useTableDataProduct'
 import { Product } from '@/types/product'
 
+import ProductTableAction from './action'
 import ProductsHeader from './header'
 import ProductTableImage from './image'
 import ProductTableSkeleton from './skeleton'
@@ -24,6 +24,7 @@ export default function ProductTableData() {
     isFetching,
     currentPage,
     onSearch,
+    refetch,
     onPageChange,
     onPerPageChange,
   } = useTableDataProduct()
@@ -35,15 +36,15 @@ export default function ProductTableData() {
   const columns: TableColumn<Product>[] = [
     {
       name: 'ID',
-      center: true,
+      center: 1 as any,
       width: '70px',
       cell: (row) => row?.productId ?? '-',
     },
     {
       name: 'Image',
-      center: true,
+      center: 1 as any,
       cell: (row) => {
-        return <ProductTableImage images={row?.productAssets ?? []} />
+        return <ProductTableImage images={row?.productImages ?? []} />
       },
     },
     {
@@ -52,7 +53,7 @@ export default function ProductTableData() {
     },
     {
       name: 'Price',
-      right: true,
+      right: 1 as any,
       cell: (row) =>
         row?.productPrice?.toLocaleString('en-US', {
           currency: 'USD',
@@ -62,7 +63,7 @@ export default function ProductTableData() {
     {
       name: 'Status',
       width: '120px',
-      center: true,
+      center: 1 as any,
       cell: (row) => {
         return (
           <div
@@ -79,19 +80,19 @@ export default function ProductTableData() {
     },
     {
       name: 'Action',
-      center: true,
-      width: '150px',
-      cell: (row) => (
-        <div>
-          <Icon name="Ellipsis" size={18} />
-        </div>
-      ),
+      center: 1 as any,
+      width: '220px',
+      cell: (row) => <ProductTableAction data={row} />,
     },
   ]
 
   return (
     <>
-      <ProductsHeader onSearch={onSearch} loading={isLoading} />
+      <ProductsHeader
+        onSearch={onSearch}
+        loading={isLoading}
+        refetch={refetch}
+      />
       {isFetching || isLoading ? (
         <ProductTableSkeleton />
       ) : (

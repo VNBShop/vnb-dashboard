@@ -10,7 +10,7 @@ export default async function DoardboardLayout({
 }: PropsWithChildren) {
   const session = await getServerSession(authOptions)
   return (
-    <main className="fixed inset-0 grid lg:grid-cols-[20%_80%]">
+    <main className="fixed inset-0 grid lg:grid-cols-[17%_83%]">
       <Sidebard user={session?.user as Session['user']} />
       <section className="overflow-auto p-4">{children}</section>
     </main>

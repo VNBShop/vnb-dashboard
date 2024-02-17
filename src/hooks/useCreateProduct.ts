@@ -1,4 +1,10 @@
-import { useMutation } from '@tanstack/react-query'
+import { useState } from 'react'
+
+import {
+  QueryObserverResult,
+  RefetchOptions,
+  useMutation,
+} from '@tanstack/react-query'
 
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
@@ -6,6 +12,8 @@ import { toast } from 'sonner'
 import useAxiosPrivate from '@/api/private/useAxios'
 import { ImageCloudinaryProps } from '@/components/ui/upload-file'
 import { DataError, DataResponse } from '@/types/react-query'
+
+import { ProductResponse } from './useTableDataProduct'
 
 export type CreateProductProps = {
   productName: string
@@ -19,7 +27,17 @@ export type CreateProductProps = {
   }
 }
 
-export default function useCreateProduct() {
+type UseCreateProductProps = {
+  onCloseModal: () => void
+  refetch: (
+    options?: RefetchOptions | undefined
+  ) => Promise<QueryObserverResult<ProductResponse, Error>>
+}
+
+export default function useCreateProduct({
+  onCloseModal,
+  refetch,
+}: UseCreateProductProps) {
   const axios = useAxiosPrivate()
   const router = useRouter()
 
@@ -41,7 +59,8 @@ export default function useCreateProduct() {
         toast.success(
           response?.data?.metadata?.message ?? 'Create product successfully!'
         )
-        router.back()
+        onCloseModal()
+        refetch()
       }
     },
     onError(error) {
@@ -52,7 +71,7 @@ export default function useCreateProduct() {
   })
 
   return {
-    onCreateProduct: mutate,
     loading: isPending,
+    onCreateProduct: mutate,
   }
 }

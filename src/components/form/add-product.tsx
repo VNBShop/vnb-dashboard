@@ -1,13 +1,15 @@
 'use client'
 
-import { createRef } from 'react'
+import { Dispatch, SetStateAction, createRef } from 'react'
 
+import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query'
 import numeral from 'numeral'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
 
 import { toast } from 'sonner'
 
 import useCreateProduct, { CreateProductProps } from '@/hooks/useCreateProduct'
+import { ProductResponse } from '@/hooks/useTableDataProduct'
 import { brands, categories } from '@/libs/constants'
 
 import { Button } from '../ui/button'
@@ -42,7 +44,17 @@ type FormProps = {
   }[]
 }
 
-export default function AddProductForm() {
+type AddProductFormProps = {
+  onCloseModal: () => void
+  refetch: (
+    options?: RefetchOptions | undefined
+  ) => Promise<QueryObserverResult<ProductResponse, Error>>
+}
+
+export default function AddProductForm({
+  onCloseModal,
+  refetch,
+}: AddProductFormProps) {
   const imagesRef = createRef<UploadFileRefProps>()
 
   const form = useForm<FormProps>({
@@ -72,7 +84,10 @@ export default function AddProductForm() {
     name: 'productDetails',
   })
 
-  const { loading, onCreateProduct } = useCreateProduct()
+  const { loading, onCreateProduct } = useCreateProduct({
+    onCloseModal,
+    refetch,
+  })
 
   const onSubmit = (values: FormProps) => {
     if (imagesRef && imagesRef.current && !imagesRef.current?.images?.length) {
@@ -106,7 +121,7 @@ export default function AddProductForm() {
       <h3 className="mb-2 text-sm font-medium text-[#211C6A]">
         General<span className="text-danger">*</span>
       </h3>
-      <div className="mb-5 grid gap-7 md:grid-cols-2 lg:w-[60%]">
+      <div className="mb-5 grid gap-7 md:grid-cols-2">
         <div>
           <Controller
             name="productName"
@@ -152,7 +167,7 @@ export default function AddProductForm() {
         </div>
       </div>
 
-      <div className="grid gap-7 md:grid-cols-2 lg:w-[60%]">
+      <div className="grid gap-7 md:grid-cols-2">
         <div>
           <Controller
             name="productSubCategory"
@@ -229,7 +244,7 @@ export default function AddProductForm() {
         <h3 className="-mb-5 text-sm font-medium text-[#211C6A]">Attributes</h3>
 
         {fields.map((field, index) => (
-          <div key={field.id} className="grid gap-7 md:grid-cols-3 lg:w-[91%]">
+          <div key={field.id} className="grid gap-2 md:grid-cols-2 md:gap-7">
             <Controller
               control={form.control}
               name={`productSizes.${index}.value`}
@@ -269,7 +284,7 @@ export default function AddProductForm() {
               </p>
             </div> */}
 
-            <div className="flex h-10 items-end gap-3 text-sm">
+            <div className="flex h-10 gap-3 text-sm md:items-end">
               <div
                 className="text-success hover:cursor-pointer hover:underline"
                 onClick={() => {
@@ -298,7 +313,7 @@ export default function AddProductForm() {
           Descriptions<span className="text-danger">*</span>
         </h3>
         {detailFields.map((field, index) => (
-          <div key={field.id} className="grid gap-7 md:grid-cols-3 lg:w-[91%]">
+          <div key={field.id} className="grid gap-2 md:grid-cols-3 md:gap-7">
             <div>
               <Controller
                 control={form.control}
@@ -345,7 +360,7 @@ export default function AddProductForm() {
               </p>
             </div>
 
-            <div className="flex h-10 items-end gap-3 text-sm">
+            <div className="flex h-10 gap-3 text-sm md:items-end">
               <div
                 className="text-success hover:cursor-pointer hover:underline"
                 onClick={() => {

@@ -33,7 +33,7 @@ export default function useTableDataProduct() {
     {} as SearchProductTableProps
   )
 
-  const { data, isLoading, isFetching, isError } = useQuery({
+  const { data, isLoading, isFetching, isError, refetch } = useQuery({
     queryKey: ['products-table', { currentPage, pageSize: perPage, ...filter }],
     queryFn: async ({ queryKey }) => {
       const filter = queryKey[1] as {
@@ -82,5 +82,6 @@ export default function useTableDataProduct() {
     onSearch,
     onPageChange,
     onPerPageChange,
+    refetch,
   }
 }

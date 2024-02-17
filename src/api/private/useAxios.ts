@@ -12,6 +12,7 @@ export default function useAxiosPrivate() {
   const refreshToken = useRefreshToken()
 
   useEffect(() => {
+    if (!session) return
     const requestIntercept = axiosPrivate.interceptors.request.use(
       (config) => {
         if (!config.headers['Authorization']) {
@@ -33,7 +34,7 @@ export default function useAxiosPrivate() {
         if (err?.response?.status === 401 && !prevReq?.sent) {
           if (!isRefreshing) {
             isRefreshing = true
-            await refreshToken()
+            await refreshToken.mutate()
             isRefreshing = false
           }
           prevReq.sent = true

@@ -10,3 +10,7 @@
   background-color: #f0f3ff;
   color: #3b30a3;
 }
+
+.rdt_Table .rdt_TableBody .rdt_TableRow .rdt_TableCell {
+  padding-block: 6px;
+}

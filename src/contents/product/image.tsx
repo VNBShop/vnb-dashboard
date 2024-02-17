@@ -6,7 +6,7 @@ import Carousel from '@/components/carousel'
 import { Product } from '@/types/product'
 
 type ProductTableImageProps = {
-  images: string[]
+  images: Product['productImages']
 }
 
 export default function ProductTableImage({ images }: ProductTableImageProps) {
@@ -14,14 +14,14 @@ export default function ProductTableImage({ images }: ProductTableImageProps) {
 
   return (
     <>
-      <figure className="relative h-[70px] w-[70px] self-center">
+      <figure className="relative h-[70px] w-[70px] self-center rounded-md">
         <Image
-          src={images[0]}
+          src={images[0]?.productAssetUrl}
           alt="product"
           fill
           sizes="100vw"
-          className="object-contain transition-all duration-300 ease-in-out hover:cursor-pointer"
-          onClick={() => setGallery(images)}
+          className="rounded-md object-contain transition-all duration-300 ease-in-out hover:cursor-pointer"
+          onClick={() => setGallery(images.map((img) => img?.productAssetUrl))}
         />
       </figure>
 

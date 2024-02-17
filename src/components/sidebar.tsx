@@ -4,14 +4,13 @@ import Image from 'next/image'
 
 import Link from 'next/link'
 
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 
 import { Session } from 'next-auth'
 
 import { signOut } from 'next-auth/react'
 import { toast } from 'sonner'
 
-import { axiosPrivate } from '@/api/private/axios'
 import useAxiosPrivate from '@/api/private/useAxios'
 import { sidebarList } from '@/libs/constants'
 import { DataError, DataResponse } from '@/types/react-query'
@@ -50,7 +49,7 @@ export default function Sidebard({ user }: SidebardProps) {
   })
 
   return (
-    <aside className="lg:col-span-[20%] hidden h-full flex-col overflow-hidden border-r py-4 pt-2 lg:flex">
+    <aside className="lg:col-span-[17%] hidden h-full flex-col overflow-hidden border-r py-4 pt-2 lg:flex">
       <header className="flex items-center gap-2 border-b border-b-gray-100 px-4 pb-2">
         <Image
           src="/icon.png"
