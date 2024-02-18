@@ -128,7 +128,7 @@ const Modal = forwardRef<ModalProps, ModalInnerProps>(
             leave="transition ease-in-out duration-200"
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-0"
-            className={cn(modalVariants({ variant, size, className }), 'mb-7')}
+            className={cn(modalVariants({ variant, size, className }), 'mb-10')}
             ref={modalRef}
             {...props}
           >

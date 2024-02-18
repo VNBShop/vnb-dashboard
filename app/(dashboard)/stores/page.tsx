@@ -1,7 +1,8 @@
 import { Breadcrumbs } from '@/components/breadscrum'
 import HeaderSection from '@/components/header-section'
+import StoresTableData from '@/contents/stores/table-data'
 
-export default function InvoiceOrderPage() {
+export default function Stores() {
   return (
     <section>
       <Breadcrumbs
@@ -17,11 +18,7 @@ export default function InvoiceOrderPage() {
         ]}
       />
 
-      <HeaderSection title="Invoice order" />
-
-      <div className="mt-5 flex items-center justify-center text-gray-500">
-        Comming soon...
-      </div>
+      <StoresTableData />
     </section>
   )
 }

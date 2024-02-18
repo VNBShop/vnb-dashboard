@@ -1,6 +1,6 @@
 'use client'
 
-import { Dispatch, SetStateAction, createRef } from 'react'
+import { Dispatch, SetStateAction, createRef, useEffect } from 'react'
 
 import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query'
 import numeral from 'numeral'
@@ -11,6 +11,8 @@ import { toast } from 'sonner'
 import useCreateProduct, { CreateProductProps } from '@/hooks/useCreateProduct'
 import { ProductResponse } from '@/hooks/useTableDataProduct'
 import { brands, categories } from '@/libs/constants'
+
+import { Product } from '@/types/product'
 
 import { Button } from '../ui/button'
 import { Input } from '../ui/input'
@@ -49,9 +51,11 @@ type AddProductFormProps = {
   refetch: (
     options?: RefetchOptions | undefined
   ) => Promise<QueryObserverResult<ProductResponse, Error>>
+  updateData?: Product
 }
 
-export default function AddProductForm({
+export default function ProductForm({
+  updateData,
   onCloseModal,
   refetch,
 }: AddProductFormProps) {
@@ -116,6 +120,31 @@ export default function AddProductForm({
     onCreateProduct(payload)
   }
 
+  useEffect(() => {
+    if (!!updateData?.productId) {
+      form.setValue('productName', updateData?.productName)
+      form.setValue('productPrice', updateData?.productPrice?.toString())
+
+      if (!!imagesRef.current) {
+        imagesRef.current.update(updateData?.productImages)
+      }
+
+      if (!!JSON.stringify(updateData?.productDetail)) {
+        form.setValue(
+          'productDetails',
+          Object.entries(updateData?.productDetail).map(([key, value]) => {
+            return {
+              key: key,
+              value: value,
+            }
+          }) as []
+        )
+      }
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [JSON.stringify(updateData), form])
+
   return (
     <form className="mt-5" onSubmit={form.handleSubmit(onSubmit)}>
       <h3 className="mb-2 text-sm font-medium text-[#211C6A]">
@@ -133,7 +162,7 @@ export default function AddProductForm({
               return (
                 <Input
                   placeholder="Name"
-                  className="h-10"
+                  className="h="
                   value={value}
                   onChange={onChange}
                 />
@@ -155,7 +184,7 @@ export default function AddProductForm({
                 <InputNumber
                   thousandSeparator
                   maxLength={11}
-                  className="h-10"
+                  className=""
                   value={value}
                   onChange={onChange}
                   placeholder="Price"
@@ -177,8 +206,15 @@ export default function AddProductForm({
             }}
             render={({ field: { value, onChange } }) => {
               return (
-                <Select value={value} onValueChange={onChange}>
-                  <SelectTrigger className="h-10 text-gray-500">
+                <Select
+                  defaultValue={
+                    !!JSON.stringify(updateData)
+                      ? updateData?.productSubCategory?.subCategoryId?.toString()
+                      : ''
+                  }
+                  onValueChange={onChange}
+                >
+                  <SelectTrigger className="h-11 text-gray-500">
                     <SelectValue placeholder="Category" />
                   </SelectTrigger>
                   <SelectContent>
@@ -214,8 +250,17 @@ export default function AddProductForm({
             }}
             render={({ field: { value, onChange } }) => {
               return (
-                <Select value={value} onValueChange={onChange}>
-                  <SelectTrigger className="h-10 text-gray-500">
+                <Select
+                  defaultValue={
+                    !!JSON.stringify(updateData)
+                      ? updateData?.productBrand?.brandId?.toString()
+                      : ''
+                  }
+                  // value={value}
+                  onValueChange={onChange}
+                  autoComplete=""
+                >
+                  <SelectTrigger className="h-11 text-gray-500">
                     <SelectValue placeholder="Brand" />
                   </SelectTrigger>
                   <SelectContent>
@@ -254,7 +299,7 @@ export default function AddProductForm({
                     placeholder="Size"
                     value={value}
                     onChange={onChange}
-                    className="h-10"
+                    className="h="
                   />
                 )
               }}
@@ -273,7 +318,7 @@ export default function AddProductForm({
                       value={value}
                       onChange={onChange}
                       maxLength={11}
-                      className="h-10"
+                      className="h="
                       placeholder="Stock"
                     />
                   )
@@ -284,7 +329,7 @@ export default function AddProductForm({
               </p>
             </div> */}
 
-            <div className="flex h-10 gap-3 text-sm md:items-end">
+            <div className="h= flex gap-3 text-sm md:items-end">
               <div
                 className="text-success hover:cursor-pointer hover:underline"
                 onClick={() => {
@@ -327,7 +372,6 @@ export default function AddProductForm({
                       placeholder="Key"
                       value={value}
                       onChange={onChange}
-                      className="h-10"
                     />
                   )
                 }}
@@ -349,7 +393,6 @@ export default function AddProductForm({
                     <Input
                       value={value}
                       onChange={onChange}
-                      className="h-10"
                       placeholder="Value"
                     />
                   )
@@ -360,7 +403,7 @@ export default function AddProductForm({
               </p>
             </div>
 
-            <div className="flex h-10 gap-3 text-sm md:items-end">
+            <div className="flex gap-3 text-sm md:items-end">
               <div
                 className="text-success hover:cursor-pointer hover:underline"
                 onClick={() => {
@@ -388,10 +431,10 @@ export default function AddProductForm({
         <Button
           type="submit"
           className="flex items-center gap-1"
-          disabled={loading}
+          disabled={loading || imagesRef?.current?.isUploading}
         >
           {loading && <Spinner size={18} />}
-          Create product
+          {!!JSON.stringify(updateData) ? 'Update' : 'Create'}
         </Button>
       </section>
     </form>

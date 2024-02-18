@@ -17,8 +17,8 @@ import Spinner from './spinner'
 import Carousel from '../carousel'
 
 export type ImageCloudinaryProps = {
-  secureUrl: string
-  assetId: string
+  productAssetId: string
+  productAssetUrl: string
 }
 
 type UploadFileProps = {
@@ -28,6 +28,8 @@ type UploadFileProps = {
 
 export type UploadFileRefProps = {
   images: ImageCloudinaryProps[]
+  isUploading: boolean
+  update: (images: ImageCloudinaryProps[]) => void
 }
 
 const UploadFile = (
@@ -43,8 +45,14 @@ const UploadFile = (
   })
   const [loading, setLoading] = useState(false)
 
+  const updateImages = (images: ImageCloudinaryProps[]) => {
+    setImages(images)
+  }
+
   useImperativeHandle(ref, () => ({
     images,
+    update: updateImages,
+    isUploading: loading,
   }))
 
   const onUploadFile = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -82,7 +90,7 @@ const UploadFile = (
 
       setImages((prev) => [
         ...prev,
-        { assetId: res?.asset_id, secureUrl: res?.secure_url },
+        { productAssetId: res?.asset_id, productAssetUrl: res?.secure_url },
       ])
     } catch (error) {
       toast.error('Upload image failed, try again 😢!')
@@ -96,7 +104,7 @@ const UploadFile = (
 
   const onDeleteImage = (image: ImageCloudinaryProps) => {
     setImages((prev) => {
-      return prev.filter((img) => img.assetId !== image.assetId)
+      return prev.filter((img) => img.productAssetId !== image.productAssetId)
     })
   }
 
@@ -125,7 +133,7 @@ const UploadFile = (
             }}
           >
             <Image
-              src={img.secureUrl}
+              src={img.productAssetUrl}
               width={size}
               height={size}
               sizes="100vw"
@@ -137,7 +145,7 @@ const UploadFile = (
                 onClick={() => {
                   setPreview({
                     imgs: images.map(
-                      (imgs) => imgs.secureUrl
+                      (imgs) => imgs.productAssetUrl
                     ) as unknown as string[],
                     index: index,
                   })

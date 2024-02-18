@@ -12,11 +12,11 @@ export type Product = {
   productSubCategory: {
     subCategoryId: number
     subCategoryName: string
-  }[]
+  }
   productBrand: {
     brandId: number
     brandName: string
-  }[]
+  }
   productDetail: {
     [key: string]: string | number
   }

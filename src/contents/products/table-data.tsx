@@ -30,7 +30,7 @@ export default function ProductTableData() {
   } = useTableDataProduct()
 
   if (hydration) {
-    return <p className="mt-4">Loading...</p>
+    return <p className="mt-4">Wait a minute...</p>
   }
 
   const columns: TableColumn<Product>[] = [
@@ -50,6 +50,14 @@ export default function ProductTableData() {
     {
       name: 'Name',
       cell: (row) => row?.productName ?? '-',
+    },
+    {
+      name: 'Brand',
+      cell: (row) => row?.productBrand?.brandName ?? '-',
+    },
+    {
+      name: 'Category',
+      cell: (row) => row?.productSubCategory?.subCategoryName ?? '-',
     },
     {
       name: 'Price',
@@ -81,8 +89,8 @@ export default function ProductTableData() {
     {
       name: 'Action',
       center: 1 as any,
-      width: '220px',
-      cell: (row) => <ProductTableAction data={row} />,
+      width: '100px',
+      cell: (row) => <ProductTableAction refetch={refetch} data={row} />,
     },
   ]
 

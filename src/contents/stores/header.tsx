@@ -3,8 +3,9 @@ import { createRef, useState } from 'react'
 import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query'
 
 import Icon from '@/common/icons'
-import AddProductForm from '@/components/form/add-product'
+import ProductForm from '@/components/form/product'
 import SearchProductForm from '@/components/form/search-products'
+import StoreForm from '@/components/form/store'
 import HeaderSection from '@/components/header-section'
 import { Modal, ModalProps } from '@/components/ui/modal'
 import {
@@ -20,7 +21,7 @@ type ProductsHeaderProps = {
   ) => Promise<QueryObserverResult<ProductResponse, Error>>
 }
 
-export default function ProductsHeader({
+export default function StoresHeader({
   onSearch,
   loading,
   refetch,
@@ -36,11 +37,11 @@ export default function ProductsHeader({
 
   return (
     <>
-      <Modal ref={modalRef} size={'lg'} header="Create product form">
-        <AddProductForm onCloseModal={onCloseModal} refetch={refetch} />
+      <Modal ref={modalRef} size={'lg'} header="Create store form">
+        <StoreForm onCloseModal={onCloseModal} refetch={refetch} />
       </Modal>
       <>
-        <HeaderSection title="Products">
+        <HeaderSection title="Stores manage">
           <section className="flex items-center gap-4">
             <div
               className="flex h-[36px] w-[36px] items-center justify-center rounded border hover:cursor-pointer hover:bg-black hover:text-white"

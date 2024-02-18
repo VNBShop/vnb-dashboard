@@ -63,26 +63,35 @@ export default function Sidebard({ user }: SidebardProps) {
         </p>
       </header>
 
-      <section className="mt-2 flex-1 overflow-auto px-2">
+      <section className="mt-2 flex flex-1 flex-col gap-3 overflow-auto px-2">
         {sidebarList.map((item) => (
-          <Link
-            href={item.url}
-            key={item.label}
-            className="flex items-center gap-2 rounded-[4px] p-2 hover:cursor-pointer lg:hover:bg-gray-100"
-          >
-            <Icon
-              name={item.icon as IconName}
-              size={20}
-              color={item.url === pathname ? '#ff2461' : ''}
-            />
-            <p
-              className={`${
-                item.url === pathname ? 'text-[#ff2461]' : ''
-              } text-[13px] font-medium`}
-            >
-              {item.label}
-            </p>
-          </Link>
+          <nav key={item.name}>
+            <h2 className="text-xs text-gray-600">{item.name}</h2>
+            <ul>
+              {item.sub?.map((item) => (
+                <li key={item.url}>
+                  <Link
+                    href={item.url}
+                    key={item.label}
+                    className="flex items-center gap-2 rounded-[4px] p-2 hover:cursor-pointer lg:hover:bg-gray-100"
+                  >
+                    <Icon
+                      name={item.icon as IconName}
+                      size={20}
+                      color={item.url === pathname ? '#ff2461' : ''}
+                    />
+                    <p
+                      className={`${
+                        item.url === pathname ? 'text-[#ff2461]' : ''
+                      } text-[13px] font-medium`}
+                    >
+                      {item.label}
+                    </p>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
         ))}
       </section>
       <section className="px-2">

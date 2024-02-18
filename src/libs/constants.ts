@@ -1,18 +1,38 @@
 export const sidebarList = [
   {
-    label: 'Home',
-    icon: 'Dashboard',
-    url: '/',
+    name: '',
+    sub: [
+      {
+        label: 'Home',
+        icon: 'Dashboard',
+        url: '/',
+      },
+    ],
   },
   {
-    label: 'Invoice order',
-    icon: 'Selling',
-    url: '/invoice-order',
+    name: 'Bussiness',
+    sub: [
+      {
+        label: 'Invoice order',
+        icon: 'Selling',
+        url: '/invoice-order',
+      },
+    ],
   },
   {
-    label: 'Products',
-    icon: 'Products',
-    url: '/products',
+    name: 'Stock',
+    sub: [
+      {
+        label: 'Products',
+        icon: 'Products',
+        url: '/products',
+      },
+      {
+        label: 'Stores',
+        icon: 'Stores',
+        url: '/stores',
+      },
+    ],
   },
 ]
 

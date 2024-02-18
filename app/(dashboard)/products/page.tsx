@@ -1,5 +1,5 @@
 import { Breadcrumbs } from '@/components/breadscrum'
-import ProductTableData from '@/contents/product/table-data'
+import ProductTableData from '@/contents/products/table-data'
 
 export default function ProductsPage() {
   return (
