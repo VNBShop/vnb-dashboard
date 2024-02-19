@@ -64,7 +64,7 @@ export default function SearchProductForm({
           render={({ field: { value, onChange } }) => {
             return (
               <Select value={value} onValueChange={onChange}>
-                <SelectTrigger className="h-10 text-gray-500">
+                <SelectTrigger className="h-10">
                   <SelectValue placeholder="Category" />
                 </SelectTrigger>
                 <SelectContent>
@@ -93,7 +93,7 @@ export default function SearchProductForm({
           render={({ field: { value, onChange } }) => {
             return (
               <Select value={value} onValueChange={onChange}>
-                <SelectTrigger className="h-10 text-gray-500">
+                <SelectTrigger className="h-10">
                   <SelectValue placeholder="Brand" />
                 </SelectTrigger>
                 <SelectContent>

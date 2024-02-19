@@ -65,12 +65,12 @@ export function Calendar({
                   format(date.from, 'LLL dd, y')
                 )
               ) : (
-                <span className="text-gray-500">Pick a date</span>
+                <span className="text-gray-400">Pick a date</span>
               )
             ) : !!date && mode === 'single' ? (
               format(date, 'LLL dd, y')
             ) : (
-              <span className="text-gray-500">Pick a date</span>
+              <span className="text-gray-400">Pick a date</span>
             )}
           </Button>
         </PopoverTrigger>
