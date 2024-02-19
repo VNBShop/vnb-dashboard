@@ -17,6 +17,7 @@ import { DataError, DataResponse } from '@/types/react-query'
 
 import Spinner from './ui/spinner'
 
+import { Avatar } from '../../public'
 import Icon, { IconName } from '../common/icons'
 
 type SidebardProps = {
@@ -101,7 +102,7 @@ export default function Sidebard({ user }: SidebardProps) {
         >
           <figure className="flex items-center gap-2">
             <Image
-              src={user?.avatar}
+              src={user?.avatar ?? Avatar}
               width={30}
               height={30}
               sizes="100vw"

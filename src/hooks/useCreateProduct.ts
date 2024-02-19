@@ -27,6 +27,15 @@ export type CreateProductProps = {
   }
 }
 
+export type UpdateProductProps = Omit<CreateProductProps, 'productSizes'> & {
+  updatedProductSizes?: {
+    productSizeId: number
+    productSize: string
+  }[]
+  addedProductSizes?: string[]
+  deletedProductSizes?: number[]
+}
+
 type UseCreateProductProps = {
   onCloseModal: () => void
   refetch: (
@@ -39,12 +48,11 @@ export default function useCreateProduct({
   refetch,
 }: UseCreateProductProps) {
   const axios = useAxiosPrivate()
-  const router = useRouter()
 
   const { mutate, isPending } = useMutation<
     DataResponse<unknown>,
     DataError<unknown>,
-    CreateProductProps,
+    CreateProductProps | UpdateProductProps,
     unknown
   >({
     mutationFn: async (data) => {
@@ -72,6 +80,6 @@ export default function useCreateProduct({
 
   return {
     loading: isPending,
-    onCreateProduct: mutate,
+    onActionProduct: mutate,
   }
 }

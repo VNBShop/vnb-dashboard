@@ -8,7 +8,10 @@ import { Controller, useFieldArray, useForm } from 'react-hook-form'
 
 import { toast } from 'sonner'
 
-import useCreateProduct, { CreateProductProps } from '@/hooks/useCreateProduct'
+import useCreateProduct, {
+  CreateProductProps,
+  UpdateProductProps,
+} from '@/hooks/useCreateProduct'
 import { ProductResponse } from '@/hooks/useTableDataProduct'
 import { brands, categories } from '@/libs/constants'
 
@@ -38,6 +41,7 @@ type FormProps = {
   productSubCategory: string
   productBrand: string
   productSizes: {
+    id?: ''
     value: string
   }[]
   productDetails: {
@@ -67,7 +71,9 @@ export default function ProductForm({
       productPrice: '',
       productSubCategory: '',
       productBrand: '',
-      productSizes: [{ value: '' }],
+      productSizes: !!JSON.stringify(updateData)
+        ? [{ value: '', id: '' }]
+        : [{ value: '' }],
       productDetails: [{ key: '', value: '' }],
     },
   })
@@ -88,7 +94,7 @@ export default function ProductForm({
     name: 'productDetails',
   })
 
-  const { loading, onCreateProduct } = useCreateProduct({
+  const { loading, onActionProduct } = useCreateProduct({
     onCloseModal,
     refetch,
   })
@@ -107,7 +113,49 @@ export default function ProductForm({
       details.map((obj) => Object.entries(obj)[0])
     )
 
-    const payload: CreateProductProps = {
+    const isUpdate = !!JSON.stringify(updateData)
+
+    const updateProductSizesNew: UpdateProductProps['addedProductSizes'] = []
+    const updateProductSizesUpdated: UpdateProductProps['updatedProductSizes'] =
+      []
+    const updateProductSizesDelete: UpdateProductProps['deletedProductSizes'] =
+      []
+
+    if (isUpdate) {
+      updateData!.productSizes.forEach((size) => {
+        const existsInValues = values.productSizes.some(
+          (val) => val.id === size.productSizeId.toString()
+        )
+        if (!existsInValues) {
+          updateProductSizesDelete.push(size.productSizeId)
+        }
+      })
+
+      values.productSizes.forEach((size) => {
+        if (!!size.id) {
+          updateProductSizesUpdated.push({
+            productSizeId: numeral(size?.id).value() as number,
+            productSize: size.value,
+          })
+        } else {
+          updateProductSizesNew.push(size.value)
+        }
+      })
+    }
+
+    const updatePayload: UpdateProductProps = {
+      productName: values.productName,
+      productPrice: numeral(values.productPrice).value() as number,
+      productSubCategory: numeral(values.productSubCategory).value() as number,
+      productBrand: numeral(values.productBrand).value() as number,
+      productDetails: convertDetail,
+      productAssets: imagesRef.current?.images as ImageCloudinaryProps[],
+      addedProductSizes: updateProductSizesNew,
+      updatedProductSizes: updateProductSizesUpdated,
+      deletedProductSizes: updateProductSizesDelete,
+    }
+
+    const createPayload: CreateProductProps = {
       ...values,
       productAssets: imagesRef.current?.images as ImageCloudinaryProps[],
       productPrice: numeral(values.productPrice).value() as number,
@@ -117,16 +165,34 @@ export default function ProductForm({
       productDetails: convertDetail,
     }
 
-    onCreateProduct(payload)
+    onActionProduct(isUpdate ? updatePayload : createPayload)
   }
 
   useEffect(() => {
     if (!!updateData?.productId) {
       form.setValue('productName', updateData?.productName)
       form.setValue('productPrice', updateData?.productPrice?.toString())
+      form.setValue(
+        'productSubCategory',
+        updateData?.productSubCategory?.subCategoryId?.toString()
+      )
+      form.setValue(
+        'productBrand',
+        updateData?.productBrand?.brandId?.toString()
+      )
 
       if (!!imagesRef.current) {
         imagesRef.current.update(updateData?.productImages)
+      }
+
+      if (!!JSON.stringify(updateData?.productSizes)) {
+        form.setValue(
+          'productSizes',
+          updateData.productSizes.map((size) => ({
+            id: size.productSizeId.toString(),
+            value: size.productSize,
+          })) as FormProps['productSizes']
+        )
       }
 
       if (!!JSON.stringify(updateData?.productDetail)) {
@@ -204,17 +270,15 @@ export default function ProductForm({
             rules={{
               required: 'Please choose category!',
             }}
-            render={({ field: { value, onChange } }) => {
+            render={({ field }) => {
               return (
                 <Select
-                  defaultValue={
-                    !!JSON.stringify(updateData)
-                      ? updateData?.productSubCategory?.subCategoryId?.toString()
-                      : ''
-                  }
-                  onValueChange={onChange}
+                  key={field.value}
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                  {...field}
                 >
-                  <SelectTrigger className="h-11 text-gray-500">
+                  <SelectTrigger className="h-11">
                     <SelectValue placeholder="Category" />
                   </SelectTrigger>
                   <SelectContent>
@@ -248,19 +312,15 @@ export default function ProductForm({
             rules={{
               required: 'Please choose brand!',
             }}
-            render={({ field: { value, onChange } }) => {
+            render={({ field }) => {
               return (
                 <Select
-                  defaultValue={
-                    !!JSON.stringify(updateData)
-                      ? updateData?.productBrand?.brandId?.toString()
-                      : ''
-                  }
-                  // value={value}
-                  onValueChange={onChange}
-                  autoComplete=""
+                  key={field.value}
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                  {...field}
                 >
-                  <SelectTrigger className="h-11 text-gray-500">
+                  <SelectTrigger className="h-11">
                     <SelectValue placeholder="Brand" />
                   </SelectTrigger>
                   <SelectContent>
