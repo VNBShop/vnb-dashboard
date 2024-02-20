@@ -29,8 +29,6 @@ export default function StoresTableData() {
     onPerPageChange,
   } = useTableDataStores()
 
-  console.log('data', data)
-
   if (hydration) {
     return <p className="mt-4">Wait a minute...</p>
   }

@@ -44,6 +44,7 @@ export default function Sidebard({ user }: SidebardProps) {
         signOut()
       }
     },
+    retry: 5,
     onError: (error) => {
       toast.error(error.response.data.metadata.message)
     },

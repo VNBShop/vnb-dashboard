@@ -25,13 +25,13 @@ export type SearchProductTableProps = {
 }
 
 export default function useTableDataProduct() {
-  const axios = useAxiosPrivate()
-
   const [currentPage, setCurrentPage] = useState(1)
   const [perPage, setPerPage] = useState(10)
   const [filter, setFilter] = useState<SearchProductTableProps>(
     {} as SearchProductTableProps
   )
+
+  const axios = useAxiosPrivate()
 
   const { data, isLoading, isFetching, isError, refetch } = useQuery({
     queryKey: ['products-table', { currentPage, pageSize: perPage, ...filter }],

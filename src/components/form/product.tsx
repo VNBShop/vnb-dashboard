@@ -1,6 +1,6 @@
 'use client'
 
-import { Dispatch, SetStateAction, createRef, useEffect } from 'react'
+import { createRef, useEffect } from 'react'
 
 import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query'
 import numeral from 'numeral'
@@ -11,7 +11,8 @@ import { toast } from 'sonner'
 import useCreateProduct, {
   CreateProductProps,
   UpdateProductProps,
-} from '@/hooks/useCreateProduct'
+} from '@/hooks/useProductAction'
+import useProductAction from '@/hooks/useProductAction'
 import { ProductResponse } from '@/hooks/useTableDataProduct'
 import { brands, categories } from '@/libs/constants'
 
@@ -94,9 +95,10 @@ export default function ProductForm({
     name: 'productDetails',
   })
 
-  const { loading, onActionProduct } = useCreateProduct({
+  const { loading, onActionProduct } = useProductAction({
     onCloseModal,
     refetch,
+    isUpdate: !!JSON.stringify(updateData),
   })
 
   const onSubmit = (values: FormProps) => {
