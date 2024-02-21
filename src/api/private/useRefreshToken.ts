@@ -1,7 +1,9 @@
 import { useMutation } from '@tanstack/react-query'
 
 import axios from 'axios'
-import { useSession } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
+
+import { DataError, DataResponse } from '@/types/react-query'
 
 export const useRefreshToken = () => {
   const { data: session, update } = useSession()
@@ -26,6 +28,12 @@ export const useRefreshToken = () => {
             refreshToken: response?.data?.metadata?.refreshToken,
           },
         })
+      }
+    },
+    onError(error: any) {
+      console.log('error: ', error)
+      if (error?.response?.status === 403) {
+        signOut()
       }
     },
   })

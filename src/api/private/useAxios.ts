@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 
 import { useSession } from 'next-auth/react'
 
-import axiosPrivate from './axiosPrivate'
+import axiosPrivate from './axios'
 import { useRefreshToken } from './useRefreshToken'
 
 export default function useAxiosPrivate() {

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { Session } from 'next-auth'
+import { getSession, useSession } from 'next-auth/react'
 
 const axiosPrivate = axios.create({
   baseURL: process.env.NEXT_SERVER_API_SERVICE,
@@ -11,15 +12,8 @@ const axiosPrivate = axios.create({
 
 axiosPrivate.interceptors.request.use(
   async (config) => {
-    const session = await fetch(`/api/auth/session`, {
-      headers: {
-        'content-type': 'application/json',
-      },
-    } satisfies RequestInit)
-    const json = await session.json()
-    const data = Object.keys(json).length > 0 ? json : null
-
-    const user: Session['user'] = data?.user
+    const session = await getSession()
+    const user = session?.user as Session['user']
     if (!config.headers['Authorization']) {
       config.headers['Authorization'] = `Bearer ${user.accessToken}`
     }
