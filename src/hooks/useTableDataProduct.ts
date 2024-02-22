@@ -30,6 +30,7 @@ export default function useTableDataProduct() {
   const [filter, setFilter] = useState<SearchProductTableProps>(
     {} as SearchProductTableProps
   )
+  const [products, setProducts] = useState<Product['productId'][]>([])
 
   const axios = useAxiosPrivate()
 
@@ -79,9 +80,11 @@ export default function useTableDataProduct() {
     isLoading,
     isFetching,
     currentPage,
+    productSelected: products,
     onSearch,
     onPageChange,
     onPerPageChange,
     refetch,
+    setProducts,
   }
 }

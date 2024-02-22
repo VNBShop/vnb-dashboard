@@ -1,12 +1,25 @@
 'use client'
+import { createRef } from 'react'
+
+import { useMutation } from '@tanstack/react-query'
 import Image from 'next/image'
 import { useSession } from 'next-auth/react'
 import DataTable, { TableColumn } from 'react-data-table-component'
 
+import { toast } from 'sonner'
+
+import useAxiosPrivate from '@/api/private/useAxios'
+import { Button } from '@/components/ui/button'
+import { Modal, ModalProps } from '@/components/ui/modal'
+import Spinner from '@/components/ui/spinner'
+import useDeactives from '@/hooks/useDeactives'
 import useHydration from '@/hooks/useHydration'
 
+import useProductAction from '@/hooks/useProductAction'
 import useTableDataProduct from '@/hooks/useTableDataProduct'
 import { Product } from '@/types/product'
+
+import { DataError, DataResponse } from '@/types/react-query'
 
 import ProductTableAction from './action'
 import ProductsHeader from './header'
@@ -18,16 +31,27 @@ import { EmptyImg } from '../../../public'
 export default function ProductTableData() {
   const { hydration } = useHydration()
 
+  const axios = useAxiosPrivate()
+
+  const deactiveModal = createRef<ModalProps>()
+
   const {
     data,
     isLoading,
     isFetching,
     currentPage,
+    productSelected,
     onSearch,
     refetch,
     onPageChange,
     onPerPageChange,
+    setProducts,
   } = useTableDataProduct()
+
+  const { loading, onDeactive } = useDeactives({
+    modalRef: deactiveModal,
+    refetch,
+  })
 
   if (hydration) {
     return <p className="mt-4">Wait a minute...</p>
@@ -105,11 +129,27 @@ export default function ProductTableData() {
         <ProductTableSkeleton />
       ) : (
         <section className="mt-4">
+          {!!productSelected.length ? (
+            <Button
+              className=" mb-4 bg-danger"
+              size="sm"
+              onClick={() =>
+                !!deactiveModal?.current && deactiveModal.current.onOpen()
+              }
+            >
+              Deactivate
+            </Button>
+          ) : null}
           <DataTable
             columns={columns as []}
             data={data?.data ?? []}
+            selectableRows
             pagination
             paginationServer
+            selectableRowDisabled={(row) => !row.productStatus}
+            onSelectedRowsChange={({ selectedRows }) =>
+              setProducts(selectedRows.map((item) => item.productId))
+            }
             paginationTotalRows={data?.total ?? 0}
             paginationDefaultPage={currentPage}
             onChangePage={onPageChange}
@@ -129,6 +169,43 @@ export default function ProductTableData() {
           />
         </section>
       )}
+
+      <Modal ref={deactiveModal} header="Deactivate products">
+        <section>
+          <p className=" my-4">
+            Are you sure you want to deactivate{' '}
+            <span className="text-danger">
+              {productSelected?.length} products
+            </span>
+            ?
+          </p>
+
+          <footer className="flex items-center justify-end gap-1">
+            <Button
+              variant="ghost"
+              size="sm"
+              disabled={loading}
+              className=" hover:underline"
+              onClick={() => {
+                if (!!deactiveModal.current) {
+                  deactiveModal.current?.onClose()
+                }
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              disabled={loading}
+              className=" flex items-center gap-1 bg-danger"
+              size="sm"
+              onClick={() => onDeactive(productSelected)}
+            >
+              {loading && <Spinner size={16} />}
+              Deactivates
+            </Button>
+          </footer>
+        </section>
+      </Modal>
     </>
   )
 }

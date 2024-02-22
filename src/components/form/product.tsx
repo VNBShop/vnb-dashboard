@@ -155,6 +155,7 @@ export default function ProductForm({
       addedProductSizes: updateProductSizesNew,
       updatedProductSizes: updateProductSizesUpdated,
       deletedProductSizes: updateProductSizesDelete,
+      productId: updateData?.productId as number,
     }
 
     const createPayload: CreateProductProps = {

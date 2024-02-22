@@ -8,7 +8,7 @@ import useTableDataStores from '@/hooks/useTableDataStores'
 
 import { Store } from '@/types/store'
 
-import ProductTableAction from './action'
+import StoreTableAction from './action'
 import StoresHeader from './header'
 
 import StoresTableSkeleton from './skeleton'
@@ -49,6 +49,14 @@ export default function StoresTableData() {
       cell: (row) => row?.storeAddress ?? '-',
     },
     {
+      name: 'Email',
+      cell: (row) => row?.storeEmail ?? '-',
+    },
+    {
+      name: 'Phone number',
+      cell: (row) => row?.storePhone ?? '-',
+    },
+    {
       name: 'Status',
       width: '120px',
       center: 1 as any,
@@ -67,10 +75,22 @@ export default function StoresTableData() {
       },
     },
     {
+      name: 'Owner name',
+      cell: (row) => row?.storeOwnerName ?? '-',
+    },
+    // {
+    //   name: 'Owner email',
+    //   cell: (row) => row?.storeOwnerEmail ?? '-',
+    // },
+    {
+      name: 'Owner phone number',
+      cell: (row) => row?.storeOwnerPhone ?? '-',
+    },
+    {
       name: 'Action',
       center: 1 as any,
       width: '100px',
-      cell: (row) => <ProductTableAction refetch={refetch} data={row} />,
+      cell: (row) => <StoreTableAction refetch={refetch} data={row} />,
     },
   ]
 

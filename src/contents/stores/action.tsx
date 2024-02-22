@@ -10,7 +10,7 @@ import { toast } from 'sonner'
 
 import useAxiosPrivate from '@/api/private/useAxios'
 import Icon from '@/common/icons'
-import ProductForm from '@/components/form/product'
+import StoreForm from '@/components/form/store'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -21,21 +21,20 @@ import {
 import { Modal, ModalProps } from '@/components/ui/modal'
 import Spinner from '@/components/ui/spinner'
 import { ProductResponse } from '@/hooks/useTableDataProduct'
-import { Product } from '@/types/product'
 import { DataError, DataResponse } from '@/types/react-query'
 import { Store } from '@/types/store'
 
-type ProductTableActionProps = {
+type StoreTableActionProps = {
   data: Store
   refetch: (
     options?: RefetchOptions | undefined
   ) => Promise<QueryObserverResult<ProductResponse, Error>>
 }
 
-export default function ProductTableAction({
+export default function StoreTableAction({
   data,
   refetch,
-}: ProductTableActionProps) {
+}: StoreTableActionProps) {
   const axios = useAxiosPrivate()
   const modalUpdateRef = createRef<ModalProps>()
   const modalDeleteRef = createRef<ModalProps>()
@@ -43,11 +42,11 @@ export default function ProductTableAction({
   const { mutate, isPending } = useMutation<
     DataResponse<unknown>,
     DataError<unknown>,
-    Product['productId'],
+    Store['storeId'],
     unknown
   >({
     mutationFn: (_data) => {
-      const res = axios.delete(`/product-service/api/v1/products/${_data}`)
+      const res = axios.delete(`/store-service/api/v1/stores/${_data}`)
       return res
     },
 
@@ -55,7 +54,7 @@ export default function ProductTableAction({
       if (response?.data?.success) {
         toast.success(
           response?.data?.metadata?.message ??
-            `Deactivate ${data?.productName} successfully!`
+            `Deactivate ${data?.storeName} successfully!`
         )
         if (!!modalDeleteRef.current) {
           modalDeleteRef.current.onClose()
@@ -74,16 +73,16 @@ export default function ProductTableAction({
   return (
     <>
       <>
-        {data?.productStatus ? (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <div className="flex h-8 w-8 items-center justify-center hover:cursor-pointer">
-                <Icon name="Ellipsis" size={16} />
-              </div>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56">
-              {/* <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <div className="flex h-8 w-8 items-center justify-center hover:cursor-pointer">
+              <Icon name="Ellipsis" size={16} />
+            </div>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-56">
+            {/* <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator /> */}
+            {!!data?.status && (
               <DropdownMenuItem
                 onClick={() => {
                   if (!!modalUpdateRef.current) {
@@ -96,31 +95,28 @@ export default function ProductTableAction({
                   Update
                 </div>
               </DropdownMenuItem>
-
-              <DropdownMenuItem
-                onClick={() => {
-                  if (!!modalDeleteRef.current) {
-                    modalDeleteRef.current.onOpen()
-                  }
-                }}
-              >
-                <div className=" flex items-center gap-2">
-                  <Icon name="Trash" size={16} />
-                  Deactivate
-                </div>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        ) : (
-          <div></div>
-        )}
+            )}
+            <DropdownMenuItem
+              onClick={() => {
+                if (!!modalDeleteRef.current) {
+                  modalDeleteRef.current.onOpen()
+                }
+              }}
+            >
+              <div className=" flex items-center gap-2">
+                <Icon name="Trash" size={16} />
+                Deactivate
+              </div>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </>
 
-      <Modal ref={modalDeleteRef} header="Deactivate product">
+      <Modal ref={modalDeleteRef} header="Deactivate store">
         <section>
           <p className=" my-4">
             Are you sure you want to deactivate{' '}
-            <span className="text-danger">{data?.productName}</span>?
+            <span className="text-danger">{data?.storeName}</span>?
           </p>
 
           <footer className="flex items-center justify-end gap-1">
@@ -141,7 +137,7 @@ export default function ProductTableAction({
               disabled={isPending}
               className=" flex items-center gap-1 bg-danger"
               size="sm"
-              onClick={() => mutate(data.productId)}
+              onClick={() => mutate(data.storeId)}
             >
               {isPending && <Spinner size={16} />}
               Deactivate
@@ -150,8 +146,8 @@ export default function ProductTableAction({
         </section>
       </Modal>
 
-      <Modal size="lg" ref={modalUpdateRef} header="Update product">
-        <ProductForm
+      <Modal size="lg" ref={modalUpdateRef} header="Update store">
+        <StoreForm
           updateData={data}
           refetch={refetch}
           onCloseModal={() => {

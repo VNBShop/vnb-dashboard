@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import {
   QueryObserverResult,
   RefetchOptions,
@@ -9,6 +11,7 @@ import { toast } from 'sonner'
 import useAxiosPrivate from '@/api/private/useAxios'
 import { ImageCloudinaryProps } from '@/components/ui/upload-file'
 
+import { Product } from '@/types/product'
 import { DataError, DataResponse } from '@/types/react-query'
 
 import { ProductResponse } from './useTableDataProduct'
@@ -32,6 +35,7 @@ export type UpdateProductProps = Omit<CreateProductProps, 'productSizes'> & {
   }[]
   addedProductSizes?: string[]
   deletedProductSizes?: number[]
+  productId: Product['productId']
 }
 
 type UseCreateProductProps = {
@@ -56,9 +60,17 @@ export default function useProductAction({
     unknown
   >({
     mutationFn: async (data) => {
-      const res = await axios.post('/product-service/api/v1/products', {
-        ...data,
-      })
+      const res = isUpdate
+        ? await axios.put(
+            `/product-service/api/v1/products/${(data as UpdateProductProps)
+              ?.productId}`,
+            {
+              ...data,
+            }
+          )
+        : await axios.post('/product-service/api/v1/products', {
+            ...data,
+          })
 
       return res
     },

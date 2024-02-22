@@ -19,36 +19,50 @@ export type CreateStoreProps = {
   storeOwnerEmail: string
 }
 
-type UseCreateStoreProps = {
+export type UpdateStoreProps = CreateStoreProps & {
+  storeId: number
+}
+
+type UseStoreActionProps = {
   onCloseModal: () => void
   refetch: (
     options?: RefetchOptions | undefined
   ) => Promise<QueryObserverResult<ProductResponse, Error>>
+  isUpdate?: boolean
 }
 
-export default function useCreateStore({
+export default function useStoreAction({
   onCloseModal,
   refetch,
-}: UseCreateStoreProps) {
+  isUpdate,
+}: UseStoreActionProps) {
   const axios = useAxiosPrivate()
 
   const { mutate, isPending } = useMutation<
     DataResponse<unknown>,
     DataError<unknown>,
-    CreateStoreProps,
-    unknown
+    CreateStoreProps | UpdateStoreProps
   >({
     mutationFn: async (data) => {
-      const res = await axios.post('/store-service/api/v1/stores', {
-        ...data,
-      })
+      const res = isUpdate
+        ? await axios.put(
+            `/store-service/api/v1/stores/${(data as UpdateStoreProps)
+              ?.storeId}`,
+            {
+              ...data,
+            }
+          )
+        : await axios.post('/store-service/api/v1/stores', {
+            ...data,
+          })
 
       return res
     },
     onSuccess: (response, data) => {
       if (response.data.success) {
         toast.success(
-          response?.data?.metadata?.message ?? 'Create store successfully!'
+          response?.data?.metadata?.message ??
+            `${isUpdate ? 'Update' : 'Create'} store successfully!`
         )
         onCloseModal()
         refetch()
@@ -63,6 +77,6 @@ export default function useCreateStore({
 
   return {
     loading: isPending,
-    onCreateProduct: mutate,
+    onStoreAction: mutate,
   }
 }

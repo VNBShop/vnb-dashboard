@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+
 import { zodResolver } from '@hookform/resolvers/zod'
 import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query'
 
@@ -5,7 +7,8 @@ import { useForm } from 'react-hook-form'
 
 import { z } from 'zod'
 
-import useCreateStore from '@/hooks/useCreateStore'
+import useCreateStore from '@/hooks/useStoreAction'
+import useStoreAction from '@/hooks/useStoreAction'
 import { ProductResponse } from '@/hooks/useTableDataProduct'
 import { storeSchema } from '@/libs/validations/store'
 import { Store } from '@/types/store'
@@ -22,14 +25,6 @@ type StoreFormProps = {
   ) => Promise<QueryObserverResult<ProductResponse, Error>>
   updateData?: Store
 }
-
-// type FormProps = {
-//   storeName: string
-//   storeAddress: string
-//   storePhone: string
-//   storeEmail: string
-//   storeOwnerEmail: string
-// }
 
 type FormProps = z.infer<typeof storeSchema>
 
@@ -49,14 +44,34 @@ export default function StoreForm({
     },
   })
 
-  const { onCreateProduct, loading } = useCreateStore({ onCloseModal, refetch })
+  const { onStoreAction, loading } = useStoreAction({
+    onCloseModal,
+    refetch,
+    isUpdate: !!JSON.stringify(updateData),
+  })
 
   const onSubmit = (values: FormProps) => {
-    onCreateProduct(values)
+    if (!!JSON.stringify(updateData)) {
+      onStoreAction({
+        ...values,
+        storeId: updateData?.storeId,
+      })
+
+      return
+    }
+    onStoreAction(values)
   }
 
-  console.log('form error', form.formState.errors)
-
+  useEffect(() => {
+    if (!!JSON.stringify(updateData)) {
+      form.setValue('storeName', updateData?.storeName ?? '')
+      form.setValue('storeAddress', updateData?.storeAddress ?? '')
+      form.setValue('storePhone', updateData?.storePhone ?? '')
+      form.setValue('storeEmail', updateData?.storeEmail ?? '')
+      form.setValue('storeOwnerEmail', updateData?.storeOwnerEmail ?? '')
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [JSON.stringify(updateData)])
   return (
     <Form {...form}>
       <form
@@ -147,7 +162,7 @@ export default function StoreForm({
             className="flex items-center gap-1"
           >
             {loading && <Spinner size={16} />}
-            Create
+            {!!JSON.stringify(updateData) ? 'Update' : 'Create'}
           </Button>
         </div>
       </form>
