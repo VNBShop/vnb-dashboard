@@ -5,6 +5,7 @@ import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query'
 import Icon from '@/common/icons'
 import ProductForm from '@/components/form/product'
 import SearchProductForm from '@/components/form/search-products'
+import SearchStoreForm from '@/components/form/search-store'
 import StoreForm from '@/components/form/store'
 import HeaderSection from '@/components/header-section'
 import { Modal, ModalProps } from '@/components/ui/modal'
@@ -69,7 +70,7 @@ export default function StoresHeader({
           </section>
         </HeaderSection>
 
-        {filter && <SearchProductForm onSearch={onSearch} loading={loading} />}
+        {filter && <SearchStoreForm onSearch={onSearch} loading={loading} />}
       </>
     </>
   )
