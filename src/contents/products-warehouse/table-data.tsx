@@ -4,27 +4,24 @@ import { createRef } from 'react'
 import Image from 'next/image'
 import DataTable, { TableColumn } from 'react-data-table-component'
 
-import useAxiosPrivate from '@/api/private/useAxios'
 import { Button } from '@/components/ui/button'
 import { Modal, ModalProps } from '@/components/ui/modal'
 import Spinner from '@/components/ui/spinner'
 import useDeactives from '@/hooks/useDeactives'
 import useHydration from '@/hooks/useHydration'
 
-import useTableDataProduct from '@/hooks/useTableDataProducts'
-import { Product } from '@/types/product'
+import useTableDataProductsWarehouse from '@/hooks/useTableDataProductsWarehouse'
+import { ProductWarehouse } from '@/types/product'
 
 import ProductTableAction from './action'
-import ProductsHeader from './header'
-import ProductTableImage from './image'
+import ProductsWarehouseHeader from './header'
+import ProductWarehouseTableImage from './image'
 import ProductTableSkeleton from './skeleton'
 
 import { EmptyImg } from '../../../public'
 
-export default function ProductTableData() {
+export default function ProductWarehouseTableData() {
   const { hydration } = useHydration()
-
-  const axios = useAxiosPrivate()
 
   const deactiveModal = createRef<ModalProps>()
 
@@ -39,7 +36,7 @@ export default function ProductTableData() {
     onPageChange,
     onPerPageChange,
     setProducts,
-  } = useTableDataProduct()
+  } = useTableDataProductsWarehouse()
 
   const { loading, onDeactive } = useDeactives({
     modalRef: deactiveModal,
@@ -50,7 +47,7 @@ export default function ProductTableData() {
     return <p className="mt-4">Wait a minute...</p>
   }
 
-  const columns: TableColumn<Product>[] = [
+  const columns: TableColumn<ProductWarehouse>[] = [
     {
       name: 'ID',
       center: 1 as any,
@@ -58,47 +55,42 @@ export default function ProductTableData() {
       cell: (row) => row?.productId ?? '-',
     },
     {
-      name: 'Image',
-      center: 1 as any,
-      cell: (row) => {
-        return <ProductTableImage images={row?.productImages ?? []} />
-      },
-    },
-    {
       name: 'Name',
       cell: (row) => row?.productName ?? '-',
     },
     {
-      name: 'Brand',
-      cell: (row) => row?.productBrand?.brandName ?? '-',
-    },
-    {
-      name: 'Category',
-      cell: (row) => row?.productSubCategory?.subCategoryName ?? '-',
-    },
-    {
-      name: 'Price',
-      right: 1 as any,
-      cell: (row) =>
-        row?.productPrice?.toLocaleString('en-US', {
-          currency: 'USD',
-          style: 'currency',
-        }) ?? '-',
-    },
-    {
-      name: 'Status',
-      width: '120px',
+      name: 'Image',
       center: 1 as any,
       cell: (row) => {
+        return <ProductWarehouseTableImage images={row?.productImages ?? ''} />
+      },
+    },
+
+    // {
+    //   name: 'Brand',
+    //   cell: (row) => row?.productBrand?.brandName ?? '-',
+    // },
+    // {
+    //   name: 'Category',
+    //   cell: (row) => row?.productSubCategory?.subCategoryName ?? '-',
+    // },
+    {
+      name: 'Quantities',
+      cell: (row) => {
+        if (!row.productSizeAndStockResponses.length) return '-'
         return (
-          <div
-            className={`rounded-full p-1 px-3 text-[13px] font-medium ${
-              row?.productStatus
-                ? 'bg-[#e4f6e2] text-[#368a2f]'
-                : 'bg-[#ffdddd] text-[#ff0e0e]'
-            }`}
-          >
-            {row?.productStatus ? 'In stock' : 'Out stock'}
+          <div>
+            {row.productSizeAndStockResponses.map(
+              (size, index) =>
+                index < 3 && (
+                  <div key={size.productStockId}>
+                    {size?.productStockSize
+                      ? `${size?.productStockSize}: `
+                      : null}{' '}
+                    {size?.productStockQuantity ?? 0}
+                  </div>
+                )
+            )}
           </div>
         )
       },
@@ -113,7 +105,7 @@ export default function ProductTableData() {
 
   return (
     <>
-      <ProductsHeader
+      <ProductsWarehouseHeader
         onSearch={onSearch}
         loading={isLoading}
         refetch={refetch}
@@ -136,13 +128,13 @@ export default function ProductTableData() {
           <DataTable
             columns={columns as []}
             data={data?.data ?? []}
-            selectableRows
+            // selectableRows
             pagination
             paginationServer
             selectableRowDisabled={(row) => !row.productStatus}
-            onSelectedRowsChange={({ selectedRows }) =>
-              setProducts(selectedRows.map((item) => item.productId))
-            }
+            // onSelectedRowsChange={({ selectedRows }) =>
+            //   setProducts(selectedRows.map((item) => item.productId))
+            // }
             paginationTotalRows={data?.total ?? 0}
             paginationDefaultPage={currentPage}
             onChangePage={onPageChange}

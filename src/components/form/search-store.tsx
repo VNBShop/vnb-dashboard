@@ -1,7 +1,7 @@
 import { formatISO } from 'date-fns'
 import { Controller, useForm } from 'react-hook-form'
 
-import { SearchProductTableProps } from '@/hooks/useTableDataProduct'
+import { SearchProductTableProps } from '@/hooks/useTableDataProducts'
 
 import { brands, categories } from '@/libs/constants'
 

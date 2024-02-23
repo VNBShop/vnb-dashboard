@@ -9,7 +9,7 @@ import { toast } from 'sonner'
 import useAxiosPrivate from '@/api/private/useAxios'
 import { DataError, DataResponse } from '@/types/react-query'
 
-import { ProductResponse } from './useTableDataProduct'
+import { ProductResponse } from './useTableDataProducts'
 
 export type CreateStoreProps = {
   storeName: string

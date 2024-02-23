@@ -20,6 +20,16 @@ export const sidebarList = [
     ],
   },
   {
+    name: 'Warehouse',
+    sub: [
+      {
+        label: 'Stock',
+        icon: 'Stock',
+        url: '/products-warehouse',
+      },
+    ],
+  },
+  {
     name: 'Stock',
     sub: [
       {

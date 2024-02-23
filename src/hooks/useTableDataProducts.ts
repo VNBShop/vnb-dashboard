@@ -3,15 +3,11 @@ import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 
 import useAxiosPrivate from '@/api/private/useAxios'
-import { Product } from '@/types/product'
+import { Product, ProductWarehouse } from '@/types/product'
 import { DataResponse } from '@/types/react-query'
 
-import { Store } from '@/types/store'
-
-import { ProductResponse } from './useTableDataProducts'
-
-export type StoresResponse = {
-  data: Store[]
+export type ProductResponse = {
+  data: ProductWarehouse[]
   maxPage: number
   nextPage: number
   currentPage: number
@@ -28,20 +24,18 @@ export type SearchProductTableProps = {
   endDate?: string
 }
 
-export default function useTableDataStores() {
-  const axios = useAxiosPrivate()
-
+export default function useTableDataProduct() {
   const [currentPage, setCurrentPage] = useState(1)
   const [perPage, setPerPage] = useState(10)
   const [filter, setFilter] = useState<SearchProductTableProps>(
     {} as SearchProductTableProps
   )
+  const [products, setProducts] = useState<Product['productId'][]>([])
+
+  const axios = useAxiosPrivate()
 
   const { data, isLoading, isFetching, isError, refetch } = useQuery({
-    queryKey: [
-      'products-stores',
-      { currentPage, pageSize: perPage, ...filter },
-    ],
+    queryKey: ['products-table', { currentPage, pageSize: perPage, ...filter }],
     queryFn: async ({ queryKey }) => {
       const filter = queryKey[1] as {
         currentPage: number
@@ -49,7 +43,7 @@ export default function useTableDataStores() {
       } & SearchProductTableProps
 
       const res: DataResponse<unknown> = await axios.get(
-        '/store-service/api/v1/stores/admin',
+        '/product-service/api/v1/products/admin',
         {
           params: {
             ...filter,
@@ -86,9 +80,11 @@ export default function useTableDataStores() {
     isLoading,
     isFetching,
     currentPage,
+    productSelected: products,
     onSearch,
     onPageChange,
     onPerPageChange,
     refetch,
+    setProducts,
   }
 }

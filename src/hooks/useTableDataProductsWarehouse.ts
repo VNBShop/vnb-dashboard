@@ -6,7 +6,7 @@ import useAxiosPrivate from '@/api/private/useAxios'
 import { Product } from '@/types/product'
 import { DataResponse } from '@/types/react-query'
 
-export type ProductResponse = {
+export type ProductsWarehouseResponse = {
   data: Product[]
   maxPage: number
   nextPage: number
@@ -15,7 +15,7 @@ export type ProductResponse = {
   total: number
 }
 
-export type SearchProductTableProps = {
+export type SearchProductWarehouseTableProps = {
   search: string
   brandIds: string
   storeIds: string
@@ -24,26 +24,29 @@ export type SearchProductTableProps = {
   endDate?: string
 }
 
-export default function useTableDataProduct() {
+export default function useTableDataProductsWarehouse() {
   const [currentPage, setCurrentPage] = useState(1)
   const [perPage, setPerPage] = useState(10)
-  const [filter, setFilter] = useState<SearchProductTableProps>(
-    {} as SearchProductTableProps
+  const [filter, setFilter] = useState<SearchProductWarehouseTableProps>(
+    {} as SearchProductWarehouseTableProps
   )
   const [products, setProducts] = useState<Product['productId'][]>([])
 
   const axios = useAxiosPrivate()
 
   const { data, isLoading, isFetching, isError, refetch } = useQuery({
-    queryKey: ['products-table', { currentPage, pageSize: perPage, ...filter }],
+    queryKey: [
+      'products-warehouse-table',
+      { currentPage, pageSize: perPage, ...filter },
+    ],
     queryFn: async ({ queryKey }) => {
       const filter = queryKey[1] as {
         currentPage: number
         pageSize: number
-      } & SearchProductTableProps
+      } & SearchProductWarehouseTableProps
 
       const res: DataResponse<unknown> = await axios.get(
-        '/product-service/api/v1/products/admin',
+        '/product-service/api/v1/warehouses/admin',
         {
           params: {
             ...filter,
@@ -52,7 +55,7 @@ export default function useTableDataProduct() {
       )
 
       if (res?.data.success) {
-        return res?.data?.metadata as ProductResponse
+        return res?.data?.metadata as ProductsWarehouseResponse
       } else {
         throw new Error('')
       }
@@ -60,7 +63,7 @@ export default function useTableDataProduct() {
     refetchOnWindowFocus: false,
   })
 
-  const onSearch = (values: SearchProductTableProps) => {
+  const onSearch = (values: SearchProductWarehouseTableProps) => {
     setFilter(values)
   }
 

@@ -9,7 +9,7 @@ import { z } from 'zod'
 
 import useCreateStore from '@/hooks/useStoreAction'
 import useStoreAction from '@/hooks/useStoreAction'
-import { ProductResponse } from '@/hooks/useTableDataProduct'
+import { ProductResponse } from '@/hooks/useTableDataProducts'
 import { storeSchema } from '@/libs/validations/store'
 import { Store } from '@/types/store'
 

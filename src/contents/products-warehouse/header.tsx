@@ -8,23 +8,23 @@ import SearchProductForm from '@/components/form/search-products'
 import HeaderSection from '@/components/header-section'
 import { Modal, ModalProps } from '@/components/ui/modal'
 import {
-  ProductResponse,
-  SearchProductTableProps,
-} from '@/hooks/useTableDataProducts'
+  ProductsWarehouseResponse,
+  SearchProductWarehouseTableProps,
+} from '@/hooks/useTableDataProductsWarehouse'
 
-type ProductsHeaderProps = {
-  onSearch: (values: SearchProductTableProps) => void
+type ProductsWarehouseHeaderProps = {
+  onSearch: (values: SearchProductWarehouseTableProps) => void
   loading: boolean
   refetch: (
     options?: RefetchOptions | undefined
-  ) => Promise<QueryObserverResult<ProductResponse, Error>>
+  ) => Promise<QueryObserverResult<ProductsWarehouseResponse, Error>>
 }
 
-export default function ProductsHeader({
+export default function ProductsWarehouseHeader({
   onSearch,
   loading,
   refetch,
-}: ProductsHeaderProps) {
+}: ProductsWarehouseHeaderProps) {
   const modalRef = createRef<ModalProps>()
   const [filter, setFilter] = useState(false)
 

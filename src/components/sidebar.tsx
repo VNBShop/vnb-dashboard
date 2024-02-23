@@ -6,6 +6,8 @@ import Link from 'next/link'
 
 import { usePathname } from 'next/navigation'
 
+import { useRouter } from 'next/navigation'
+import router from 'next/router'
 import { Session } from 'next-auth'
 
 import { signOut } from 'next-auth/react'
@@ -20,12 +22,14 @@ import Spinner from './ui/spinner'
 import { Avatar } from '../../public'
 import Icon, { IconName } from '../common/icons'
 
-type SidebardProps = {
+type SidebarProps = {
   user: Session['user']
+  onClose?: () => void
 }
 
-export default function Sidebard({ user }: SidebardProps) {
+export default function Sidebar({ user, onClose }: SidebarProps) {
   const pathname = usePathname()
+  const router = useRouter()
 
   const axios = useAxiosPrivate()
 
@@ -39,9 +43,10 @@ export default function Sidebard({ user }: SidebardProps) {
       const res = axios.post('/user-service/api/v1/account/logout')
       return res
     },
-    onSuccess: (res) => {
+    onSuccess: async (res) => {
       if (res?.data?.success) {
-        signOut()
+        await signOut()
+        onClose?.()
       }
     },
     retry: 5,
@@ -51,7 +56,7 @@ export default function Sidebard({ user }: SidebardProps) {
   })
 
   return (
-    <aside className="lg:col-span-[17%] hidden h-full flex-col overflow-hidden border-r py-4 pt-2 lg:flex">
+    <aside className="flex h-full flex-col overflow-hidden py-4 pt-2">
       <header className="flex items-center gap-2 border-b border-b-gray-100 px-4 pb-2">
         <Image
           src="/icon.png"
@@ -75,6 +80,7 @@ export default function Sidebard({ user }: SidebardProps) {
                   <Link
                     href={item.url}
                     key={item.label}
+                    onClick={() => onClose?.()}
                     className="flex items-center gap-2 rounded-[4px] p-2 hover:cursor-pointer lg:hover:bg-gray-100"
                   >
                     <Icon
