@@ -8,8 +8,9 @@ import { Button } from '@/components/ui/button'
 import { ModalProps } from '@/components/ui/modal'
 import useHydration from '@/hooks/useHydration'
 
-import useTableDataProductsWarehouse from '@/hooks/useTableDataProductsWarehouse'
-import { ProductWarehouse } from '@/types/product'
+import useTableDataProductsWarehouse from '@/hooks/warehouses/useTableProductsWarehouse'
+
+import { ProductWarehouse } from '@/types/warehouse'
 
 import ProductWarehouseTableAction from './action'
 import ProductsWarehouseHeader from './header'

@@ -10,7 +10,7 @@ import { Modal, ModalProps } from '@/components/ui/modal'
 import {
   ProductResponse,
   SearchProductTableProps,
-} from '@/hooks/useTableDataProducts'
+} from '@/hooks/products/useTableProducts'
 
 type ProductsHeaderProps = {
   onSearch: (values: SearchProductTableProps) => void

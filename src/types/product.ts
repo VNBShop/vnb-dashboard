@@ -23,15 +23,3 @@ export type Product = {
   productPrice: number
   productStatus: boolean
 }
-
-export type ProductWarehouse = Pick<Product, 'productId' | 'productName'> & {
-  productImages: string[]
-  productIsHaveSize: boolean
-  productSizeAndStockResponses: ProductWarehouseSizeStock[]
-}
-
-export type ProductWarehouseSizeStock = {
-  productStockSizeId: number
-  productStockSize: string
-  productStockQuantity: number
-}

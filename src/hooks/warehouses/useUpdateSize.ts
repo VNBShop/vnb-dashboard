@@ -10,7 +10,7 @@ import useAxiosPrivate from '@/api/private/useAxios'
 import { PRODUCT_SERVICE } from '@/libs/micro-service'
 import { DataError, DataResponse } from '@/types/react-query'
 
-import { ProductsWarehouseResponse } from './useTableDataProductsWarehouse'
+import { ProductsWarehouseResponse } from './useTableProductsWarehouse'
 
 export type UpdateSizePayload = {
   productSizeId: number

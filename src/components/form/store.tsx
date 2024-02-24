@@ -7,9 +7,9 @@ import { useForm } from 'react-hook-form'
 
 import { z } from 'zod'
 
-import useCreateStore from '@/hooks/useStoreAction'
-import useStoreAction from '@/hooks/useStoreAction'
-import { ProductResponse } from '@/hooks/useTableDataProducts'
+import { ProductResponse } from '@/hooks/products/useTableProducts'
+import useCreateStore from '@/hooks/stores/useStoreAction'
+import useStoreAction from '@/hooks/stores/useStoreAction'
 import { storeSchema } from '@/libs/validations/store'
 import { Store } from '@/types/store'
 

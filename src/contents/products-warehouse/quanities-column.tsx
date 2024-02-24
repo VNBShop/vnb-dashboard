@@ -7,8 +7,8 @@ import SizeUpdateForm, {
   SizeUpdateFormProps,
 } from '@/components/form/size-update'
 import { Modal } from '@/components/ui/modal'
-import { ProductsWarehouseResponse } from '@/hooks/useTableDataProductsWarehouse'
-import { ProductWarehouse } from '@/types/product'
+import { ProductsWarehouseResponse } from '@/hooks/warehouses/useTableProductsWarehouse'
+import { ProductWarehouse } from '@/types/warehouse'
 
 type ProductsWarehouseQuantityColumnProps = {
   row: ProductWarehouse

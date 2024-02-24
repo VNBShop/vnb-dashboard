@@ -11,9 +11,9 @@ import { toast } from 'sonner'
 import useCreateProduct, {
   CreateProductProps,
   UpdateProductProps,
-} from '@/hooks/useProductAction'
-import useProductAction from '@/hooks/useProductAction'
-import { ProductResponse } from '@/hooks/useTableDataProducts'
+} from '@/hooks/products/useProductAction'
+import useProductAction from '@/hooks/products/useProductAction'
+import { ProductResponse } from '@/hooks/products/useTableProducts'
 import { brands, categories } from '@/libs/constants'
 
 import { Product } from '@/types/product'

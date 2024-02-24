@@ -8,10 +8,10 @@ import useAxiosPrivate from '@/api/private/useAxios'
 import { Button } from '@/components/ui/button'
 import { Modal, ModalProps } from '@/components/ui/modal'
 import Spinner from '@/components/ui/spinner'
-import useDeactives from '@/hooks/useDeactives'
+import useDeactives from '@/hooks/products/useDeactives'
+import useTableDataProduct from '@/hooks/products/useTableProducts'
 import useHydration from '@/hooks/useHydration'
 
-import useTableDataProduct from '@/hooks/useTableDataProducts'
 import { Product } from '@/types/product'
 
 import ProductTableAction from './action'

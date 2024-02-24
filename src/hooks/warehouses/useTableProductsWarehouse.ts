@@ -24,7 +24,7 @@ export type SearchProductWarehouseTableProps = {
   endDate?: string
 }
 
-export default function useTableDataProductsWarehouse() {
+export default function useTableProductsWarehouse() {
   const [currentPage, setCurrentPage] = useState(1)
   const [perPage, setPerPage] = useState(10)
   const [filter, setFilter] = useState<SearchProductWarehouseTableProps>(

@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 import {
   QueryObserverResult,
   RefetchOptions,
@@ -9,36 +7,23 @@ import {
 import { toast } from 'sonner'
 
 import useAxiosPrivate from '@/api/private/useAxios'
-import { ImageCloudinaryProps } from '@/components/ui/upload-file'
-
-import { Product } from '@/types/product'
 import { DataError, DataResponse } from '@/types/react-query'
 
-import { ProductResponse } from './useTableDataProducts'
+import { ProductResponse } from '../products/useTableProducts'
 
-export type CreateProductProps = {
-  productName: string
-  productSizes: string[]
-  productPrice: number
-  productSubCategory: number
-  productBrand: number
-  productAssets: ImageCloudinaryProps[]
-  productDetails: {
-    [key: string]: string | number
-  }
+export type CreateStoreProps = {
+  storeName: string
+  storeAddress: string
+  storePhone: string
+  storeEmail: string
+  storeOwnerEmail: string
 }
 
-export type UpdateProductProps = Omit<CreateProductProps, 'productSizes'> & {
-  updatedProductSizes?: {
-    productSizeId: number
-    productSize: string
-  }[]
-  addedProductSizes?: string[]
-  deletedProductSizes?: number[]
-  productId: Product['productId']
+export type UpdateStoreProps = CreateStoreProps & {
+  storeId: number
 }
 
-type IProps = {
+type UseStoreActionProps = {
   onCloseModal: () => void
   refetch: (
     options?: RefetchOptions | undefined
@@ -46,29 +31,28 @@ type IProps = {
   isUpdate?: boolean
 }
 
-export default function useProductAction({
+export default function useStoreAction({
   onCloseModal,
   refetch,
   isUpdate,
-}: IProps) {
+}: UseStoreActionProps) {
   const axios = useAxiosPrivate()
 
   const { mutate, isPending } = useMutation<
     DataResponse<unknown>,
     DataError<unknown>,
-    CreateProductProps | UpdateProductProps,
-    unknown
+    CreateStoreProps | UpdateStoreProps
   >({
     mutationFn: async (data) => {
       const res = isUpdate
         ? await axios.put(
-            `/product-service/api/v1/products/${(data as UpdateProductProps)
-              ?.productId}`,
+            `/store-service/api/v1/stores/${(data as UpdateStoreProps)
+              ?.storeId}`,
             {
               ...data,
             }
           )
-        : await axios.post('/product-service/api/v1/products', {
+        : await axios.post('/store-service/api/v1/stores', {
             ...data,
           })
 
@@ -78,7 +62,7 @@ export default function useProductAction({
       if (response.data.success) {
         toast.success(
           response?.data?.metadata?.message ??
-            `${isUpdate ? 'Update' : 'Create'} product successfully!`
+            `${isUpdate ? 'Update' : 'Create'} store successfully!`
         )
         onCloseModal()
         refetch()
@@ -93,6 +77,6 @@ export default function useProductAction({
 
   return {
     loading: isPending,
-    onActionProduct: mutate,
+    onStoreAction: mutate,
   }
 }

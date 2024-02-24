@@ -4,7 +4,7 @@ import DataTable, { TableColumn } from 'react-data-table-component'
 
 import useHydration from '@/hooks/useHydration'
 
-import useTableDataStores from '@/hooks/useTableDataStores'
+import useTableDataStores from '@/hooks/stores/useTableDataStores'
 
 import { Store } from '@/types/store'
 

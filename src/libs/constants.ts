@@ -27,6 +27,11 @@ export const sidebarList = [
         icon: 'Stock',
         url: '/products-warehouse',
       },
+      {
+        label: 'History',
+        icon: 'WarehouseHistory',
+        url: '/warehouse-history/imported',
+      },
     ],
   },
   {

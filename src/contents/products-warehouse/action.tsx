@@ -20,9 +20,10 @@ import {
 } from '@/components/ui/drop-menu'
 import { Modal, ModalProps } from '@/components/ui/modal'
 import Spinner from '@/components/ui/spinner'
-import { ProductsWarehouseResponse } from '@/hooks/useTableDataProductsWarehouse'
-import { Product, ProductWarehouse } from '@/types/product'
+import { ProductsWarehouseResponse } from '@/hooks/warehouses/useTableProductsWarehouse'
+import { Product } from '@/types/product'
 import { DataError, DataResponse } from '@/types/react-query'
+import { ProductWarehouse } from '@/types/warehouse'
 
 type ProductsWarehouseTableActionProps = {
   data: ProductWarehouse

@@ -4,12 +4,15 @@ import numeral from 'numeral'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import { ProductsWarehouseResponse } from '@/hooks/useTableDataProductsWarehouse'
-import useTableDataStores from '@/hooks/useTableDataStores'
-import useUpdateSize, { UpdateSizePayload } from '@/hooks/useUpdateSize'
+import useTableDataStores from '@/hooks/stores/useTableDataStores'
+import { ProductsWarehouseResponse } from '@/hooks/warehouses/useTableProductsWarehouse'
+import useUpdateSize, {
+  UpdateSizePayload,
+} from '@/hooks/warehouses/useUpdateSize'
 
 import { SizeExportSchema, SizeImportSchema } from '@/libs/validations/product'
-import { ProductWarehouse, ProductWarehouseSizeStock } from '@/types/product'
+
+import { ProductWarehouse, ProductWarehouseSizeStock } from '@/types/warehouse'
 
 import { Button } from '../ui/button'
 import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/form'

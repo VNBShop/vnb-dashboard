@@ -12,7 +12,7 @@ import { ModalProps } from '@/components/ui/modal'
 import { Product } from '@/types/product'
 import { DataResponse, DataError } from '@/types/react-query'
 
-import { ProductResponse } from './useTableDataProducts'
+import { ProductResponse } from './useTableProducts'
 
 type DeactivatesProps = {
   refetch: (

@@ -8,7 +8,7 @@ import HeaderSection from '@/components/header-section'
 import {
   ProductsWarehouseResponse,
   SearchProductWarehouseTableProps,
-} from '@/hooks/useTableDataProductsWarehouse'
+} from '@/hooks/warehouses/useTableProductsWarehouse'
 
 type ProductsWarehouseHeaderProps = {
   onSearch: (values: SearchProductWarehouseTableProps) => void
