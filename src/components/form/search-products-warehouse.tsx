@@ -1,8 +1,7 @@
 import { formatISO } from 'date-fns'
 import { Controller, useForm } from 'react-hook-form'
 
-import { SearchProductTableProps } from '@/hooks/useTableDataProducts'
-
+import { SearchProductWarehouseTableProps } from '@/hooks/useTableDataProductsWarehouse'
 import { brands, categories } from '@/libs/constants'
 
 import { Button } from '../ui/button'
@@ -19,24 +18,24 @@ import {
 } from '../ui/select'
 import Spinner from '../ui/spinner'
 
-type FormSearchProps = SearchProductTableProps & {
+type FormSearchProps = SearchProductWarehouseTableProps & {
   datetime: {
     from: Date
     to: Date
   }
 }
 
-type SearchProductFormProps = {
-  onSearch: (values: SearchProductTableProps) => void
+type SearchProductWarehouseFormProps = {
+  onSearch: (values: SearchProductWarehouseTableProps) => void
   loading: boolean
   onResetFilter: () => void
 }
 
-export default function SearchProductForm({
+export default function SearchProductWarehouseForm({
   onSearch,
   loading,
   onResetFilter,
-}: SearchProductFormProps) {
+}: SearchProductWarehouseFormProps) {
   const form = useForm<FormSearchProps>()
 
   const onSubmit = (values: FormSearchProps) => {

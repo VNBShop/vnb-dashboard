@@ -18,12 +18,14 @@ type ProductsHeaderProps = {
   refetch: (
     options?: RefetchOptions | undefined
   ) => Promise<QueryObserverResult<ProductResponse, Error>>
+  onResetFilter: () => void
 }
 
 export default function ProductsHeader({
   onSearch,
   loading,
   refetch,
+  onResetFilter,
 }: ProductsHeaderProps) {
   const modalRef = createRef<ModalProps>()
   const [filter, setFilter] = useState(false)
@@ -68,7 +70,13 @@ export default function ProductsHeader({
           </section>
         </HeaderSection>
 
-        {filter && <SearchProductForm onSearch={onSearch} loading={loading} />}
+        {filter && (
+          <SearchProductForm
+            onSearch={onSearch}
+            loading={loading}
+            onResetFilter={onResetFilter}
+          />
+        )}
       </>
     </>
   )

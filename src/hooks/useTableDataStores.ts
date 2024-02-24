@@ -3,12 +3,9 @@ import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 
 import useAxiosPrivate from '@/api/private/useAxios'
-import { Product } from '@/types/product'
 import { DataResponse } from '@/types/react-query'
 
 import { Store } from '@/types/store'
-
-import { ProductResponse } from './useTableDataProducts'
 
 export type StoresResponse = {
   data: Store[]
@@ -28,7 +25,11 @@ export type SearchProductTableProps = {
   endDate?: string
 }
 
-export default function useTableDataStores() {
+type IProps = {
+  isExport?: boolean
+}
+
+export default function useTableDataStores({ isExport }: IProps) {
   const axios = useAxiosPrivate()
 
   const [currentPage, setCurrentPage] = useState(1)
@@ -58,12 +59,13 @@ export default function useTableDataStores() {
       )
 
       if (res?.data.success) {
-        return res?.data?.metadata as ProductResponse
+        return res?.data?.metadata as StoresResponse
       } else {
         throw new Error('')
       }
     },
     refetchOnWindowFocus: false,
+    enabled: isExport,
   })
 
   const onSearch = (values: SearchProductTableProps) => {

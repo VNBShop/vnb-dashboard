@@ -38,7 +38,7 @@ export type UpdateProductProps = Omit<CreateProductProps, 'productSizes'> & {
   productId: Product['productId']
 }
 
-type UseCreateProductProps = {
+type IProps = {
   onCloseModal: () => void
   refetch: (
     options?: RefetchOptions | undefined
@@ -50,7 +50,7 @@ export default function useProductAction({
   onCloseModal,
   refetch,
   isUpdate,
-}: UseCreateProductProps) {
+}: IProps) {
   const axios = useAxiosPrivate()
 
   const { mutate, isPending } = useMutation<

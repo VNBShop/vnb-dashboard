@@ -28,7 +28,7 @@ export const config = {
     '/invoice-order',
     '/products',
     '/product',
-    '/products-stock',
+    '/products-warehouse',
     '/product/:path*',
   ],
 }

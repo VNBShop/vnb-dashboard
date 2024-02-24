@@ -3,11 +3,11 @@ import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 
 import useAxiosPrivate from '@/api/private/useAxios'
-import { Product, ProductWarehouse } from '@/types/product'
+import { Product } from '@/types/product'
 import { DataResponse } from '@/types/react-query'
 
 export type ProductResponse = {
-  data: ProductWarehouse[]
+  data: Product[]
   maxPage: number
   nextPage: number
   currentPage: number
@@ -73,6 +73,10 @@ export default function useTableDataProduct() {
     setPerPage(_perPage)
   }
 
+  const onResetFilter = () => {
+    setFilter({} as SearchProductTableProps)
+  }
+
   return {
     data,
     isError,
@@ -86,5 +90,6 @@ export default function useTableDataProduct() {
     onPerPageChange,
     refetch,
     setProducts,
+    onResetFilter,
   }
 }

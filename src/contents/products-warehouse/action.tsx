@@ -21,11 +21,11 @@ import {
 import { Modal, ModalProps } from '@/components/ui/modal'
 import Spinner from '@/components/ui/spinner'
 import { ProductsWarehouseResponse } from '@/hooks/useTableDataProductsWarehouse'
-import { Product } from '@/types/product'
+import { Product, ProductWarehouse } from '@/types/product'
 import { DataError, DataResponse } from '@/types/react-query'
 
 type ProductsWarehouseTableActionProps = {
-  data: Product
+  data: ProductWarehouse
   refetch: (
     options?: RefetchOptions | undefined
   ) => Promise<QueryObserverResult<ProductsWarehouseResponse, Error>>
@@ -72,48 +72,42 @@ export default function ProductWarehouseTableAction({
 
   return (
     <>
-      <>
-        {data?.productStatus ? (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <div className="flex h-8 w-8 items-center justify-center hover:cursor-pointer">
-                <Icon name="Ellipsis" size={16} />
-              </div>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56">
-              {/* <DropdownMenuLabel>My Account</DropdownMenuLabel>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <div className="flex h-8 w-8 items-center justify-center hover:cursor-pointer">
+            <Icon name="Ellipsis" size={16} />
+          </div>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="w-56">
+          {/* <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator /> */}
-              <DropdownMenuItem
-                onClick={() => {
-                  if (!!modalUpdateRef.current) {
-                    modalUpdateRef.current?.onOpen()
-                  }
-                }}
-              >
-                <div className=" flex items-center gap-2">
-                  <Icon name="Pen" size={16} />
-                  Update
-                </div>
-              </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => {
+              if (!!modalUpdateRef.current) {
+                modalUpdateRef.current?.onOpen()
+              }
+            }}
+          >
+            <div className=" flex items-center gap-2">
+              <Icon name="Pen" size={16} />
+              Update
+            </div>
+          </DropdownMenuItem>
 
-              <DropdownMenuItem
-                onClick={() => {
-                  if (!!modalDeleteRef.current) {
-                    modalDeleteRef.current.onOpen()
-                  }
-                }}
-              >
-                <div className=" flex items-center gap-2">
-                  <Icon name="Trash" size={16} />
-                  Deactivate
-                </div>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        ) : (
-          <div></div>
-        )}
-      </>
+          <DropdownMenuItem
+            onClick={() => {
+              if (!!modalDeleteRef.current) {
+                modalDeleteRef.current.onOpen()
+              }
+            }}
+          >
+            <div className=" flex items-center gap-2">
+              <Icon name="Trash" size={16} />
+              Deactivate
+            </div>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
 
       <Modal ref={modalDeleteRef} header="Deactivate product">
         <section>
@@ -149,17 +143,7 @@ export default function ProductWarehouseTableAction({
         </section>
       </Modal>
 
-      <Modal size="lg" ref={modalUpdateRef} header="Update product">
-        <ProductForm
-          updateData={data}
-          refetch={refetch}
-          onCloseModal={() => {
-            if (!!modalUpdateRef.current) {
-              modalDeleteRef.current?.onClose()
-            }
-          }}
-        />
-      </Modal>
+      <Modal size="lg" ref={modalUpdateRef} header="Update product"></Modal>
     </>
   )
 }

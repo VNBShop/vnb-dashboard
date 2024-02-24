@@ -39,6 +39,7 @@ export default function ProductTableData() {
     onPageChange,
     onPerPageChange,
     setProducts,
+    onResetFilter,
   } = useTableDataProduct()
 
   const { loading, onDeactive } = useDeactives({
@@ -117,6 +118,7 @@ export default function ProductTableData() {
         onSearch={onSearch}
         loading={isLoading}
         refetch={refetch}
+        onResetFilter={onResetFilter}
       />
       {isFetching || isLoading ? (
         <ProductTableSkeleton />

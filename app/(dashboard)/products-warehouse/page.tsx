@@ -11,7 +11,7 @@ export default function ProductsWarehousePage() {
             href: '/',
           },
           {
-            title: 'Products',
+            title: 'Products warehouse',
             href: '/products-stock',
           },
         ]}

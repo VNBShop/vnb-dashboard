@@ -76,6 +76,10 @@ export default function useTableDataProductsWarehouse() {
     setPerPage(_perPage)
   }
 
+  const onResetFilter = () => {
+    setFilter({} as SearchProductWarehouseTableProps)
+  }
+
   return {
     data,
     isError,
@@ -89,5 +93,6 @@ export default function useTableDataProductsWarehouse() {
     onPerPageChange,
     refetch,
     setProducts,
+    onResetFilter,
   }
 }
