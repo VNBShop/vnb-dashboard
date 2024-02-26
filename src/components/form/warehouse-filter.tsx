@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { Controller, useForm } from 'react-hook-form'
 
 import Icon from '@/common/icons'
@@ -6,11 +7,11 @@ import { WarehouseExportedFilter } from '@/hooks/warehouses/useTableWarehouseExp
 
 import { cn } from '@/libs/utils'
 
+import SearchProductSkeleton from '../skeleton/search-product'
 import { Button } from '../ui/button'
 import { Calendar } from '../ui/calendar'
 import {
   Command,
-  CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
@@ -33,10 +34,7 @@ type Inputs = WarehouseExportedFilter & {
 export default function WarehouseHistoryFilterForm() {
   const form = useForm<Inputs>()
 
-  const { data, isError, isFetching, isLoading, isPending, onSearch, search } =
-    useSearchProduct()
-
-  console.log('form >>', form.getValues('actorId'))
+  const { data, isError, isFetching, onSearch, search } = useSearchProduct()
 
   return (
     <form className="mt-4">
@@ -50,15 +48,17 @@ export default function WarehouseHistoryFilterForm() {
                 <Button
                   variant="outline"
                   role="combobox"
+                  style={{
+                    height: 40,
+                  }}
                   className={cn(
-                    'justify-between',
-                    !field.value &&
-                      'h-10 text-gray-400 shadow-none hover:bg-transparent hover:text-gray-400'
+                    'justify-between text-gray-400 shadow-none  hover:bg-transparent hover:text-gray-400',
+                    field.value && 'text-black'
                   )}
                 >
                   {field.value
                     ? data?.find((data) => data.productId === field.value)
-                        ?.productName
+                        ?.productName ?? 'Select product'
                     : 'Select product'}
                   <div className="ml-2 h-4 w-4 shrink-0 opacity-50">
                     <Icon name="CaretSort" size={16} />
@@ -69,35 +69,71 @@ export default function WarehouseHistoryFilterForm() {
                 <Command key={'search-product'} shouldFilter={false}>
                   <CommandInput
                     value={search}
-                    onValueChange={onSearch}
+                    onValueChange={(e) => {
+                      if (!e) {
+                        form.resetField('productId')
+                      }
+                      onSearch(e)
+                    }}
                     placeholder="Search product..."
                     className="h-9"
                   />
                   <CommandList>
-                    <CommandEmpty>hehe</CommandEmpty>
                     <CommandGroup>
-                      {data?.map((product) => (
-                        <CommandItem
-                          value={product?.productId?.toString()}
-                          key={product?.productId?.toString()}
-                          onSelect={(value) => {
-                            form.setValue('productId', Number(value))
-                          }}
-                        >
-                          {product?.productName}
-                          <div
-                            className={cn(
-                              'ml-auto h-4 w-4',
-                              product?.productId === field.value
-                                ? 'opacity-100'
-                                : 'opacity-0'
-                            )}
-                          >
-                            <Icon name="Checked" size={16} />
-                          </div>
-                        </CommandItem>
-                      ))}
+                      {!isFetching && !isError
+                        ? data?.map((product) => (
+                            <CommandItem
+                              value={product?.productId?.toString()}
+                              key={product?.productId?.toString()}
+                              onSelect={(value) => {
+                                form.setValue('productId', Number(value))
+                              }}
+                            >
+                              <section className="flex items-center gap-3">
+                                <figure className="relative h-10 w-10 overflow-hidden rounded-full">
+                                  <Image
+                                    src={
+                                      product?.productImages[0]
+                                        .productAssetUrl ?? ''
+                                    }
+                                    alt="product id"
+                                    sizes="100vw"
+                                    className=" rounded-full object-cover"
+                                    fill
+                                  />
+                                </figure>
+                                <article>
+                                  <p className="text-sm font-medium">
+                                    {product?.productName}
+                                  </p>
+                                  <p className="text-xs text-secondary">
+                                    {product?.productPrice?.toLocaleString()}
+                                  </p>
+                                </article>
+                              </section>
+                              <div
+                                className={cn(
+                                  'ml-auto h-4 w-4',
+                                  product?.productId === field.value
+                                    ? 'opacity-100'
+                                    : 'opacity-0'
+                                )}
+                              >
+                                <Icon name="Checked" size={16} />
+                              </div>
+                            </CommandItem>
+                          ))
+                        : null}
+
+                      {isFetching && !data && !isError ? (
+                        <SearchProductSkeleton />
+                      ) : null}
                     </CommandGroup>
+                    {(isError || !data) && !isFetching ? (
+                      <p className="grid place-items-center py-4 text-sm">
+                        No product found
+                      </p>
+                    ) : null}
                   </CommandList>
                 </Command>
               </PopoverContent>
@@ -165,7 +201,7 @@ export default function WarehouseHistoryFilterForm() {
         />
       </section>
 
-      <div className="flex items-center justify-end">
+      <div className="mt-4 flex items-center justify-end">
         <Button
           disabled={true}
           type="submit"
