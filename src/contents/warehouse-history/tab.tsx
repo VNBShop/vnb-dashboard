@@ -7,7 +7,7 @@ export default function WarehouseHistoryTab() {
   return (
     <section className="mb-4 flex items-center">
       <Link
-        href="/warehouse-history/import"
+        href="/warehouse-history/imported"
         className="relative p-2 px-5 text-sm font-medium"
       >
         <p
@@ -22,7 +22,7 @@ export default function WarehouseHistoryTab() {
         ) : null}
       </Link>
       <Link
-        href="/warehouse-history/export"
+        href="/warehouse-history/exported"
         className="relative p-2 px-5 text-sm font-medium"
       >
         <p

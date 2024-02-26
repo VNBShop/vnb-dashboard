@@ -2,27 +2,28 @@
 import Image from 'next/image'
 import DataTable from 'react-data-table-component'
 
-import { WareHouseImportedContext } from '@/contexts/warehouse-imported'
+import { WareHouseExportedContext } from '@/contexts/warehouse-exported'
 import useHydration from '@/hooks/useHydration'
-import useTableWarehouseImported from '@/hooks/warehouses/useTableWarehouseImported'
+
+import useTableWarehouseExported from '@/hooks/warehouses/useTableWarehouseExported'
 
 import genColumns from './columns'
 
-import WareHouseImportedHeader from './header'
+import WareHouseExportedHeader from './header'
 
-import { EmptyImg } from '../../../public'
-import ProductTableSkeleton from '../products/skeleton'
+import { EmptyImg } from '../../../../public'
+import ProductTableSkeleton from '../../products/skeleton'
 
-export default function WareHouseImportedContent() {
+export default function WareHouseExportedContent() {
   const { hydration } = useHydration()
-  const values = useTableWarehouseImported()
+  const values = useTableWarehouseExported()
   const columns = genColumns()
   if (hydration) {
     return <p className="mt-4">Wait a minute...</p>
   }
   return (
-    <WareHouseImportedContext.Provider value={values}>
-      <WareHouseImportedHeader />
+    <WareHouseExportedContext.Provider value={values}>
+      <WareHouseExportedHeader />
       {values.isFetching || values.isLoading ? (
         <ProductTableSkeleton />
       ) : (
@@ -51,6 +52,6 @@ export default function WareHouseImportedContent() {
           />
         </section>
       )}
-    </WareHouseImportedContext.Provider>
+    </WareHouseExportedContext.Provider>
   )
 }

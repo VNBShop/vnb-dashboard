@@ -11,7 +11,7 @@ export default function genColumns() {
       cell(row) {
         if (!row?.createdAt) return '-'
         return dayjs(row.createdAt as unknown as Date).format(
-          'HH:mm dd/MM/yyyy'
+          'HH:mm DD/MM/YYYY'
         )
       },
     },

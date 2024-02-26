@@ -3,13 +3,11 @@ import { useState } from 'react'
 
 import { useQuery } from '@tanstack/react-query'
 
-import { Session } from 'next-auth'
-
 import useAxiosPrivate from '@/api/private/useAxios'
 import { PRODUCT_SERVICE } from '@/libs/micro-service'
 import { DataResponse } from '@/types/react-query'
 
-export type WarehouseImportedResponse = {
+export type WarehouseExportedResponse = {
   data: [
     {
       importFrom: string
@@ -28,49 +26,43 @@ export type WarehouseImportedResponse = {
   total: number
 }
 
-export type WarehouseImportedFilter = {
-  actorId: number
+export type WarehouseExportedFilter = {
+  actorId: number | string
+  importTo: number
   productId: number
   startDate: string
   endDate: string
 }
 
-type IProps = {
-  user: Session['user']
-}
-
-export default function useTableWarehouseImported({ user }: IProps) {
+export default function useTableWarehouseExported() {
   const axios = useAxiosPrivate()
   const [currentPage, setCurrentPage] = useState(1)
   const [perPage, setPerPage] = useState(10)
-  const [filter, setFilter] = useState<WarehouseImportedFilter>(
-    {} as WarehouseImportedFilter
+  const [filter, setFilter] = useState<WarehouseExportedFilter>(
+    {} as WarehouseExportedFilter
   )
   const { data, refetch, isFetching, isError, isLoading } = useQuery({
     queryKey: [
-      'warehouse-imported',
+      'warehouse-exported',
       { currentPage, pageSize: perPage, ...filter },
     ],
     queryFn: async ({ queryKey }) => {
       const filter = queryKey[1] as {
         currentPage: number
         pageSize: number
-      } & WarehouseImportedFilter
+      } & WarehouseExportedFilter
 
-      const res: DataResponse<unknown> = user?.roles?.includes('ADMIN')
-        ? await axios.get(`${PRODUCT_SERVICE}/warehouse-orders/imports/admin`, {
-            params: {
-              ...filter,
-            },
-          })
-        : await axios.get(`${PRODUCT_SERVICE}/warehouse-orders/imports`, {
-            params: {
-              ...filter,
-            },
-          })
+      const res: DataResponse<unknown> = await axios.get(
+        `${PRODUCT_SERVICE}/warehouse-orders/exports`,
+        {
+          params: {
+            ...filter,
+          },
+        }
+      )
 
       if (res?.data.success) {
-        return res?.data?.metadata as WarehouseImportedResponse
+        return res?.data?.metadata as WarehouseExportedResponse
       } else {
         throw new Error('')
       }
@@ -78,7 +70,7 @@ export default function useTableWarehouseImported({ user }: IProps) {
     refetchOnWindowFocus: false,
   })
 
-  const onSearch = (values: WarehouseImportedFilter) => {
+  const onSearch = (values: WarehouseExportedFilter) => {
     setFilter(values)
   }
 
@@ -92,7 +84,7 @@ export default function useTableWarehouseImported({ user }: IProps) {
   }
 
   const onResetFilter = () => {
-    setFilter({} as WarehouseImportedFilter)
+    setFilter({} as WarehouseExportedFilter)
   }
 
   return {
