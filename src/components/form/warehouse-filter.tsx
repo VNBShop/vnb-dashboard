@@ -1,11 +1,20 @@
+import dayjs from 'dayjs'
 import Image from 'next/image'
+import numeral from 'numeral'
 import { Controller, useForm } from 'react-hook-form'
 
 import Icon from '@/common/icons'
+import { useWareHouseExportedContext } from '@/contexts/warehouse-exported'
+import { useWareHouseImportedContext } from '@/contexts/warehouse-imported'
+import useGetWarehouseFilter from '@/hooks/common/useGetWarehouseFilter'
 import useSearchProduct from '@/hooks/products/useSearchProduct'
 import { WarehouseExportedFilter } from '@/hooks/warehouses/useTableWarehouseExported'
 
+import { WarehouseImportedFilter } from '@/hooks/warehouses/useTableWarehouseImported'
 import { cn } from '@/libs/utils'
+
+import { StoreSingle } from '@/types/store'
+import { Admin } from '@/types/user'
 
 import SearchProductSkeleton from '../skeleton/search-product'
 import { Button } from '../ui/button'
@@ -28,16 +37,62 @@ import {
 import Spinner from '../ui/spinner'
 
 type Inputs = WarehouseExportedFilter & {
-  datetime: Date
+  datetime: {
+    from: Date
+    to: Date
+  }
 }
 
-export default function WarehouseHistoryFilterForm() {
+type IProps = {
+  admins: Admin[]
+  stores?: StoreSingle[]
+  isExported?: boolean
+}
+
+export default function WarehouseHistoryFilterForm({
+  admins,
+  isExported,
+  stores,
+}: IProps) {
   const form = useForm<Inputs>()
 
   const { data, isError, isFetching, onSearch, search } = useSearchProduct()
+  const {
+    onSearch: onFilterImported,
+    isLoading: loadingImported,
+    onResetFilter: onResetFilterImported,
+  } = useWareHouseImportedContext()
+  const {
+    onSearch: onFilterExported,
+    isLoading: loadingExported,
+    onResetFilter: onResetFilterExported,
+  } = useWareHouseExportedContext()
+
+  const onSubmit = (values: Inputs) => {
+    const payload = {
+      actorId: numeral(values?.actorId)?.value() as number,
+      productId: numeral(values?.productId)?.value() as number,
+      startDate: values?.datetime?.from
+        ? dayjs(values?.datetime?.from).toISOString()
+        : undefined,
+      endDate: values?.datetime?.to
+        ? dayjs(values?.datetime?.to).toISOString()
+        : undefined,
+    }
+
+    if (!!isExported) {
+      const params: WarehouseExportedFilter = {
+        ...payload,
+        importTo: numeral(values?.importTo)?.value() as number,
+      }
+      onFilterExported(params)
+    } else {
+      onFilterImported(payload)
+    }
+  }
 
   return (
-    <form className="mt-4">
+    <form className="mt-4" onSubmit={form.handleSubmit(onSubmit)}>
       <section className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
         <Controller
           control={form.control}
@@ -153,37 +208,53 @@ export default function WarehouseHistoryFilterForm() {
                 <SelectValue placeholder="Actor" />
               </SelectTrigger>
               <SelectContent>
-                {[].map((item) => (
-                  <SelectItem key={item} value={'2'}>
-                    Test
+                {admins?.map((item) => (
+                  <SelectItem
+                    key={item?.adminId}
+                    value={item?.adminId?.toString()}
+                  >
+                    {item?.adminName}
                   </SelectItem>
-                ))}
+                )) ?? (
+                  <p className="grid place-items-center py-4 text-sm">
+                    No admins found
+                  </p>
+                )}
               </SelectContent>
             </Select>
           )}
         />
-        <Controller
-          control={form.control}
-          name="importTo"
-          render={({ field }) => (
-            <Select
-              key={field.value}
-              onValueChange={field.onChange}
-              value={field?.value?.toString()}
-            >
-              <SelectTrigger className="h-10">
-                <SelectValue placeholder="Import to" />
-              </SelectTrigger>
-              <SelectContent>
-                {[].map((item) => (
-                  <SelectItem key={item} value={'2'}>
-                    Test
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          )}
-        />
+        {!!isExported && (
+          <Controller
+            control={form.control}
+            name="importTo"
+            render={({ field }) => (
+              <Select
+                key={field.value}
+                onValueChange={field.onChange}
+                value={field?.value?.toString()}
+              >
+                <SelectTrigger className="h-10">
+                  <SelectValue placeholder="Import to" />
+                </SelectTrigger>
+                <SelectContent>
+                  {stores?.map((item) => (
+                    <SelectItem
+                      key={item?.storeId}
+                      value={item?.storeId?.toString()}
+                    >
+                      {item?.storeName}
+                    </SelectItem>
+                  )) ?? (
+                    <p className="grid place-items-center py-4 text-sm">
+                      No stores found
+                    </p>
+                  )}
+                </SelectContent>
+              </Select>
+            )}
+          />
+        )}
 
         <Controller
           name="datetime"
@@ -199,31 +270,59 @@ export default function WarehouseHistoryFilterForm() {
             )
           }}
         />
+
+        {!isExported && (
+          <div className="flex items-center justify-end">
+            <Button
+              disabled={loadingImported}
+              type="submit"
+              className="flex h-10 items-center gap-1"
+            >
+              {loadingImported && <Spinner size={18} />}
+              Search
+            </Button>
+
+            <Button
+              className="h-10 text-danger hover:underline"
+              variant="ghost"
+              type="button"
+              disabled={loadingImported}
+              onClick={() => {
+                form.reset()
+                onResetFilterImported()
+              }}
+            >
+              Clear
+            </Button>
+          </div>
+        )}
       </section>
 
-      <div className="mt-4 flex items-center justify-end">
-        <Button
-          disabled={true}
-          type="submit"
-          className="flex h-10 items-center gap-1"
-        >
-          {true && <Spinner size={18} />}
-          Search
-        </Button>
+      {!!isExported && (
+        <div className="mt-5 flex items-center justify-end">
+          <Button
+            disabled={loadingExported}
+            type="submit"
+            className="flex h-10 items-center gap-1"
+          >
+            {loadingExported && <Spinner size={18} />}
+            Search
+          </Button>
 
-        <Button
-          className="h-10 text-danger hover:underline"
-          variant="ghost"
-          type="button"
-          disabled={true}
-          onClick={() => {
-            form.reset()
-            // onResetFilter()
-          }}
-        >
-          Clear
-        </Button>
-      </div>
+          <Button
+            className="h-10 text-danger hover:underline"
+            variant="ghost"
+            type="button"
+            disabled={loadingExported}
+            onClick={() => {
+              form.reset()
+              onResetFilterExported()
+            }}
+          >
+            Clear
+          </Button>
+        </div>
+      )}
     </form>
   )
 }

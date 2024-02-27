@@ -29,7 +29,7 @@ type IProps = {
   isExport?: boolean
 }
 
-export default function useTableDataStores({ isExport }: IProps) {
+export default function useStoresTable({ isExport }: IProps = {}) {
   const axios = useAxiosPrivate()
 
   const [currentPage, setCurrentPage] = useState(1)
@@ -65,7 +65,7 @@ export default function useTableDataStores({ isExport }: IProps) {
       }
     },
     refetchOnWindowFocus: false,
-    enabled: isExport,
+    enabled: !!isExport ? true : undefined,
   })
 
   const onSearch = (values: SearchProductTableProps) => {
@@ -81,6 +81,10 @@ export default function useTableDataStores({ isExport }: IProps) {
     setPerPage(_perPage)
   }
 
+  const onResetFilter = () => {
+    setFilter({} as SearchProductTableProps)
+  }
+
   return {
     data,
     isError,
@@ -92,5 +96,6 @@ export default function useTableDataStores({ isExport }: IProps) {
     onPageChange,
     onPerPageChange,
     refetch,
+    onResetFilter,
   }
 }

@@ -1,22 +1,11 @@
 import { formatISO } from 'date-fns'
-import { Controller, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 
+import { useStoreTableContext } from '@/contexts/stores-table'
 import { SearchProductTableProps } from '@/hooks/products/useTableProducts'
 
-import { brands, categories } from '@/libs/constants'
-
 import { Button } from '../ui/button'
-import { Calendar } from '../ui/calendar'
 import { Input } from '../ui/input'
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from '../ui/select'
 import Spinner from '../ui/spinner'
 
 type FormSearchProps = SearchProductTableProps & {
@@ -26,16 +15,9 @@ type FormSearchProps = SearchProductTableProps & {
   }
 }
 
-type SearchStoreFormProps = {
-  onSearch: (values: SearchProductTableProps) => void
-  loading: boolean
-}
-
-export default function SearchStoreForm({
-  onSearch,
-  loading,
-}: SearchStoreFormProps) {
+export default function SearchStoreForm() {
   const form = useForm<FormSearchProps>()
+  const { onSearch, isLoading: loading, onResetFilter } = useStoreTableContext()
 
   const onSubmit = (values: FormSearchProps) => {
     const { datetime, ...payload } = {
@@ -74,7 +56,10 @@ export default function SearchStoreForm({
           variant="ghost"
           type="button"
           disabled={loading}
-          onClick={() => form.reset()}
+          onClick={() => {
+            form.reset()
+            onResetFilter()
+          }}
         >
           Clear
         </Button>

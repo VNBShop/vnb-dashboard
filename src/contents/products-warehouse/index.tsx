@@ -6,13 +6,12 @@ import DataTable, { TableColumn } from 'react-data-table-component'
 
 import { Button } from '@/components/ui/button'
 import { ModalProps } from '@/components/ui/modal'
+import { ProductWarehouseTableContext } from '@/contexts/warehouse-product-table'
 import useHydration from '@/hooks/useHydration'
 
-import useTableDataProductsWarehouse from '@/hooks/warehouses/useTableProductsWarehouse'
-
+import useProductsWarehouseTable from '@/hooks/warehouses/useProductsWarehouseTable'
 import { ProductWarehouse } from '@/types/warehouse'
 
-import ProductWarehouseTableAction from './action'
 import ProductsWarehouseHeader from './header'
 import ProductWarehouseTableImage from './image'
 import ProductsWarehouseQuantityColumn from './quanities-column'
@@ -25,18 +24,7 @@ export default function ProductWarehouseTableData() {
 
   const deactiveModal = createRef<ModalProps>()
 
-  const {
-    data,
-    isLoading,
-    isFetching,
-    currentPage,
-    productSelected,
-    onSearch,
-    refetch,
-    onPageChange,
-    onPerPageChange,
-    onResetFilter,
-  } = useTableDataProductsWarehouse()
+  const props = useProductsWarehouseTable()
 
   if (hydration) {
     return <p className="mt-4">Wait a minute...</p>
@@ -64,32 +52,21 @@ export default function ProductWarehouseTableData() {
       name: 'Quantities',
       cell: (row) => {
         if (!row.productSizeAndStockResponses.length) return '-'
-        return <ProductsWarehouseQuantityColumn refetch={refetch} row={row} />
+        return (
+          <ProductsWarehouseQuantityColumn refetch={props?.refetch} row={row} />
+        )
       },
     },
-    // {
-    //   name: 'Action',
-    //   center: 1 as any,
-    //   width: '100px',
-    //   cell: (row) => (
-    //     <ProductWarehouseTableAction refetch={refetch} data={row} />
-    //   ),
-    // },
   ]
 
   return (
-    <>
-      <ProductsWarehouseHeader
-        onSearch={onSearch}
-        loading={isLoading}
-        refetch={refetch}
-        onResetFilter={onResetFilter}
-      />
-      {isFetching || isLoading ? (
+    <ProductWarehouseTableContext.Provider value={props}>
+      <ProductsWarehouseHeader />
+      {props?.isFetching || props?.isLoading ? (
         <ProductTableSkeleton />
       ) : (
         <section className="mt-4">
-          {!!productSelected.length ? (
+          {!!props?.productSelected.length ? (
             <Button
               className=" mb-4 bg-danger"
               size="sm"
@@ -102,14 +79,14 @@ export default function ProductWarehouseTableData() {
           ) : null}
           <DataTable
             columns={columns as []}
-            data={data?.data ?? []}
+            data={props?.data?.data ?? []}
             pagination
             paginationServer
             selectableRowDisabled={(row) => !row.productStatus}
-            paginationTotalRows={data?.total ?? 0}
-            paginationDefaultPage={currentPage}
-            onChangePage={onPageChange}
-            onChangeRowsPerPage={onPerPageChange}
+            paginationTotalRows={props?.data?.total ?? 0}
+            paginationDefaultPage={props?.currentPage}
+            onChangePage={props?.onPageChange}
+            onChangeRowsPerPage={props?.onPerPageChange}
             noDataComponent={
               <div className="mt-[120px] grid place-items-center gap-5">
                 <Image
@@ -125,6 +102,6 @@ export default function ProductWarehouseTableData() {
           />
         </section>
       )}
-    </>
+    </ProductWarehouseTableContext.Provider>
   )
 }

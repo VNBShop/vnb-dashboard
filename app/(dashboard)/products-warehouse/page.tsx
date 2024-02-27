@@ -1,5 +1,5 @@
 import { Breadcrumbs } from '@/components/breadscrum'
-import ProductWarehouseTableData from '@/contents/products-warehouse/table-data'
+import ProductWarehouseTableData from '@/contents/products-warehouse'
 
 export default function ProductsWarehousePage() {
   return (

@@ -1,31 +1,14 @@
-import { Dispatch, SetStateAction, useState } from 'react'
-
-import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query'
+import { useState } from 'react'
 
 import Icon from '@/common/icons'
 import SearchProductWarehouseForm from '@/components/form/search-products-warehouse'
 import HeaderSection from '@/components/header-section'
-import {
-  ProductsWarehouseResponse,
-  SearchProductWarehouseTableProps,
-} from '@/hooks/warehouses/useTableProductsWarehouse'
+import { useProductWarehouseTableContext } from '@/contexts/warehouse-product-table'
 
-type ProductsWarehouseHeaderProps = {
-  onSearch: (values: SearchProductWarehouseTableProps) => void
-  loading: boolean
-  refetch: (
-    options?: RefetchOptions | undefined
-  ) => Promise<QueryObserverResult<ProductsWarehouseResponse, Error>>
-  onResetFilter: () => void
-}
-
-export default function ProductsWarehouseHeader({
-  onSearch,
-  loading,
-  refetch,
-  onResetFilter,
-}: ProductsWarehouseHeaderProps) {
+export default function ProductsWarehouseHeader() {
   const [filter, setFilter] = useState(false)
+
+  const { refetch } = useProductWarehouseTableContext()
 
   return (
     <>
@@ -46,13 +29,7 @@ export default function ProductsWarehouseHeader({
         </section>
       </HeaderSection>
 
-      {filter && (
-        <SearchProductWarehouseForm
-          onResetFilter={onResetFilter}
-          onSearch={onSearch}
-          loading={loading}
-        />
-      )}
+      {filter && <SearchProductWarehouseForm />}
     </>
   )
 }

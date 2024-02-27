@@ -9,6 +9,8 @@ import useAxiosPrivate from '@/api/private/useAxios'
 import { PRODUCT_SERVICE } from '@/libs/micro-service'
 import { DataResponse } from '@/types/react-query'
 
+import useGetWarehouseFilter from '../common/useGetWarehouseFilter'
+
 export type WarehouseImportedResponse = {
   data: [
     {
@@ -29,10 +31,10 @@ export type WarehouseImportedResponse = {
 }
 
 export type WarehouseImportedFilter = {
-  actorId: number
-  productId: number
-  startDate: string
-  endDate: string
+  actorId?: number
+  productId?: number
+  startDate?: string
+  endDate?: string
 }
 
 type IProps = {
@@ -78,6 +80,8 @@ export default function useTableWarehouseImported({ user }: IProps) {
     refetchOnWindowFocus: false,
   })
 
+  const { admins } = useGetWarehouseFilter()
+
   const onSearch = (values: WarehouseImportedFilter) => {
     setFilter(values)
   }
@@ -102,6 +106,7 @@ export default function useTableWarehouseImported({ user }: IProps) {
     isLoading,
     isFetching,
     currentPage,
+    admins,
     onSearch,
     onPageChange,
     onPerPageChange,

@@ -4,8 +4,8 @@ import numeral from 'numeral'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import useTableDataStores from '@/hooks/stores/useTableDataStores'
-import { ProductsWarehouseResponse } from '@/hooks/warehouses/useTableProductsWarehouse'
+import useTableDataStores from '@/hooks/stores/useStoresTable'
+import { ProductsWarehouseResponse } from '@/hooks/warehouses/useProductsWarehouseTable'
 import useUpdateSize, {
   UpdateSizePayload,
 } from '@/hooks/warehouses/useUpdateSize'
@@ -144,10 +144,7 @@ export default function SizeUpdateForm({
         ) : null}
 
         <section className="mt-7 flex items-center justify-center">
-          <Button
-            disabled={loading || isFetching}
-            className="flex h-10 items-center gap-1"
-          >
+          <Button disabled={loading} className="flex h-10 items-center gap-1">
             {loading && <Spinner size={16} />}
             {isExport ? 'Export' : 'Import'}
           </Button>

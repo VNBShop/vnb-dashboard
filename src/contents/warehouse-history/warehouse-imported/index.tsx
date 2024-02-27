@@ -4,6 +4,7 @@ import { Session } from 'next-auth'
 import DataTable from 'react-data-table-component'
 
 import { WareHouseImportedContext } from '@/contexts/warehouse-imported'
+import useGetWarehouseFilter from '@/hooks/common/useGetWarehouseFilter'
 import useHydration from '@/hooks/useHydration'
 import useTableWarehouseImported from '@/hooks/warehouses/useTableWarehouseImported'
 
@@ -22,6 +23,7 @@ export default function WareHouseImportedContent({ user }: IProps) {
   const { hydration } = useHydration()
   const values = useTableWarehouseImported({ user })
   const columns = genColumns()
+
   if (hydration) {
     return <p className="mt-4">Wait a minute...</p>
   }

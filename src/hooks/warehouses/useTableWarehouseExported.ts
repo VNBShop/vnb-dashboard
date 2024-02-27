@@ -7,6 +7,8 @@ import useAxiosPrivate from '@/api/private/useAxios'
 import { PRODUCT_SERVICE } from '@/libs/micro-service'
 import { DataResponse } from '@/types/react-query'
 
+import useGetWarehouseFilter from '../common/useGetWarehouseFilter'
+
 export type WarehouseExportedResponse = {
   data: [
     {
@@ -27,11 +29,11 @@ export type WarehouseExportedResponse = {
 }
 
 export type WarehouseExportedFilter = {
-  actorId: number | string
-  importTo: number
-  productId: number
-  startDate: string
-  endDate: string
+  actorId?: number
+  importTo?: number
+  productId?: number
+  startDate?: string
+  endDate?: string
 }
 
 export default function useTableWarehouseExported() {
@@ -70,6 +72,8 @@ export default function useTableWarehouseExported() {
     refetchOnWindowFocus: false,
   })
 
+  const { admins, stores } = useGetWarehouseFilter()
+
   const onSearch = (values: WarehouseExportedFilter) => {
     setFilter(values)
   }
@@ -94,6 +98,8 @@ export default function useTableWarehouseExported() {
     isLoading,
     isFetching,
     currentPage,
+    admins,
+    stores,
     onSearch,
     onPageChange,
     onPerPageChange,

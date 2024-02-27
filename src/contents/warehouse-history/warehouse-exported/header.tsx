@@ -1,12 +1,13 @@
 import { useState } from 'react'
 
 import Icon from '@/common/icons'
+import WarehouseHistoryFilterForm from '@/components/form/warehouse-filter'
 import HeaderSection from '@/components/header-section'
 import { useWareHouseExportedContext } from '@/contexts/warehouse-exported'
 
 export default function WareHouseExportedHeader() {
   const [filter, setFilter] = useState(false)
-  const { refetch } = useWareHouseExportedContext()
+  const { refetch, admins, stores } = useWareHouseExportedContext()
   return (
     <>
       <HeaderSection title="Warehouse exported management">
@@ -27,12 +28,11 @@ export default function WareHouseExportedHeader() {
       </HeaderSection>
 
       {filter && (
-        <p>Hehe</p>
-        // <SearchProductForm
-        //   onSearch={onSearch}
-        //   loading={loading}
-        //   onResetFilter={onResetFilter}
-        // />
+        <WarehouseHistoryFilterForm
+          admins={admins}
+          stores={stores}
+          isExported
+        />
       )}
     </>
   )

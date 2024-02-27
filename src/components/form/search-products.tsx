@@ -1,6 +1,7 @@
 import { formatISO } from 'date-fns'
 import { Controller, useForm } from 'react-hook-form'
 
+import { useProductTableContext } from '@/contexts/product-table'
 import { SearchProductTableProps } from '@/hooks/products/useTableProducts'
 
 import { brands, categories } from '@/libs/constants'
@@ -26,18 +27,14 @@ type FormSearchProps = SearchProductTableProps & {
   }
 }
 
-type SearchProductFormProps = {
-  onSearch: (values: SearchProductTableProps) => void
-  loading: boolean
-  onResetFilter: () => void
-}
-
-export default function SearchProductForm({
-  onSearch,
-  loading,
-  onResetFilter,
-}: SearchProductFormProps) {
+export default function SearchProductForm() {
   const form = useForm<FormSearchProps>()
+
+  const {
+    onSearch,
+    onResetFilter,
+    isLoading: loading,
+  } = useProductTableContext()
 
   const onSubmit = (values: FormSearchProps) => {
     const { datetime, ...payload } = {

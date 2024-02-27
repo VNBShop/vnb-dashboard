@@ -9,26 +9,17 @@ import SearchStoreForm from '@/components/form/search-store'
 import StoreForm from '@/components/form/store'
 import HeaderSection from '@/components/header-section'
 import { Modal, ModalProps } from '@/components/ui/modal'
+import { useStoreTableContext } from '@/contexts/stores-table'
 import {
   ProductResponse,
   SearchProductTableProps,
 } from '@/hooks/products/useTableProducts'
 
-type ProductsHeaderProps = {
-  onSearch: (values: SearchProductTableProps) => void
-  loading: boolean
-  refetch: (
-    options?: RefetchOptions | undefined
-  ) => Promise<QueryObserverResult<ProductResponse, Error>>
-}
-
-export default function StoresHeader({
-  onSearch,
-  loading,
-  refetch,
-}: ProductsHeaderProps) {
+export default function StoresHeader() {
   const modalRef = createRef<ModalProps>()
   const [filter, setFilter] = useState(false)
+
+  const { refetch } = useStoreTableContext()
 
   const onCloseModal = () => {
     if (modalRef && modalRef.current?.isOpen) {
@@ -70,7 +61,7 @@ export default function StoresHeader({
           </section>
         </HeaderSection>
 
-        {filter && <SearchStoreForm onSearch={onSearch} loading={loading} />}
+        {filter && <SearchStoreForm />}
       </>
     </>
   )

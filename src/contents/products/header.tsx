@@ -1,34 +1,17 @@
 import { createRef, useState } from 'react'
 
-import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query'
-
 import Icon from '@/common/icons'
 import ProductForm from '@/components/form/product'
 import SearchProductForm from '@/components/form/search-products'
 import HeaderSection from '@/components/header-section'
 import { Modal, ModalProps } from '@/components/ui/modal'
-import {
-  ProductResponse,
-  SearchProductTableProps,
-} from '@/hooks/products/useTableProducts'
+import { useProductTableContext } from '@/contexts/product-table'
 
-type ProductsHeaderProps = {
-  onSearch: (values: SearchProductTableProps) => void
-  loading: boolean
-  refetch: (
-    options?: RefetchOptions | undefined
-  ) => Promise<QueryObserverResult<ProductResponse, Error>>
-  onResetFilter: () => void
-}
-
-export default function ProductsHeader({
-  onSearch,
-  loading,
-  refetch,
-  onResetFilter,
-}: ProductsHeaderProps) {
+export default function ProductsHeader() {
   const modalRef = createRef<ModalProps>()
   const [filter, setFilter] = useState(false)
+
+  const { refetch } = useProductTableContext()
 
   const onCloseModal = () => {
     if (modalRef && modalRef.current?.isOpen) {
@@ -70,13 +53,7 @@ export default function ProductsHeader({
           </section>
         </HeaderSection>
 
-        {filter && (
-          <SearchProductForm
-            onSearch={onSearch}
-            loading={loading}
-            onResetFilter={onResetFilter}
-          />
-        )}
+        {filter && <SearchProductForm />}
       </>
     </>
   )

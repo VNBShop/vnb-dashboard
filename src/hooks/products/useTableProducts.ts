@@ -24,7 +24,7 @@ export type SearchProductTableProps = {
   endDate?: string
 }
 
-export default function useTableProduct() {
+export default function useProductTable() {
   const [currentPage, setCurrentPage] = useState(1)
   const [perPage, setPerPage] = useState(10)
   const [filter, setFilter] = useState<SearchProductTableProps>(

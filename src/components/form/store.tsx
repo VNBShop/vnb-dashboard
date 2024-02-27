@@ -7,9 +7,8 @@ import { useForm } from 'react-hook-form'
 
 import { z } from 'zod'
 
-import { ProductResponse } from '@/hooks/products/useTableProducts'
-import useCreateStore from '@/hooks/stores/useStoreAction'
 import useStoreAction from '@/hooks/stores/useStoreAction'
+import { StoresResponse } from '@/hooks/stores/useStoresTable'
 import { storeSchema } from '@/libs/validations/store'
 import { Store } from '@/types/store'
 
@@ -22,7 +21,7 @@ type StoreFormProps = {
   onCloseModal: () => void
   refetch: (
     options?: RefetchOptions | undefined
-  ) => Promise<QueryObserverResult<ProductResponse, Error>>
+  ) => Promise<QueryObserverResult<StoresResponse, Error>>
   updateData?: Store
 }
 

@@ -9,6 +9,8 @@ import { toast } from 'sonner'
 import useAxiosPrivate from '@/api/private/useAxios'
 import { DataError, DataResponse } from '@/types/react-query'
 
+import { StoresResponse } from './useStoresTable'
+
 import { ProductResponse } from '../products/useTableProducts'
 
 export type CreateStoreProps = {
@@ -27,7 +29,7 @@ type UseStoreActionProps = {
   onCloseModal: () => void
   refetch: (
     options?: RefetchOptions | undefined
-  ) => Promise<QueryObserverResult<ProductResponse, Error>>
+  ) => Promise<QueryObserverResult<StoresResponse, Error>>
   isUpdate?: boolean
 }
 

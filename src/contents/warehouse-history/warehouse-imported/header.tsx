@@ -7,7 +7,7 @@ import { useWareHouseImportedContext } from '@/contexts/warehouse-imported'
 
 export default function WareHouseImportedHeader() {
   const [filter, setFilter] = useState(false)
-  const { refetch } = useWareHouseImportedContext()
+  const { refetch, admins } = useWareHouseImportedContext()
   return (
     <>
       <HeaderSection title="Warehouse imported management">
@@ -27,7 +27,7 @@ export default function WareHouseImportedHeader() {
         </section>
       </HeaderSection>
 
-      {filter && <WarehouseHistoryFilterForm />}
+      {filter && <WarehouseHistoryFilterForm admins={admins} />}
     </>
   )
 }

@@ -1,7 +1,8 @@
 import { formatISO } from 'date-fns'
 import { Controller, useForm } from 'react-hook-form'
 
-import { SearchProductWarehouseTableProps } from '@/hooks/warehouses/useTableProductsWarehouse'
+import { useProductWarehouseTableContext } from '@/contexts/warehouse-product-table'
+import { SearchProductWarehouseTableProps } from '@/hooks/warehouses/useProductsWarehouseTable'
 import { brands, categories } from '@/libs/constants'
 
 import { Button } from '../ui/button'
@@ -25,18 +26,14 @@ type FormSearchProps = SearchProductWarehouseTableProps & {
   }
 }
 
-type SearchProductWarehouseFormProps = {
-  onSearch: (values: SearchProductWarehouseTableProps) => void
-  loading: boolean
-  onResetFilter: () => void
-}
-
-export default function SearchProductWarehouseForm({
-  onSearch,
-  loading,
-  onResetFilter,
-}: SearchProductWarehouseFormProps) {
+export default function SearchProductWarehouseForm() {
   const form = useForm<FormSearchProps>()
+
+  const {
+    onSearch,
+    isLoading: loading,
+    onResetFilter,
+  } = useProductWarehouseTableContext()
 
   const onSubmit = (values: FormSearchProps) => {
     const { datetime, ...payload } = {

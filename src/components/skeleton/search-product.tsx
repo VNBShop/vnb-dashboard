@@ -7,7 +7,7 @@ export default function SearchProductSkeleton() {
         <section key={index} className="flex items-center gap-3">
           <Skeleton circle width={40} height={40} />
           <article>
-            <Skeleton width={70} height={16} />
+            <Skeleton width={120} height={16} />
             <Skeleton width={40} height={16} />
           </article>
         </section>

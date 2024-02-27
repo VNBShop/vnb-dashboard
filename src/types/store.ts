@@ -9,3 +9,5 @@ export type Store = {
   storePhone: string
   status: boolean
 }
+
+export type StoreSingle = Pick<Store, 'storeId' | 'storeName'>

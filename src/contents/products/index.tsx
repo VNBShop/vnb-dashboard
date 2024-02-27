@@ -8,8 +8,10 @@ import useAxiosPrivate from '@/api/private/useAxios'
 import { Button } from '@/components/ui/button'
 import { Modal, ModalProps } from '@/components/ui/modal'
 import Spinner from '@/components/ui/spinner'
+import { ProductTableContext } from '@/contexts/product-table'
 import useDeactives from '@/hooks/products/useDeactives'
 import useTableDataProduct from '@/hooks/products/useTableProducts'
+import useProductTable from '@/hooks/products/useTableProducts'
 import useHydration from '@/hooks/useHydration'
 
 import { Product } from '@/types/product'
@@ -24,27 +26,13 @@ import { EmptyImg } from '../../../public'
 export default function ProductTableData() {
   const { hydration } = useHydration()
 
-  const axios = useAxiosPrivate()
-
   const deactiveModal = createRef<ModalProps>()
 
-  const {
-    data,
-    isLoading,
-    isFetching,
-    currentPage,
-    productSelected,
-    onSearch,
-    refetch,
-    onPageChange,
-    onPerPageChange,
-    setProducts,
-    onResetFilter,
-  } = useTableDataProduct()
+  const props = useProductTable()
 
   const { loading, onDeactive } = useDeactives({
     modalRef: deactiveModal,
-    refetch,
+    refetch: props.refetch,
   })
 
   if (hydration) {
@@ -108,69 +96,66 @@ export default function ProductTableData() {
       name: 'Action',
       center: 1 as any,
       width: '100px',
-      cell: (row) => <ProductTableAction refetch={refetch} data={row} />,
+      cell: (row) => <ProductTableAction refetch={props?.refetch} data={row} />,
     },
   ]
 
   return (
     <>
-      <ProductsHeader
-        onSearch={onSearch}
-        loading={isLoading}
-        refetch={refetch}
-        onResetFilter={onResetFilter}
-      />
-      {isFetching || isLoading ? (
-        <ProductTableSkeleton />
-      ) : (
-        <section className="mt-4">
-          {!!productSelected.length ? (
-            <Button
-              className=" mb-4 bg-danger"
-              size="sm"
-              onClick={() =>
-                !!deactiveModal?.current && deactiveModal.current.onOpen()
+      <ProductTableContext.Provider value={props}>
+        <ProductsHeader />
+        {props.isFetching || props.isLoading ? (
+          <ProductTableSkeleton />
+        ) : (
+          <section className="mt-4">
+            {!!props?.productSelected.length ? (
+              <Button
+                className=" mb-4 bg-danger"
+                size="sm"
+                onClick={() =>
+                  !!deactiveModal?.current && deactiveModal.current.onOpen()
+                }
+              >
+                Deactivate
+              </Button>
+            ) : null}
+            <DataTable
+              columns={columns as []}
+              data={props?.data?.data ?? []}
+              selectableRows
+              pagination
+              paginationServer
+              selectableRowDisabled={(row) => !row.productStatus}
+              onSelectedRowsChange={({ selectedRows }) =>
+                props?.setProducts?.(selectedRows.map((item) => item.productId))
               }
-            >
-              Deactivate
-            </Button>
-          ) : null}
-          <DataTable
-            columns={columns as []}
-            data={data?.data ?? []}
-            selectableRows
-            pagination
-            paginationServer
-            selectableRowDisabled={(row) => !row.productStatus}
-            onSelectedRowsChange={({ selectedRows }) =>
-              setProducts(selectedRows.map((item) => item.productId))
-            }
-            paginationTotalRows={data?.total ?? 0}
-            paginationDefaultPage={currentPage}
-            onChangePage={onPageChange}
-            onChangeRowsPerPage={onPerPageChange}
-            noDataComponent={
-              <div className="mt-[120px] grid place-items-center gap-5">
-                <Image
-                  src={EmptyImg}
-                  width={100}
-                  height={100}
-                  sizes="100vw"
-                  alt="Empty"
-                />
-                <p className="font-medium text-gray-500">No data 😢</p>
-              </div>
-            }
-          />
-        </section>
-      )}
+              paginationTotalRows={props?.data?.total ?? 0}
+              paginationDefaultPage={props?.currentPage}
+              onChangePage={props?.onPageChange}
+              onChangeRowsPerPage={props?.onPerPageChange}
+              noDataComponent={
+                <div className="mt-[120px] grid place-items-center gap-5">
+                  <Image
+                    src={EmptyImg}
+                    width={100}
+                    height={100}
+                    sizes="100vw"
+                    alt="Empty"
+                  />
+                  <p className="font-medium text-gray-500">No data 😢</p>
+                </div>
+              }
+            />
+          </section>
+        )}
+      </ProductTableContext.Provider>
 
       <Modal ref={deactiveModal} header="Deactivate products">
         <section>
           <p className=" my-4">
             Are you sure you want to deactivate{' '}
             <span className="text-danger">
-              {productSelected?.length} products
+              {props?.productSelected?.length} products
             </span>
             ?
           </p>
@@ -193,7 +178,7 @@ export default function ProductTableData() {
               disabled={loading}
               className=" flex items-center gap-1 bg-danger"
               size="sm"
-              onClick={() => onDeactive(productSelected)}
+              onClick={() => onDeactive(props?.productSelected)}
             >
               {loading && <Spinner size={16} />}
               Deactivates
