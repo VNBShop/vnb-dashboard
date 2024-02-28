@@ -36,12 +36,12 @@ export default function InvoiceOrderForm() {
           <section>
             <Popover>
               <PopoverTrigger asChild>
-                <Button className="w-[350px]" variant="outline">
+                <Button className="w-[400px]" variant="outline">
                   <Icon name="Plus" size={16} />
                   Add product
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-[350px]">
+              <PopoverContent className="w-[400px]">
                 <Command key={'search-product'} shouldFilter={false}>
                   <CommandInput
                     value={search}
@@ -74,7 +74,7 @@ export default function InvoiceOrderForm() {
                             }}
                           >
                             <section className="flex items-center gap-3">
-                              <figure className="relative h-10 w-10 overflow-hidden rounded-full">
+                              <figure className="relative h-[70px] w-[70px] overflow-hidden rounded-full">
                                 <Image
                                   src={
                                     product?.productImages[0].productAssetUrl ??
@@ -88,7 +88,7 @@ export default function InvoiceOrderForm() {
                               </figure>
                               <article className="flex-1">
                                 <div className="flex items-center justify-between">
-                                  <p className="text-sm font-medium">
+                                  <p className="flex-1 text-sm font-medium text-black/70">
                                     {product?.productName}
                                   </p>
 
@@ -109,14 +109,16 @@ export default function InvoiceOrderForm() {
                                   {product?.productPrice?.toLocaleString()}
                                 </p>
 
-                                <section className="mt-2 flex items-center gap-1">
+                                <section className="relative mt-2 flex flex-wrap items-center gap-1">
                                   {product?.productSizes?.map((size) => (
                                     <div
-                                      className="flex items-center gap-1 rounded border border-gray-300 p-1 px-2 text-sm"
+                                      className="flex items-center gap-1 rounded border border-gray-300 p-1 px-2 text-sm hover:cursor-pointer hover:bg-black hover:text-white"
                                       key={size?.productSizeId}
                                     >
                                       <Icon name="Plus" size={14} />
                                       {size?.productSize}
+
+                                      <div></div>
                                     </div>
                                   ))}
                                 </section>
