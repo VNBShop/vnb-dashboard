@@ -1,4 +1,5 @@
 import { Breadcrumbs } from '@/components/breadscrum'
+import InvoiceOrderForm from '@/components/form/invoice-order'
 import HeaderSection from '@/components/header-section'
 
 export default function InvoiceOrderPage() {
@@ -19,9 +20,7 @@ export default function InvoiceOrderPage() {
 
       <HeaderSection title="Invoice order" />
 
-      <div className="mt-5 flex items-center justify-center text-gray-500">
-        Comming soon...
-      </div>
+      <InvoiceOrderForm />
     </section>
   )
 }
