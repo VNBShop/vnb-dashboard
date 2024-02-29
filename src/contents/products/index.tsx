@@ -10,8 +10,8 @@ import { Modal, ModalProps } from '@/components/ui/modal'
 import Spinner from '@/components/ui/spinner'
 import { ProductTableContext } from '@/contexts/product-table'
 import useDeactives from '@/hooks/products/useDeactives'
-import useTableDataProduct from '@/hooks/products/useTableProducts'
-import useProductTable from '@/hooks/products/useTableProducts'
+import useTableDataProduct from '@/hooks/products/useProductsTable'
+import useProductTable from '@/hooks/products/useProductsTable'
 import useHydration from '@/hooks/useHydration'
 
 import { Product } from '@/types/product'
@@ -68,11 +68,7 @@ export default function ProductTableData() {
     {
       name: 'Price',
       right: 1 as any,
-      cell: (row) =>
-        row?.productPrice?.toLocaleString('en-US', {
-          currency: 'USD',
-          style: 'currency',
-        }) ?? '-',
+      cell: (row) => row?.productPrice?.toLocaleString() ?? '-',
     },
     {
       name: 'Status',

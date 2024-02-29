@@ -17,6 +17,11 @@ export const sidebarList = [
         icon: 'Selling',
         url: '/invoice-order',
       },
+      {
+        label: 'Orders',
+        icon: 'Orders',
+        url: '/all-ordered',
+      },
     ],
   },
   {

@@ -5,9 +5,10 @@ export type Product = {
     productAssetId: string
     productAssetUrl: string
   }[]
-  productSizes: {
+  productSizeAndStockResponses: {
     productSizeId: number
     productSize: string
+    productStock: number
   }[]
   productSubCategory: {
     subCategoryId: number

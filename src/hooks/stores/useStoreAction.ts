@@ -11,7 +11,7 @@ import { DataError, DataResponse } from '@/types/react-query'
 
 import { StoresResponse } from './useStoresTable'
 
-import { ProductResponse } from '../products/useTableProducts'
+import { ProductResponse } from '../products/useProductsTable'
 
 export type CreateStoreProps = {
   storeName: string

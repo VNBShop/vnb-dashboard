@@ -4,23 +4,29 @@ import HeaderSection from '@/components/header-section'
 
 export default function InvoiceOrderPage() {
   return (
-    <section>
-      <Breadcrumbs
-        segments={[
-          {
-            title: 'Home',
-            href: '/',
-          },
-          {
-            title: 'Invoice order',
-            href: '/invoice-order',
-          },
-        ]}
+    <>
+      <section>
+        <Breadcrumbs
+          segments={[
+            {
+              title: 'Home',
+              href: '/',
+            },
+            {
+              title: 'Invoice order',
+              href: '/invoice-order',
+            },
+          ]}
+        />
+
+        <HeaderSection title="Invoice order" />
+
+        <InvoiceOrderForm />
+      </section>
+      <div
+        className=" absolute inset-0 z-[-1] bg-[rgb(245,247,250)]"
+        aria-hidden
       />
-
-      <HeaderSection title="Invoice order" />
-
-      <InvoiceOrderForm />
-    </section>
+    </>
   )
 }

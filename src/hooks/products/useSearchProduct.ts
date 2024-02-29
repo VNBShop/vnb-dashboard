@@ -7,7 +7,7 @@ import { PRODUCT_SERVICE } from '@/libs/micro-service'
 
 import { DataResponse } from '@/types/react-query'
 
-import { ProductResponse } from './useTableProducts'
+import { ProductResponse } from './useProductsTable'
 
 import { useDebounce } from '../useDebounce'
 

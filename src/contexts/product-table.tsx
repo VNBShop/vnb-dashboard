@@ -1,7 +1,7 @@
 'use client'
 import { createContext, useContext } from 'react'
 
-import useTableProduct from '@/hooks/products/useTableProducts'
+import useTableProduct from '@/hooks/products/useProductsTable'
 
 type ProductTableContextProps = ReturnType<typeof useTableProduct>
 

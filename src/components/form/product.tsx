@@ -13,7 +13,7 @@ import useCreateProduct, {
   UpdateProductProps,
 } from '@/hooks/products/useProductAction'
 import useProductAction from '@/hooks/products/useProductAction'
-import { ProductResponse } from '@/hooks/products/useTableProducts'
+import { ProductResponse } from '@/hooks/products/useProductsTable'
 import { brands, categories } from '@/libs/constants'
 
 import { Product } from '@/types/product'

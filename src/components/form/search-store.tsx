@@ -2,7 +2,7 @@ import { formatISO } from 'date-fns'
 import { useForm } from 'react-hook-form'
 
 import { useStoreTableContext } from '@/contexts/stores-table'
-import { SearchProductTableProps } from '@/hooks/products/useTableProducts'
+import { SearchProductTableProps } from '@/hooks/products/useProductsTable'
 
 import { Button } from '../ui/button'
 import { Input } from '../ui/input'

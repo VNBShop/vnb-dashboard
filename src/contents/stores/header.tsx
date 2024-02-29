@@ -13,7 +13,7 @@ import { useStoreTableContext } from '@/contexts/stores-table'
 import {
   ProductResponse,
   SearchProductTableProps,
-} from '@/hooks/products/useTableProducts'
+} from '@/hooks/products/useProductsTable'
 
 export default function StoresHeader() {
   const modalRef = createRef<ModalProps>()

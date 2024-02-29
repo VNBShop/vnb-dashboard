@@ -14,7 +14,7 @@ import { ImageCloudinaryProps } from '@/components/ui/upload-file'
 import { Product } from '@/types/product'
 import { DataError, DataResponse } from '@/types/react-query'
 
-import { ProductResponse } from './useTableProducts'
+import { ProductResponse } from './useProductsTable'
 
 export type CreateProductProps = {
   productName: string

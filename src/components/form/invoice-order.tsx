@@ -1,183 +1,238 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
+import { zodResolver } from '@hookform/resolvers/zod'
 import Image from 'next/image'
-
-import { toast } from 'sonner'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
 
 import Icon from '@/common/icons'
 
-import useSearchProduct from '@/hooks/products/useSearchProduct'
+import InvoiceCart from '@/contents/invoice/invoice-cart'
 
-import { cn } from '@/libs/utils'
+import InvoiceStateModal from '@/contents/invoice/state-modal'
+import useCreateInvoice, {
+  CreateInvoicePayload,
+} from '@/hooks/order/useCreateInvoice'
+import { InvoiceShema } from '@/libs/validations/invoice'
 import { Product } from '@/types/product'
 
-import SearchProductSkeleton from '../skeleton/search-product'
+import { CartEmpty } from '../../../public'
+import SearchInvoice from '../../contents/invoice/invoice-search'
 import { Button } from '../ui/button'
-import {
-  Command,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from '../ui/command'
+import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/form'
+
 import { Input } from '../ui/input'
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
+import Spinner from '../ui/spinner'
+
+export type CartInvoice = Pick<
+  Product,
+  'productPrice' | 'productImages' | 'productName'
+> & {
+  quantity: number
+  nameSize?: string
+  id: number
+}
+
+type Inpust = z.infer<typeof InvoiceShema>
 
 export default function InvoiceOrderForm() {
-  const [products, setProducts] = useState<Product[]>([])
-  const { search, onSearch, isError, isFetching, isLoading, data } =
-    useSearchProduct()
+  const form = useForm<Inpust>({
+    resolver: zodResolver(InvoiceShema),
+    defaultValues: {
+      firstName: '',
+      phone: '',
+    },
+  })
+  const [products, setProducts] = useState<CartInvoice[]>([])
+  const [stateModal, setStateModal] = useState(false)
+
+  const onAddProducts = (
+    prod: Product & {
+      nameSize?: string
+      id: number
+    }
+  ) => {
+    setProducts((prev) => {
+      const findProduct = prev.findIndex((item) => item?.id === prod?.id)
+
+      if (findProduct !== -1) {
+        const newProducts = [...prev]
+
+        newProducts[findProduct] = {
+          ...prev[findProduct],
+          quantity: prev[findProduct].quantity + 1,
+        }
+
+        return newProducts
+      }
+      return [
+        ...prev,
+        {
+          productId: prod?.productId,
+          productImages: prod?.productImages,
+          productName: prod?.productName,
+          productPrice: prod?.productPrice,
+          quantity: 1,
+          nameSize: prod?.nameSize,
+          id: prod.id,
+        },
+      ]
+    })
+  }
+
+  const { loading, onCreate } = useCreateInvoice()
+
+  const onSubmit = (values: Inpust) => {
+    console.log('values', values)
+    if (!products?.length) return
+    const orderProds: CreateInvoicePayload['products'] = products.map(
+      (prod) => ({
+        productSizeId: prod.id,
+        quantity: prod.quantity,
+      })
+    )
+
+    const payload: CreateInvoicePayload = {
+      firstName: values.firstName,
+      phone: values.phone,
+      products: orderProds,
+    }
+
+    onCreate(payload)
+  }
+
+  const onCloseModal = () => {
+    setProducts([])
+    form.reset()
+    setStateModal(false)
+  }
+
+  useEffect(() => {
+    return () => {
+      setProducts([])
+      form.reset()
+      setStateModal(false)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
-    <section className="mt-5 flex items-center justify-center">
-      <section className="w-[70%]">
-        <section className="grid gap-28 lg:grid-cols-2">
-          <section>
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button className="w-[400px]" variant="outline">
-                  <Icon name="Plus" size={16} />
-                  Add product
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-[400px]">
-                <Command key={'search-product'} shouldFilter={false}>
-                  <CommandInput
-                    value={search}
-                    onValueChange={(e) => {
-                      onSearch(e)
-                    }}
-                    placeholder="Search product..."
-                    className="h-9"
-                  />
-                  <CommandList>
-                    {!isFetching && !isError ? (
-                      <section className=" mt-2 space-y-3">
-                        {data?.map((product) => (
-                          <div
-                            key={product?.productId?.toString()}
-                            onSelect={() => {
-                              setProducts((prev) => {
-                                const findIndex = prev.findIndex(
-                                  (prod) => prod.productId === product.productId
-                                )
+    <>
+      <section className="mt-5 overflow-auto pb-2">
+        <div className="mb-7">
+          <SearchInvoice onAddProducts={onAddProducts} />
+        </div>
+        {!!products?.length ? (
+          <section className="flex flex-col items-start gap-7 md:flex-row">
+            <InvoiceCart products={products} setProducts={setProducts} />
 
-                                if (findIndex !== -1) {
-                                  toast.error(
-                                    `${product?.productName} already have on cart`
-                                  )
-                                  return prev
-                                }
-                                return [...prev, product]
-                              })
-                            }}
-                          >
-                            <section className="flex items-center gap-3">
-                              <figure className="relative h-[70px] w-[70px] overflow-hidden rounded-full">
-                                <Image
-                                  src={
-                                    product?.productImages[0].productAssetUrl ??
-                                    ''
-                                  }
-                                  alt="product id"
-                                  sizes="100vw"
-                                  className=" rounded-full object-cover"
-                                  fill
-                                />
-                              </figure>
-                              <article className="flex-1">
-                                <div className="flex items-center justify-between">
-                                  <p className="flex-1 text-sm font-medium text-black/70">
-                                    {product?.productName}
-                                  </p>
+            <section className="sticky top-0 w-full rounded-md bg-white p-4 pr-2 shadow-sm md:w-[40%]">
+              <p className="mb-4 flex items-center gap-1 font-medium">
+                <Icon name="Selling" size={16} />
+                Bill info:
+              </p>
 
-                                  <div
-                                    className={cn(
-                                      ' rounded-full px-2 py-[2px] text-[10px] text-white',
-                                      product?.productStatus
-                                        ? 'bg-[#c9edc5] text-[#2c6d28]'
-                                        : 'bg-gray-300'
-                                    )}
-                                  >
-                                    {product?.productStatus
-                                      ? 'Active'
-                                      : 'Inactive'}
-                                  </div>
-                                </div>
-                                <p className="text-xs text-secondary">
-                                  {product?.productPrice?.toLocaleString()}
-                                </p>
-
-                                <section className="relative mt-2 flex flex-wrap items-center gap-1">
-                                  {product?.productSizes?.map((size) => (
-                                    <div
-                                      className="flex items-center gap-1 rounded border border-gray-300 p-1 px-2 text-sm hover:cursor-pointer hover:bg-black hover:text-white"
-                                      key={size?.productSizeId}
-                                    >
-                                      <Icon name="Plus" size={14} />
-                                      {size?.productSize}
-
-                                      <div></div>
-                                    </div>
-                                  ))}
-                                </section>
-                              </article>
-                            </section>
-                          </div>
-                        ))}
-                      </section>
-                    ) : null}
-
-                    {(isFetching || isLoading) && !data ? (
-                      <SearchProductSkeleton />
-                    ) : null}
-
-                    {(isError || !data) && !isFetching ? (
-                      <p className="grid place-items-center py-4 text-sm">
-                        No product found
-                      </p>
-                    ) : null}
-                  </CommandList>
-                </Command>
-              </PopoverContent>
-            </Popover>
-          </section>
-
-          <section>
-            <p className="mb-4 flex items-center gap-1 font-medium text-gray-600">
-              <Icon name="Cart" size={18} />
-              Cart:
-            </p>
-            <section className=" space-y-4">
-              {products?.map((prod) => (
-                <article
-                  key={prod.productId}
-                  className="flex items-center gap-4"
+              <Form {...form}>
+                <form
+                  className=" space-y-4"
+                  onSubmit={form.handleSubmit(onSubmit)}
                 >
-                  <figure className="relative h-[50px] w-[50px] rounded-md">
-                    <Image
-                      alt="img"
-                      src={prod?.productImages[0]?.productAssetUrl}
-                      sizes="100vw"
-                      className="rounded-md object-cover"
-                      fill
-                    />
-                  </figure>
+                  <FormField
+                    control={form.control}
+                    name="firstName"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <Input {...field} placeholder="Customer name" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
 
-                  <div>
-                    <h2 className="">{prod?.productName}</h2>
-                    <p className="text-[13px] font-medium text-secondary">
-                      {prod?.productPrice?.toLocaleString()}
-                    </p>
-                    <section></section>
-                  </div>
-                </article>
-              ))}
+                  <FormField
+                    control={form.control}
+                    name="phone"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            placeholder="Customer phone number"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <section className="space-y-1">
+                    {products.map((prod) => (
+                      <section
+                        key={prod.id}
+                        className="flex items-center justify-between text-sm"
+                      >
+                        <div>
+                          {prod.productName}
+                          {prod?.nameSize ? (
+                            <span>({prod.nameSize})</span>
+                          ) : null}
+                          {` `}
+                          <span className=" text-gray-500">
+                            x{prod.quantity}
+                          </span>
+                        </div>
+                        <p>
+                          {(prod.productPrice * prod.quantity).toLocaleString()}
+                        </p>
+                      </section>
+                    ))}
+                  </section>
+
+                  <div className="h-[1px] w-full bg-slate-300" />
+
+                  <section className="flex items-center justify-between text-[15px]">
+                    <p className="font-medium">Totally</p>
+
+                    <span className="font-medium text-secondary">
+                      {products
+                        .reduce(
+                          (acc, curr) =>
+                            acc + curr.quantity * curr.productPrice,
+                          0
+                        )
+                        .toLocaleString()}
+                    </span>
+                  </section>
+
+                  <Button
+                    disabled={loading}
+                    type="submit"
+                    className="w-full space-x-1"
+                  >
+                    {loading && <Spinner size={18} />}
+                    <span> Payment</span>
+                  </Button>
+                </form>
+              </Form>
             </section>
           </section>
-        </section>
+        ) : (
+          <section className="mt-[100px] flex items-center justify-center">
+            <Image
+              alt="Empty cart"
+              src={CartEmpty}
+              width={200}
+              height={200}
+              sizes="100vw"
+            />
+          </section>
+        )}
       </section>
-    </section>
+
+      <InvoiceStateModal open={stateModal} onCloseModal={onCloseModal} />
+    </>
   )
 }

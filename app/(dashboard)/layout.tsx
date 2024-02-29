@@ -15,12 +15,12 @@ export default async function DoardboardLayout({
 }: PropsWithChildren) {
   const session = await getServerSession(authOptions)
   return (
-    <main className="fixed inset-0 lg:grid lg:grid-cols-[17%_83%]">
+    <main className="inset-0 lg:fixed lg:grid lg:grid-cols-[17%_83%]">
       <div className="lg:col-span-[17%] hidden border-r lg:block">
         <Sidebar user={session?.user as Session['user']} />
       </div>
       <SidebarMobile user={session?.user as Session['user']} />
-      <section className="overflow-auto p-4">{children}</section>
+      <section className="relative overflow-auto p-4">{children}</section>
     </main>
   )
 }

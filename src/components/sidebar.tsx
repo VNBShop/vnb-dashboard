@@ -7,7 +7,6 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 import { useRouter } from 'next/navigation'
-import router from 'next/router'
 import { Session } from 'next-auth'
 
 import { signOut } from 'next-auth/react'

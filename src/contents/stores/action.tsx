@@ -20,7 +20,7 @@ import {
 } from '@/components/ui/drop-menu'
 import { Modal, ModalProps } from '@/components/ui/modal'
 import Spinner from '@/components/ui/spinner'
-import { ProductResponse } from '@/hooks/products/useTableProducts'
+import { ProductResponse } from '@/hooks/products/useProductsTable'
 import { StoresResponse } from '@/hooks/stores/useStoresTable'
 import { DataError, DataResponse } from '@/types/react-query'
 import { Store } from '@/types/store'

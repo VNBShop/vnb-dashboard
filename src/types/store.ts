@@ -8,6 +8,7 @@ export type Store = {
   storeEmail: string
   storePhone: string
   status: boolean
+  storeMemberName: string
 }
 
 export type StoreSingle = Pick<Store, 'storeId' | 'storeName'>
