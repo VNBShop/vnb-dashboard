@@ -16,7 +16,11 @@ export type CreateInvoicePayload = {
   }[]
 }
 
-export default function useCreateInvoice() {
+type IProps = {
+  onOpenModal: () => void
+}
+
+export default function useCreateInvoice({ onOpenModal }: IProps) {
   const axios = useAxiosPrivate()
 
   const { isPending, mutate } = useMutation<
@@ -29,6 +33,7 @@ export default function useCreateInvoice() {
     },
     onSuccess: (response) => {
       if (response?.data?.success) {
+        onOpenModal()
       }
     },
     onError: (error) => {

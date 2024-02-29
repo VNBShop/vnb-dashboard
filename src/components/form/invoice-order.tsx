@@ -82,7 +82,11 @@ export default function InvoiceOrderForm() {
     })
   }
 
-  const { loading, onCreate } = useCreateInvoice()
+  const onOpenModal = () => {
+    setStateModal(true)
+  }
+
+  const { loading, onCreate } = useCreateInvoice({ onOpenModal })
 
   const onSubmit = (values: Inpust) => {
     console.log('values', values)

@@ -48,7 +48,7 @@ export default function InvoiceCart({ products, setProducts }: IProps) {
                 <section className="flex items-center">
                   <button
                     disabled={!prod.quantity || prod.quantity <= 1}
-                    className="flex h-8 w-8 items-center justify-center rounded-l-md bg-blue-500 text-white"
+                    className="flex h-8 w-8 items-center justify-center rounded-l-md text-blue-500"
                     onClick={() => {
                       setProducts((prev) => {
                         const findProduct = prev.findIndex(
@@ -92,10 +92,10 @@ export default function InvoiceCart({ products, setProducts }: IProps) {
                         return prev
                       })
                     }}
-                    className="h-8 w-[50px] rounded-none text-center"
+                    className="h-8 w-[50px] rounded-none border-l-0 border-r-0 border-t-0 text-center"
                   />
                   <button
-                    className="flex h-8 w-8 items-center justify-center rounded-r-md bg-blue-500 text-white"
+                    className="flex h-8 w-8 items-center justify-center rounded-r-md text-blue-500 "
                     onClick={() => {
                       setProducts((prev) => {
                         const findProduct = prev.findIndex(
