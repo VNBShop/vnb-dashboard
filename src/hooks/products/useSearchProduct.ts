@@ -11,7 +11,11 @@ import { ProductResponse } from './useProductsTable'
 
 import { useDebounce } from '../useDebounce'
 
-export default function useSearchProduct() {
+type IProps = {
+  isInvoice?: boolean
+}
+
+export default function useSearchProduct({ isInvoice }: IProps = {}) {
   const queryClient = useQueryClient()
   const axios = useAxiosPrivate()
   const [search, setSearch] = useState('')
@@ -19,10 +23,11 @@ export default function useSearchProduct() {
   const searchVal = useDebounce(search)
 
   const { data, isPending, isFetching, isLoading, isError } = useQuery({
+    // eslint-disable-next-line @tanstack/query/exhaustive-deps
     queryKey: ['search-product', searchVal],
     queryFn: async ({ queryKey }) => {
       const res: DataResponse<unknown> = await axios.get(
-        `${PRODUCT_SERVICE}/products/admin`,
+        `${PRODUCT_SERVICE}/products/${!!isInvoice ? 'invoices' : 'admin'}`,
         {
           params: {
             search: queryKey[1],

@@ -26,7 +26,7 @@ type IProps = {
 }
 export default function SearchInvoice({ onAddProducts }: IProps) {
   const { search, onSearch, isError, isFetching, isLoading, data } =
-    useSearchProduct()
+    useSearchProduct({ isInvoice: true })
 
   return (
     <Popover>

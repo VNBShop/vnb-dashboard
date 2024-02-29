@@ -36,7 +36,6 @@ export default function SigninForm() {
   })
 
   const onSubmit = async (values: Inputs) => {
-    console.log('values: ', values)
     setLoading(true)
     const result = await signIn('credentials', {
       email: values.email,

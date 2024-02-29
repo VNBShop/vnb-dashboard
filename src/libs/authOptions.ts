@@ -33,7 +33,11 @@ export const authOptions: NextAuthOptions = {
         const data = await res.json()
 
         if (data?.success) {
-          if (!data?.metadata?.roles?.includes('ADMIN')) {
+          if (
+            !data?.metadata?.roles?.includes('ADMIN') &&
+            !data?.metadata?.roles?.includes('STORE_OWNER') &&
+            !data?.metadata?.roles?.includes('STORE_MEMBER')
+          ) {
             throw new Error('You do not have permission')
           }
 
