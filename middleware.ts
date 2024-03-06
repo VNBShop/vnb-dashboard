@@ -30,5 +30,9 @@ export const config = {
     '/product',
     '/products-warehouse',
     '/product/:path*',
+    '/all-ordered',
+    '/stores',
+    '/warehouse-history/imported',
+    '/warehouse-history/exported',
   ],
 }

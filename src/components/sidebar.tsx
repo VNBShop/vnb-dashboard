@@ -55,7 +55,7 @@ export default function Sidebar({ user, onClose }: SidebarProps) {
   })
 
   return (
-    <aside className="flex h-full flex-col overflow-hidden py-4 pt-2">
+    <aside className="flex h-full flex-col overflow-hidden bg-white py-4 pt-2">
       <header className="flex items-center gap-2 border-b border-b-gray-100 px-4 pb-2">
         <Image
           src="/icon.png"
@@ -107,16 +107,17 @@ export default function Sidebar({ user, onClose }: SidebarProps) {
           className="flex items-center justify-between rounded-lg p-2 px-2 hover:cursor-pointer hover:bg-gray-100"
         >
           <figure className="flex items-center gap-2">
-            <Image
-              src={user?.avatar ?? Avatar}
-              width={30}
-              height={30}
-              sizes="100vw"
-              alt="avt"
-              className=" rounded-full"
-            />
+            <figure className="relative h-8 w-8 rounded-full">
+              <Image
+                src={user?.avatar ?? Avatar}
+                fill
+                sizes="100vw"
+                alt="avt"
+                className=" rounded-full object-cover"
+              />
+            </figure>
 
-            <figcaption className="font-medium text-gray-600">
+            <figcaption className="flex-1 font-medium text-gray-600">
               Logout
             </figcaption>
           </figure>

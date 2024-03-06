@@ -25,3 +25,11 @@ export type OrderProduct = {
   priceUnit: number
   productImage: string
 }
+
+export type OrderedStatus =
+  | 'PENDING'
+  | 'CANCELLED'
+  | 'DELIVERING'
+  | 'RE_DELIVERING'
+  | 'SUCCESS'
+  | 'DELIVER_FAILED'

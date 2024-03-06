@@ -1,23 +1,28 @@
 'use client'
 
 import Image from 'next/image'
+import { Session } from 'next-auth'
 import DataTable, { TableColumn } from 'react-data-table-component'
 
 import { OrdersTableContext } from '@/contexts/orders-table '
 import useOrdersTable from '@/hooks/order/useOrdersTable'
 import useHydration from '@/hooks/useHydration'
 
-import { Order } from '@/types/order'
+import { colorsOrderedStatus, orderedStatusOption } from '@/libs/constants'
+import { Order, OrderedStatus } from '@/types/order'
 
-import OrdersHeader from './header'
 import ProductTableSkeleton from './skeleton'
 
 import { EmptyImg } from '../../../public'
 
-export default function OrdersTableData() {
+type IProps = {
+  user: Session['user']
+}
+
+export default function OrdersTableData({ user }: IProps) {
   const { hydration } = useHydration()
 
-  const props = useOrdersTable()
+  const props = useOrdersTable({ isAdmin: !!user?.roles?.includes('ADMIN') })
 
   if (hydration) {
     return <p className="mt-4">Wait a minute...</p>
@@ -57,9 +62,18 @@ export default function OrdersTableData() {
       cell: (row) => {
         return (
           <div
+            style={{
+              color:
+                colorsOrderedStatus[row?.orderStatus as OrderedStatus].color,
+              backgroundColor:
+                colorsOrderedStatus[row?.orderStatus as OrderedStatus]
+                  .backgroundColor,
+            }}
             className={`rounded-full p-1 px-3 text-[13px] font-medium lowercase first-letter:uppercase`}
           >
-            {row?.orderStatus ?? '-'}
+            {orderedStatusOption?.find(
+              (order) => order?.value === row?.orderStatus
+            )?.label ?? '-'}
           </div>
         )
       },
@@ -68,7 +82,7 @@ export default function OrdersTableData() {
 
   return (
     <OrdersTableContext.Provider value={props}>
-      <OrdersHeader />
+      {/* <OrdersHeader /> */}
       {props.isFetching || props.isLoading ? (
         <ProductTableSkeleton />
       ) : (

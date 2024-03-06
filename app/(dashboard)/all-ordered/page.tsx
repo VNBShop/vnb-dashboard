@@ -1,7 +1,12 @@
+import { Session, getServerSession } from 'next-auth'
+
 import { Breadcrumbs } from '@/components/breadscrum'
 import OrdersTableData from '@/contents/all-ordered'
+import { authOptions } from '@/libs/authOptions'
 
-export default function AllOrdered() {
+export default async function AllOrdered() {
+  const session = await getServerSession(authOptions)
+
   return (
     <section suppressHydrationWarning>
       <Breadcrumbs
@@ -17,7 +22,7 @@ export default function AllOrdered() {
         ]}
       />
 
-      <OrdersTableData />
+      <OrdersTableData user={session?.user as Session['user']} />
     </section>
   )
 }

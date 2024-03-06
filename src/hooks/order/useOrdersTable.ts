@@ -22,7 +22,11 @@ export type SearchOrdersTableProps = {
   endDate?: string
 }
 
-export default function useOrdersTable() {
+type IProps = {
+  isAdmin?: boolean
+}
+
+export default function useOrdersTable({ isAdmin }: IProps) {
   const [currentPage, setCurrentPage] = useState(1)
   const [perPage, setPerPage] = useState(10)
   const [filter, setFilter] = useState<SearchOrdersTableProps>(
@@ -32,6 +36,7 @@ export default function useOrdersTable() {
   const axios = useAxiosPrivate()
 
   const { data, isLoading, isFetching, isError, refetch } = useQuery({
+    // eslint-disable-next-line @tanstack/query/exhaustive-deps
     queryKey: ['orders-table', { currentPage, pageSize: perPage, ...filter }],
     queryFn: async ({ queryKey }) => {
       const filter = queryKey[1] as {
@@ -40,7 +45,7 @@ export default function useOrdersTable() {
       } & SearchOrdersTableProps
 
       const res: DataResponse<unknown> = await axios.get(
-        `${ORDER_SERVICE}/orders/admin`,
+        `${ORDER_SERVICE}/orders/${isAdmin ? 'admin' : 'store'}`,
         {
           params: {
             ...filter,

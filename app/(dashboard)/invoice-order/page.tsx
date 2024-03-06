@@ -24,7 +24,7 @@ export default function InvoiceOrderPage() {
         <InvoiceOrderForm />
       </section>
       <div
-        className=" absolute inset-0 z-[-1] bg-[rgb(245,247,250)]"
+        className=" fixed inset-0 z-[-1] bg-[rgb(245,247,250)]"
         aria-hidden
       />
     </>
