@@ -1,5 +1,7 @@
 import { OrderedStatus } from '@/types/order'
 
+export type ROLE = 'ADMIN' | 'USER' | 'STORE_OWNER' | 'STORE_MEMBER'
+
 export const sidebarList = [
   {
     name: '',
@@ -8,6 +10,7 @@ export const sidebarList = [
         label: 'Home',
         icon: 'Dashboard',
         url: '/',
+        scopes: ['STORE_MEMBER', 'STORE_OWNER', 'ADMIN'] as ROLE[],
       },
     ],
   },
@@ -18,11 +21,13 @@ export const sidebarList = [
         label: 'Invoice order',
         icon: 'Selling',
         url: '/invoice-order',
+        scopes: ['STORE_MEMBER', 'STORE_OWNER'] as ROLE[],
       },
       {
         label: 'Orders',
         icon: 'Orders',
         url: '/all-ordered',
+        scopes: ['STORE_MEMBER', 'STORE_OWNER', 'ADMIN'] as ROLE[],
       },
     ],
   },
@@ -33,11 +38,13 @@ export const sidebarList = [
         label: 'Stock',
         icon: 'Stock',
         url: '/products-warehouse',
+        scopes: ['ADMIN'] as ROLE[],
       },
       {
         label: 'History',
         icon: 'WarehouseHistory',
         url: '/warehouse-history/imported',
+        scopes: ['STORE_MEMBER', 'STORE_OWNER', 'ADMIN'] as ROLE[],
       },
     ],
   },
@@ -48,11 +55,13 @@ export const sidebarList = [
         label: 'Products',
         icon: 'Products',
         url: '/products',
+        scopes: ['ADMIN'] as ROLE[],
       },
       {
         label: 'Stores',
         icon: 'Stores',
         url: '/stores',
+        scopes: ['ADMIN'] as ROLE[],
       },
     ],
   },

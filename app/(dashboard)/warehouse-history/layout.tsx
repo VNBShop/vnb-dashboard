@@ -1,13 +1,17 @@
 import { PropsWithChildren } from 'react'
 
-import WarehouseHistoryTab from '@/contents/warehouse-history/tab'
+import { Session, getServerSession } from 'next-auth'
 
-export default function WareHouseHistoryLayout({
+import WarehouseHistoryTab from '@/contents/warehouse-history/tab'
+import { authOptions } from '@/libs/authOptions'
+
+export default async function WareHouseHistoryLayout({
   children,
 }: PropsWithChildren) {
+  const session = await getServerSession(authOptions)
   return (
     <>
-      <WarehouseHistoryTab />
+      <WarehouseHistoryTab user={session?.user as Session['user']} />
       {children}
     </>
   )

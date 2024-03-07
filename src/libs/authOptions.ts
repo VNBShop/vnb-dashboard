@@ -45,8 +45,8 @@ export const authOptions: NextAuthOptions = {
 
           if (!!info) {
             return {
-              ...data?.metadata,
               ...info,
+              ...data?.metadata,
             }
           }
 

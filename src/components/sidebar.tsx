@@ -54,6 +54,8 @@ export default function Sidebar({ user, onClose }: SidebarProps) {
     },
   })
 
+  console.log('user', user)
+
   return (
     <aside className="flex h-full flex-col overflow-hidden bg-white py-4 pt-2">
       <header className="flex items-center gap-2 border-b border-b-gray-100 px-4 pb-2">
@@ -70,36 +72,45 @@ export default function Sidebar({ user, onClose }: SidebarProps) {
       </header>
 
       <section className="mt-2 flex flex-1 flex-col gap-3 overflow-auto px-2">
-        {sidebarList.map((item) => (
-          <nav key={item.name}>
-            <h2 className="text-xs text-gray-600">{item.name}</h2>
-            <ul>
-              {item.sub?.map((item) => (
-                <li key={item.url}>
-                  <Link
-                    href={item.url}
-                    key={item.label}
-                    onClick={() => onClose?.()}
-                    className="flex items-center gap-2 rounded-[4px] p-2 hover:cursor-pointer lg:hover:bg-gray-100"
-                  >
-                    <Icon
-                      name={item.icon as IconName}
-                      size={20}
-                      color={item.url === pathname ? '#ff2461' : ''}
-                    />
-                    <p
-                      className={`${
-                        item.url === pathname ? 'text-[#ff2461]' : ''
-                      } text-[13px] font-medium`}
-                    >
-                      {item.label}
-                    </p>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        ))}
+        {sidebarList.map((item) => {
+          if (!user?.roles?.includes('ADMIN') && item?.name === 'Stock') {
+            return null
+          }
+          return (
+            <nav key={item.name}>
+              <h2 className="text-xs text-gray-600">{item.name}</h2>
+              <ul>
+                {item.sub
+                  ?.filter(
+                    (subItem) =>
+                      user?.roles?.some((role) => subItem.scopes.includes(role))
+                  )
+                  .map((subItem) => (
+                    <li key={subItem.url}>
+                      <Link
+                        href={subItem.url}
+                        onClick={() => onClose?.()}
+                        className="flex items-center gap-2 rounded-[4px] p-2 hover:cursor-pointer lg:hover:bg-gray-100"
+                      >
+                        <Icon
+                          name={subItem.icon as IconName}
+                          size={20}
+                          color={subItem.url === pathname ? '#ff2461' : ''}
+                        />
+                        <p
+                          className={`${
+                            subItem.url === pathname ? 'text-[#ff2461]' : ''
+                          } text-[13px] font-medium`}
+                        >
+                          {subItem.label}
+                        </p>
+                      </Link>
+                    </li>
+                  ))}
+              </ul>
+            </nav>
+          )
+        })}
       </section>
       <section className="px-2">
         <section
@@ -107,17 +118,16 @@ export default function Sidebar({ user, onClose }: SidebarProps) {
           className="flex items-center justify-between rounded-lg p-2 px-2 hover:cursor-pointer hover:bg-gray-100"
         >
           <figure className="flex items-center gap-2">
-            <figure className="relative h-8 w-8 rounded-full">
-              <Image
-                src={user?.avatar ?? Avatar}
-                fill
-                sizes="100vw"
-                alt="avt"
-                className=" rounded-full object-cover"
-              />
-            </figure>
+            <Image
+              src={user?.avatar ?? Avatar}
+              width={30}
+              height={30}
+              sizes="100vw"
+              alt="avt"
+              className=" rounded-full"
+            />
 
-            <figcaption className="flex-1 font-medium text-gray-600">
+            <figcaption className="font-medium text-gray-600">
               Logout
             </figcaption>
           </figure>
