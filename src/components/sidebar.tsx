@@ -117,20 +117,29 @@ export default function Sidebar({ user, onClose }: SidebarProps) {
           onClick={onSignOut}
           className="flex items-center justify-between rounded-lg p-2 px-2 hover:cursor-pointer hover:bg-gray-100"
         >
-          <figure className="flex items-center gap-2">
-            <Image
-              src={user?.avatar ?? Avatar}
-              width={30}
-              height={30}
-              sizes="100vw"
-              alt="avt"
-              className=" rounded-full"
-            />
+          <div className="flex flex-1 items-center gap-2">
+            <figure className="relative h-8 w-8 rounded-full">
+              <Image
+                src={user?.avatar ?? Avatar}
+                sizes="100vw"
+                alt="avt"
+                fill
+                className=" rounded-full object-cover"
+              />
+            </figure>
+            <div className="items-center, flex flex-1 gap-1">
+              {user?.roles?.map((role, index) => (
+                <p
+                  key={role}
+                  className="flex items-center gap-1 truncate text-sm lowercase text-gray-500"
+                >
+                  <span className="first-letter:uppercase">{role}</span>{' '}
+                  {index < user?.roles?.length - 1 && <span>-</span>}
+                </p>
+              ))}
+            </div>
+          </div>
 
-            <figcaption className="font-medium text-gray-600">
-              Logout
-            </figcaption>
-          </figure>
           {isPending ? <Spinner size={18} /> : <Icon name="Logout" size={18} />}
         </section>
       </section>

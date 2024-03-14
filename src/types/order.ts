@@ -33,3 +33,13 @@ export type OrderedStatus =
   | 'RE_DELIVERING'
   | 'SUCCESS'
   | 'DELIVER_FAILED'
+
+export type Shipper = {
+  shipperId: number
+  email: string
+  firstName: string
+  lastName: string
+  phone: string
+  status: boolean
+  avatar: string
+}

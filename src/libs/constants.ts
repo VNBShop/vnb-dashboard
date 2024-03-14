@@ -65,6 +65,17 @@ export const sidebarList = [
       },
     ],
   },
+  {
+    name: 'Delivery',
+    sub: [
+      {
+        label: 'Shipper',
+        icon: 'Products',
+        url: '/shipper',
+        scopes: ['ADMIN'] as ROLE[],
+      },
+    ],
+  },
 ]
 
 export const brands = [
