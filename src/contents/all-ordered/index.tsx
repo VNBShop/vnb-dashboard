@@ -36,9 +36,19 @@ export default function OrdersTableData({ user }: IProps) {
       cell: (row) => row?.orderId ?? '-',
     },
     {
-      name: 'Customer',
+      name: 'Customer ID',
       center: 1 as any,
       cell: (row) => row?.orderId ?? '-',
+    },
+    {
+      name: 'Customer name',
+      center: 1 as any,
+      cell: (row) => row?.customer?.customerName ?? '-',
+    },
+    {
+      name: 'Customer phone',
+      center: 1 as any,
+      cell: (row) => row?.customer?.customerPhone ?? '-',
     },
     {
       name: 'Store',
@@ -47,7 +57,11 @@ export default function OrdersTableData({ user }: IProps) {
     {
       name: 'Payment type',
       center: 1 as any,
-      cell: (row) => row?.paymentType ?? '-',
+      cell: (row) => (
+        <p className=" lowercase first-letter:uppercase">
+          {row?.paymentType ?? '-'}
+        </p>
+      ),
     },
     {
       name: 'Total',
@@ -64,10 +78,10 @@ export default function OrdersTableData({ user }: IProps) {
           <div
             style={{
               color:
-                colorsOrderedStatus[row?.orderStatus as OrderedStatus].color,
+                colorsOrderedStatus[row?.orderStatus as OrderedStatus]?.color,
               backgroundColor:
                 colorsOrderedStatus[row?.orderStatus as OrderedStatus]
-                  .backgroundColor,
+                  ?.backgroundColor,
             }}
             className={`rounded-full p-1 px-3 text-[13px] font-medium lowercase first-letter:uppercase`}
           >

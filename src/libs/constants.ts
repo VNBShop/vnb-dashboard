@@ -1,4 +1,5 @@
 import { OrderedStatus } from '@/types/order'
+import { UserRole } from '@/types/user'
 
 export type ROLE = 'ADMIN' | 'USER' | 'STORE_OWNER' | 'STORE_MEMBER'
 
@@ -72,6 +73,17 @@ export const sidebarList = [
         label: 'Shipper',
         icon: 'Products',
         url: '/shipper',
+        scopes: ['ADMIN'] as ROLE[],
+      },
+    ],
+  },
+  {
+    name: 'User',
+    sub: [
+      {
+        label: 'User',
+        icon: 'Users',
+        url: '/users',
         scopes: ['ADMIN'] as ROLE[],
       },
     ],
@@ -271,5 +283,31 @@ export const orderedStatusOption: {
   {
     label: 'Cancelled',
     value: 'CANCELLED',
+  },
+]
+
+export const userRoleOptions: {
+  label: string
+  value: UserRole
+}[] = [
+  {
+    label: 'Admin',
+    value: 'ADMIN',
+  },
+  {
+    label: 'User',
+    value: 'USER',
+  },
+  {
+    label: 'Store owner',
+    value: 'STORE_OWNER',
+  },
+  {
+    label: 'Store member',
+    value: 'STORE_MEMBER',
+  },
+  {
+    label: 'Shipper',
+    value: 'SHIPPER',
   },
 ]

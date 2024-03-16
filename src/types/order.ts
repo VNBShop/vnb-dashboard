@@ -14,6 +14,7 @@ export type Order = {
 export type Customer = {
   customerId: number
   customerName: string
+  customerPhone: string
 }
 
 export type OrderProduct = {

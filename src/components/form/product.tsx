@@ -124,7 +124,7 @@ export default function ProductForm({
       []
 
     if (isUpdate) {
-      updateData!.productSizes.forEach((size) => {
+      updateData!.productSizeAndStockResponses.forEach((size) => {
         const existsInValues = values.productSizes.some(
           (val) => val.id === size.productSizeId.toString()
         )
@@ -188,10 +188,10 @@ export default function ProductForm({
         imagesRef.current.update(updateData?.productImages)
       }
 
-      if (!!JSON.stringify(updateData?.productSizes)) {
+      if (!!JSON.stringify(updateData?.productSizeAndStockResponses)) {
         form.setValue(
           'productSizes',
-          updateData.productSizes.map((size) => ({
+          updateData.productSizeAndStockResponses.map((size) => ({
             id: size.productSizeId.toString(),
             value: size.productSize,
           })) as FormProps['productSizes']

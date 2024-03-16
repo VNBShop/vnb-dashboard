@@ -45,7 +45,7 @@ export default function ProductsHeader() {
                   modalRef.current.onOpen()
                 }
               }}
-              className="inline-flex items-center gap-1 rounded border bg-success p-2 px-4 text-sm font-medium text-white hover:cursor-pointer hover:bg-success/90 lg:hover:bg-success lg:hover:text-white"
+              className="inline-flex items-center gap-1 rounded-lg border bg-success p-2 px-4 text-sm font-medium text-white hover:cursor-pointer hover:bg-success/90 lg:hover:bg-success lg:hover:text-white"
             >
               <Icon name="Plus" size={20} />
               Create
