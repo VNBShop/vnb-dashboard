@@ -16,6 +16,9 @@ export const SizeImportSchema = z.object({
   stock: z.string().min(1, {
     message: 'Please enter stock amount',
   }),
+  priceUnit: z.string().min(1, {
+    message: 'Please enter price unit',
+  }),
 })
 
 export const SizeExportSchema = z.object({

@@ -13,9 +13,14 @@ import {
   YAxis,
 } from 'recharts'
 
+import { OrderChart } from '@/hooks/useDashboard'
 import useMediaQuery from '@/hooks/useMediaQuery'
 
-export default function Chart() {
+type IProps = {
+  orderChats: OrderChart[]
+}
+
+export default function Chart({ orderChats }: IProps) {
   const isSCMedium = useMediaQuery('(min-width: 768px)')
 
   const data = [
@@ -122,7 +127,7 @@ export default function Chart() {
 
       <ResponsiveContainer width={isSCMedium ? '50%' : '100%'} height={270}>
         <AreaChart
-          data={data}
+          data={orderChats}
           margin={{
             top: 10,
             right: 30,
@@ -136,21 +141,21 @@ export default function Chart() {
           <Tooltip />
           <Area
             type="monotone"
-            dataKey="uv"
+            dataKey="badminton"
             stackId="1"
             stroke="#8884d8"
             fill="#8884d8"
           />
           <Area
             type="monotone"
-            dataKey="pv"
+            dataKey="football"
             stackId="1"
             stroke="#82ca9d"
             fill="#82ca9d"
           />
           <Area
             type="monotone"
-            dataKey="amt"
+            dataKey="basketball"
             stackId="1"
             stroke="#ffc658"
             fill="#ffc658"

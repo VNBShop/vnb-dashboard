@@ -35,5 +35,6 @@ export const config = {
     '/warehouse-history/imported',
     '/warehouse-history/exported',
     '/shipper',
+    '/reports',
   ],
 }

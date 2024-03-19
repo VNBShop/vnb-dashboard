@@ -11,7 +11,7 @@ declare module 'next-auth' {
       avatar: string
       email: string
       provider: 'LOCAL' | 'GOOGLE'
-      roles: ('ADMIN' | 'USER' | 'STORE_OWNER' | 'STORE_MEMBER' | 'SHIPPER')[]
+      roles: UserRole[]
     }
   }
 }

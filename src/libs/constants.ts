@@ -86,6 +86,12 @@ export const sidebarList = [
         url: '/users',
         scopes: ['ADMIN'] as ROLE[],
       },
+      {
+        label: 'Reports',
+        icon: 'Users',
+        url: '/reports',
+        scopes: ['ADMIN'] as ROLE[],
+      },
     ],
   },
 ]

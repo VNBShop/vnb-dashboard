@@ -28,7 +28,6 @@ type SidebarProps = {
 
 export default function Sidebar({ user, onClose }: SidebarProps) {
   const pathname = usePathname()
-  const router = useRouter()
 
   const axios = useAxiosPrivate()
 
@@ -53,8 +52,6 @@ export default function Sidebar({ user, onClose }: SidebarProps) {
       toast.error(error.response.data.metadata.message)
     },
   })
-
-  console.log('user', user)
 
   return (
     <aside className="flex h-full flex-col overflow-hidden bg-white py-4 pt-2">

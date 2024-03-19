@@ -16,6 +16,7 @@ export type UpdateSizePayload = {
   productSizeId: number
   stock: number
   storeId?: number
+  priceUnit?: number
 }
 
 type IProps = {

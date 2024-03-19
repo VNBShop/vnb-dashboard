@@ -72,6 +72,7 @@ export default function SizeUpdateForm({
     const payloadImport: UpdateSizePayload = {
       productSizeId: data.payload?.productStockSizeId,
       stock: numeral(values.stock).value() ?? 0,
+      priceUnit: numeral((values as InputsImport)?.priceUnit).value() ?? 0,
     }
 
     const payloadExport: UpdateSizePayload = {
@@ -97,6 +98,7 @@ export default function SizeUpdateForm({
               <FormControl>
                 <InputNumber
                   className="h-10"
+                  thousandSeparator
                   placeholder="Enter amount quantity"
                   {...field}
                 />
@@ -105,6 +107,26 @@ export default function SizeUpdateForm({
             </FormItem>
           )}
         />
+
+        {!isExport && (
+          <FormField
+            control={form.control}
+            name="priceUnit"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <InputNumber
+                    className="h-10"
+                    thousandSeparator
+                    placeholder="Enter price unit"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
 
         {isExport ? (
           isFetching ? (
