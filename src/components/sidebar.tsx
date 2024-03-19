@@ -70,7 +70,12 @@ export default function Sidebar({ user, onClose }: SidebarProps) {
 
       <section className="mt-2 flex flex-1 flex-col gap-3 overflow-auto px-2">
         {sidebarList.map((item) => {
-          if (!user?.roles?.includes('ADMIN') && item?.name === 'Stock') {
+          if (
+            !user?.roles?.includes('ADMIN') &&
+            (item?.name === 'Stock' ||
+              item?.name === 'Delivery' ||
+              item?.name === 'User')
+          ) {
             return null
           }
           return (

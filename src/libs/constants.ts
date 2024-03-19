@@ -11,7 +11,7 @@ export const sidebarList = [
         label: 'Home',
         icon: 'Dashboard',
         url: '/',
-        scopes: ['STORE_MEMBER', 'STORE_OWNER', 'ADMIN'] as ROLE[],
+        scopes: ['ADMIN'] as ROLE[],
       },
     ],
   },
