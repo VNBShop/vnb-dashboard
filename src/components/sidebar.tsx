@@ -129,14 +129,13 @@ export default function Sidebar({ user, onClose }: SidebarProps) {
                 className=" rounded-full object-cover"
               />
             </figure>
-            <div className="items-center, flex flex-1 gap-1">
+            <div className="flex-1">
               {user?.roles?.map((role, index) => (
                 <p
                   key={role}
-                  className="flex items-center gap-1 truncate text-sm lowercase text-gray-500"
+                  className=" text-xs lowercase text-gray-500 first-letter:uppercase"
                 >
-                  <span className="first-letter:uppercase">{role}</span>{' '}
-                  {index < user?.roles?.length - 1 && <span>-</span>}
+                  {role}
                 </p>
               ))}
             </div>
