@@ -34,6 +34,12 @@ export type OrderChart = {
   badminton: number
 }
 
+export type SaleChart = {
+  monthYear: string
+  totalSales: number
+  totalImport: number
+}
+
 export default function useDashboard() {
   const axios = useAxiosPrivate()
 
@@ -79,6 +85,16 @@ export default function useDashboard() {
           return res?.data?.metadata ?? null
         },
       },
+      {
+        queryKey: ['sale-chart'],
+        queryFn: async () => {
+          const res: DataResponse<SaleChart[]> = await axios.get(
+            `${ORDER_SERVICE}/dashboards/chart/admin`
+          )
+
+          return res?.data?.metadata ?? null
+        },
+      },
     ],
   })
 
@@ -87,5 +103,6 @@ export default function useDashboard() {
     order: (res?.[1]?.data ?? {}) as OrderRes,
     product: (res?.[2]?.data ?? {}) as ProductRes,
     orderChats: (res?.[3]?.data ?? []) as OrderChart[],
+    saleChats: (res?.[4]?.data ?? []) as SaleChart[],
   }
 }

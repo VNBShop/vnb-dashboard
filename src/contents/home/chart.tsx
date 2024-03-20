@@ -13,21 +13,22 @@ import {
   YAxis,
 } from 'recharts'
 
-import { OrderChart } from '@/hooks/useDashboard'
+import { OrderChart, SaleChart } from '@/hooks/useDashboard'
 import useMediaQuery from '@/hooks/useMediaQuery'
 
 type IProps = {
   orderChats: OrderChart[]
+  saleChats: SaleChart[]
 }
 
-export default function Chart({ orderChats }: IProps) {
+export default function Chart({ orderChats, saleChats }: IProps) {
   const isSCMedium = useMediaQuery('(min-width: 768px)')
 
   return (
     <section className="mt-4 flex w-full flex-col gap-16 rounded bg-white py-2 pt-4 shadow-sm md:flex-row">
-      {/* <ResponsiveContainer width={isSCMedium ? '50%' : '100%'} height={300}>
+      <ResponsiveContainer width={isSCMedium ? '50%' : '100%'} height={300}>
         <LineChart
-          data={data}
+          data={saleChats}
           margin={{
             top: 10,
             right: 30,
@@ -42,15 +43,15 @@ export default function Chart({ orderChats }: IProps) {
           <Legend />
           <Line
             type="monotone"
-            dataKey="pv"
+            dataKey="totalSales"
             stroke="#8884d8"
             activeDot={{ r: 8 }}
           />
-          <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+          <Line type="monotone" dataKey="totalImport" stroke="#82ca9d" />
         </LineChart>
-      </ResponsiveContainer> */}
+      </ResponsiveContainer>
 
-      <ResponsiveContainer width={'100%'} height={350}>
+      <ResponsiveContainer width={isSCMedium ? '50%' : '100%'} height={300}>
         <AreaChart
           data={orderChats}
           margin={{
