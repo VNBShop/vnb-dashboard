@@ -27,31 +27,6 @@ export default function Chart({ orderChats, saleChats }: IProps) {
   return (
     <section className="mt-4 flex w-full flex-col gap-16 rounded bg-white py-2 pt-4 shadow-sm md:flex-row">
       <ResponsiveContainer width={isSCMedium ? '50%' : '100%'} height={300}>
-        <LineChart
-          data={saleChats}
-          margin={{
-            top: 10,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Line
-            type="monotone"
-            dataKey="totalSales"
-            stroke="#8884d8"
-            activeDot={{ r: 8 }}
-          />
-          <Line type="monotone" dataKey="totalImport" stroke="#82ca9d" />
-        </LineChart>
-      </ResponsiveContainer>
-
-      <ResponsiveContainer width={isSCMedium ? '50%' : '100%'} height={300}>
         <AreaChart
           data={orderChats}
           margin={{
@@ -87,6 +62,39 @@ export default function Chart({ orderChats, saleChats }: IProps) {
             fill="#ffc658"
           />
         </AreaChart>
+      </ResponsiveContainer>
+
+      <ResponsiveContainer width={isSCMedium ? '50%' : '100%'} height={300}>
+        <LineChart
+          data={saleChats}
+          margin={{
+            top: 10,
+            right: 30,
+            left: 20,
+            bottom: 5,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="totalSales" />
+          <YAxis
+            tick={{
+              fontSize: '8px',
+              width: 300,
+              height: 150,
+            }}
+            interval={0}
+          />
+          <Tooltip />
+          <Legend />
+
+          <Line type="monotone" dataKey="totalImport" stroke="#82ca9d" />
+          <Line
+            type="monotone"
+            dataKey="totalSales"
+            stroke="#8884d8"
+            activeDot={{ r: 8 }}
+          />
+        </LineChart>
       </ResponsiveContainer>
     </section>
   )
