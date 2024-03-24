@@ -30,6 +30,12 @@ export const sidebarList = [
         url: '/all-ordered',
         scopes: ['STORE_MEMBER', 'STORE_OWNER', 'ADMIN'] as ROLE[],
       },
+      {
+        label: 'Vouchers',
+        icon: 'Voucher',
+        url: '/vouchers',
+        scopes: ['STORE_MEMBER', 'STORE_OWNER', 'ADMIN'] as ROLE[],
+      },
     ],
   },
   {
@@ -88,7 +94,7 @@ export const sidebarList = [
       },
       {
         label: 'Reports',
-        icon: 'Users',
+        icon: 'Report',
         url: '/reports',
         scopes: ['ADMIN'] as ROLE[],
       },
@@ -316,4 +322,27 @@ export const userRoleOptions: {
     label: 'Shipper',
     value: 'SHIPPER',
   },
+]
+
+export const voucherPercentOption = [
+  { label: '5%', value: 0.05 },
+  { label: '10%', value: 0.1 },
+  { label: '15%', value: 0.15 },
+  { label: '20%', value: 0.2 },
+  { label: '25%', value: 0.25 },
+  { label: '30%', value: 0.3 },
+  { label: '35%', value: 0.35 },
+  { label: '40%', value: 0.4 },
+  { label: '45%', value: 0.45 },
+  { label: '50%', value: 0.5 },
+  { label: '55%', value: 0.55 },
+  { label: '60%', value: 0.6 },
+  { label: '65%', value: 0.65 },
+  { label: '70%', value: 0.7 },
+  { label: '75%', value: 0.75 },
+  { label: '80%', value: 0.8 },
+  { label: '85%', value: 0.85 },
+  { label: '90%', value: 0.9 },
+  { label: '95%', value: 0.95 },
+  { label: '100%', value: 1 },
 ]

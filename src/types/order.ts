@@ -44,3 +44,13 @@ export type Shipper = {
   status: boolean
   avatar: string
 }
+
+export type Voucher = {
+  voucherId: number
+  voucherCode: string
+  maxDiscount: number
+  voucherPercent: number
+  startedAt: Date
+  expiredAt: Date
+  quantity: number
+}

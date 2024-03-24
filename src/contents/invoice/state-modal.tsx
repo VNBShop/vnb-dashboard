@@ -35,13 +35,23 @@ export default function InvoiceStateModal({ onCloseModal, open }: IProps) {
       </section>
 
       <section className="mt-7 flex items-center justify-center gap-4">
-        <Button className="h-10" variant="outline" onClick={onCloseModal}>
-          <Icon name="Checked" size={18} />
-          <span>Finished</span>
-        </Button>
-        <Button className="h-10 bg-secondary">
+        <Button
+          disabled
+          size="sm"
+          className="h-10 bg-secondary hover:bg-secondary/70"
+        >
           <Icon name="Printer" size={18} />
           <span>Print</span>
+        </Button>
+
+        <Button
+          className="h-10 bg-success text-white hover:bg-success/70"
+          variant="outline"
+          onClick={onCloseModal}
+          size="sm"
+        >
+          <Icon name="Checked" size={18} />
+          <span>Finished</span>
         </Button>
       </section>
     </Modal>

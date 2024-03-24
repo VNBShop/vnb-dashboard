@@ -77,7 +77,7 @@ export function Calendar({
         <PopoverContent className="w-auto bg-white p-0" align={align}>
           <DayPicker
             showOutsideDays={showOutsideDays}
-            className={cn('p-3', className)}
+            className={cn('z-[9999] p-3', className)}
             initialFocus
             mode={mode}
             selected={date}

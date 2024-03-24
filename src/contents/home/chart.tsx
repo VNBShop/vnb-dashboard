@@ -75,8 +75,9 @@ export default function Chart({ orderChats, saleChats }: IProps) {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="totalSales" />
+          <XAxis dataKey="totalImport" />
           <YAxis
+            dataKey="totalSales"
             tick={{
               fontSize: '8px',
               width: 300,

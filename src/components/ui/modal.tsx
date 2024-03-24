@@ -125,8 +125,8 @@ const Modal = forwardRef<ModalProps, ModalInnerProps>(
           appear
           className={
             center
-              ? 'fixed bottom-0 left-0 right-0 top-0 z-[1001] flex items-center justify-center overflow-y-auto bg-slate-900/25 px-2 opacity-100 backdrop-blur transition-opacity md:px-0'
-              : 'fixed bottom-0 left-0 right-0 top-0 z-[1001] flex items-start justify-center overflow-y-auto bg-slate-900/25 px-2 pt-16 opacity-100 backdrop-blur transition-opacity md:px-0'
+              ? 'fixed bottom-0 left-0 right-0 top-0 z-[100] flex items-center justify-center overflow-y-auto bg-slate-900/25 px-2 opacity-100 backdrop-blur transition-opacity md:px-0'
+              : 'fixed bottom-0 left-0 right-0 top-0 z-[100] flex items-start justify-center overflow-y-auto bg-slate-900/25 px-2 pt-16 opacity-100 backdrop-blur transition-opacity md:px-0'
           }
           onClick={closeOutside ? onCloseOutSide : undefined}
         >

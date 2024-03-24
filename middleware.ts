@@ -37,5 +37,6 @@ export const config = {
     '/shipper',
     '/reports',
     '/users',
+    '/vouchers',
   ],
 }
