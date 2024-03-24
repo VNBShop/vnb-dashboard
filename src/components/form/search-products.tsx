@@ -127,6 +127,7 @@ export default function SearchProductForm() {
         <Button
           disabled={loading}
           type="submit"
+          size="sm"
           className="flex h-10 items-center gap-1"
         >
           {loading && <Spinner size={18} />}
@@ -137,6 +138,7 @@ export default function SearchProductForm() {
           className="h-10 text-danger hover:underline"
           variant="ghost"
           type="button"
+          size="sm"
           disabled={loading}
           onClick={() => {
             form.reset()

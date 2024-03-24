@@ -12,4 +12,5 @@ export const shipperShema = z.object({
   email: z.string().min(1, { message: 'Email is required' }).email(),
   firstName: z.string().min(1, 'First name is required'),
   lastName: z.string().min(1, 'Last name is required'),
+  idNumber: z.string().min(1, 'Identify number is required'),
 })

@@ -70,8 +70,12 @@ export default function WarehouseHistoryFilterForm({
 
   const onSubmit = (values: Inputs) => {
     const payload = {
-      actorId: numeral(values?.actorId)?.value() as number,
-      productId: numeral(values?.productId)?.value() as number,
+      actorId: values?.actorId
+        ? (numeral(values?.actorId)?.value() as number)
+        : undefined,
+      productId: values?.productId
+        ? (numeral(values?.productId)?.value() as number)
+        : undefined,
       startDate: values?.datetime?.from
         ? dayjs(values?.datetime?.from).toISOString()
         : undefined,

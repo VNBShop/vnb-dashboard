@@ -43,6 +43,7 @@ export type Shipper = {
   phone: string
   status: boolean
   avatar: string
+  idNumber: string
 }
 
 export type Voucher = {

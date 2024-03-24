@@ -26,6 +26,7 @@ export default function CreateShipperForm({ onCloseModal }: StoreFormProps) {
       firstName: '',
       lastName: '',
       phone: '',
+      idNumber: '',
     },
   })
 
@@ -97,6 +98,21 @@ export default function CreateShipperForm({ onCloseModal }: StoreFormProps) {
                 <FormItem>
                   <FormControl>
                     <Input {...field} placeholder="Email address" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )
+            }}
+          />
+
+          <FormField
+            control={form.control}
+            name={'idNumber'}
+            render={({ field }) => {
+              return (
+                <FormItem className=" col-span-2">
+                  <FormControl>
+                    <Input {...field} placeholder="Identify number" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

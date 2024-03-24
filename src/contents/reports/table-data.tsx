@@ -61,9 +61,11 @@ export default function ReportsTableData() {
         return (
           <div
             className={`rounded-full p-1 px-3 text-[13px] font-medium lowercase first-letter:uppercase ${
-              row?.status
+              row?.status === 'APPROVED'
                 ? 'bg-[#e4f6e2] text-[#368a2f]'
-                : 'bg-[#ffdddd] text-[#ff0e0e]'
+                : row?.status === 'PENDING'
+                  ? 'bg-[#fff2c5] text-[#e27100]'
+                  : 'bg-[#ffdddd] text-[#ff0e0e]'
             }`}
           >
             {row?.status}

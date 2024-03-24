@@ -15,7 +15,6 @@ type IProps = {
 }
 
 export default function ReportsTableAction({ data }: IProps) {
-  const modalDeleteRef = createRef<ModalProps>()
   const [modal, setModal] = useState(false)
 
   const { loading, onHandleReportPost } = useHandleReportPost({

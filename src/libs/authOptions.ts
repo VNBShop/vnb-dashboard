@@ -32,6 +32,8 @@ export const authOptions: NextAuthOptions = {
 
         const data = await res.json()
 
+        console.log('login response: ', res)
+
         if (data?.success) {
           if (
             !data?.metadata?.roles?.includes('ADMIN') &&
@@ -52,6 +54,8 @@ export const authOptions: NextAuthOptions = {
 
           return data?.metadata
         } else {
+          console.log('errr')
+
           throw new Error(data?.metadata?.message)
         }
       },

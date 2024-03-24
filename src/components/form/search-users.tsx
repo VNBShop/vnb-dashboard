@@ -33,7 +33,7 @@ export default function SearchUsersForm() {
       <section className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
         <Input
           {...form.register('search')}
-          placeholder="Name store"
+          placeholder="Search"
           className="h-10"
         />
 

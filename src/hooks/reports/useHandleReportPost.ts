@@ -33,11 +33,15 @@ export default function useHandleReportPost({ onSuccess }: IProps) {
         `${FORUM_SERVICE}/post-reports/${payload?.reportId}/${payload?.type}`
       )
     },
-    onSuccess: async (res) => {
+    onSuccess: async (res, payload) => {
       if (res?.data?.success) {
         await client.invalidateQueries({
           queryKey: ['get-posts-report'],
         })
+
+        toast.success(
+          `${payload?.type === 'approve' ? 'Approve' : 'Reject'} successfully!`
+        )
 
         onSuccess()
       }

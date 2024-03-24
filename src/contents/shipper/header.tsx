@@ -1,11 +1,10 @@
-import { createRef, useState } from 'react'
+import { useState } from 'react'
 
 import Icon from '@/common/icons'
 import CreateShipperForm from '@/components/form/create-shipper'
-import SearchStoreForm from '@/components/form/search-store'
-import StoreForm from '@/components/form/store'
+import SearchShippersForm from '@/components/form/search-shipper'
 import HeaderSection from '@/components/header-section'
-import { Modal, ModalProps } from '@/components/ui/modal'
+import { Modal } from '@/components/ui/modal'
 import { useShipperTableContext } from '@/contexts/shipper-table'
 
 export default function ShipperHeader() {
@@ -53,7 +52,7 @@ export default function ShipperHeader() {
           </section>
         </HeaderSection>
 
-        {filter && <SearchStoreForm />}
+        {filter && <SearchShippersForm />}
       </>
     </>
   )

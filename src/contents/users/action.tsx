@@ -24,6 +24,7 @@ export default function UsersShipperTableAction({ data }: IProps) {
     <>
       <>
         <Button
+          disabled={!data?.isActive}
           onClick={() => setModal(true)}
           size="sm"
           className="bg-danger hover:bg-danger/70"

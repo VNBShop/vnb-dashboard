@@ -28,7 +28,7 @@ export default function useAddShipper({ onSuccess }: IProps) {
     },
     onSuccess: async (res) => {
       if (res?.data?.success) {
-        await client.refetchQueries({
+        await client.invalidateQueries({
           queryKey: ['get-shippers'],
         })
 

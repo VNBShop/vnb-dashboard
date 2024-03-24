@@ -64,6 +64,10 @@ export default function ShipperTableData() {
       cell: (row) => row?.phone ?? '-',
     },
     {
+      name: 'Identify number',
+      cell: (row) => row?.idNumber ?? '-',
+    },
+    {
       name: 'Status',
       width: '120px',
       center: 1 as any,
