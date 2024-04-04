@@ -55,7 +55,7 @@ export default function StoreTableAction({
       if (response?.data?.success) {
         toast.success(
           response?.data?.metadata?.message ??
-            `Deactivate ${data?.storeName} successfully!`
+          `Deactivate ${data?.storeName} successfully!`
         )
         if (!!modalDeleteRef.current) {
           modalDeleteRef.current.onClose()
@@ -75,7 +75,7 @@ export default function StoreTableAction({
     <>
       <>
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
+          <DropdownMenuTrigger asChild disabled={!data?.status}>
             <div className="flex h-8 w-8 items-center justify-center hover:cursor-pointer">
               <Icon name="Ellipsis" size={16} />
             </div>
@@ -84,31 +84,35 @@ export default function StoreTableAction({
             {/* <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator /> */}
             {!!data?.status && (
-              <DropdownMenuItem
-                onClick={() => {
-                  if (!!modalUpdateRef.current) {
-                    modalUpdateRef.current?.onOpen()
-                  }
-                }}
-              >
-                <div className=" flex items-center gap-2">
-                  <Icon name="Pen" size={16} />
-                  Update
-                </div>
-              </DropdownMenuItem>
+              <>
+                <DropdownMenuItem
+                  onClick={() => {
+                    if (!!modalUpdateRef.current) {
+                      modalUpdateRef.current?.onOpen()
+                    }
+                  }}
+                >
+                  <div className=" flex items-center gap-2">
+                    <Icon name="Pen" size={16} />
+                    Update
+                  </div>
+                </DropdownMenuItem>
+
+                <DropdownMenuItem
+                  onClick={() => {
+                    if (!!modalDeleteRef.current) {
+                      modalDeleteRef.current.onOpen()
+                    }
+                  }}
+                >
+                  <div className=" flex items-center gap-2">
+                    <Icon name="Trash" size={16} />
+                    Deactivate
+                  </div>
+                </DropdownMenuItem>
+              </>
             )}
-            <DropdownMenuItem
-              onClick={() => {
-                if (!!modalDeleteRef.current) {
-                  modalDeleteRef.current.onOpen()
-                }
-              }}
-            >
-              <div className=" flex items-center gap-2">
-                <Icon name="Trash" size={16} />
-                Deactivate
-              </div>
-            </DropdownMenuItem>
+
           </DropdownMenuContent>
         </DropdownMenu>
       </>

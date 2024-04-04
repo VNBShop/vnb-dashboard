@@ -125,11 +125,11 @@ export default function ProductForm({
 
     if (isUpdate) {
       updateData!.productSizeAndStockResponses.forEach((size) => {
-        const existsInValues = values.productSizes.some(
-          (val) => val.id === size.productSizeId.toString()
+        const existsInValues = values?.productSizes.some(
+          (val) => val?.id === size?.productSizeId?.toString()
         )
         if (!existsInValues) {
-          updateProductSizesDelete.push(size.productSizeId)
+          updateProductSizesDelete.push(size?.productSizeId)
         }
       })
 
@@ -192,8 +192,8 @@ export default function ProductForm({
         form.setValue(
           'productSizes',
           updateData.productSizeAndStockResponses.map((size) => ({
-            id: size.productSizeId.toString(),
-            value: size.productSize,
+            id: size?.productSizeId?.toString(),
+            value: size?.productSize,
           })) as FormProps['productSizes']
         )
       }

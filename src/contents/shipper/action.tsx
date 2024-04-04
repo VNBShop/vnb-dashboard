@@ -1,4 +1,4 @@
-import { createRef } from 'react'
+import { createRef, useRef } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Modal, ModalProps } from '@/components/ui/modal'
@@ -11,7 +11,7 @@ type IProps = {
 }
 
 export default function ShipperTableAction({ data }: IProps) {
-  const modalDeleteRef = createRef<ModalProps>()
+  const modalDeleteRef = useRef<ModalProps | null>(null)
 
   const { loading, onDeleteShipper } = useDeleteShipper({
     onSuccess: () => {

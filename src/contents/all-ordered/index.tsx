@@ -1,5 +1,6 @@
 'use client'
 
+import dayjs from 'dayjs'
 import Image from 'next/image'
 import { Session } from 'next-auth'
 import DataTable, { TableColumn } from 'react-data-table-component'
@@ -29,6 +30,17 @@ export default function OrdersTableData({ user }: IProps) {
   }
 
   const columns: TableColumn<Order>[] = [
+    {
+      name: 'Time',
+      center: 1 as any,
+      width: '150px',
+      cell: (row) => {
+        if (!row?.orderDate) {
+          return '-'
+        }
+        return dayjs(row?.orderDate)?.format('HH:mm:ss DD/MM/YYYY')
+      }
+    },
     {
       name: 'ID',
       center: 1 as any,

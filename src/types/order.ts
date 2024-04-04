@@ -1,6 +1,7 @@
 import { Store } from './store'
 
 export type Order = {
+  createdAt: Date
   orderId: number
   customer: Customer
   store: Store

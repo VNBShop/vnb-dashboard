@@ -199,10 +199,10 @@ export default function HomePage() {
             <span
               className={cn(
                 'flex items-center gap-1',
-                (user?.totalUsers ?? 0) >= 0 ? 'text-success' : 'text-danger'
+                (user?.userPercentage ?? 0) >= 0 ? 'text-success' : 'text-danger'
               )}
             >
-              {(user?.totalUsers ?? 0) >= 0 ? (
+              {(user?.userPercentage ?? 0) >= 0 ? (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-4 w-4"
