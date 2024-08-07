@@ -9,7 +9,7 @@
     "@tanstack/query/no-rest-destructuring": "warn",
     "@tanstack/query/stable-query-client": "error",
     "prefer-const": "error",
-    "semi": ["warn", "never"],
+    "semi": ["warn", "never"]
     "import/order": [
       "warn",
       {
